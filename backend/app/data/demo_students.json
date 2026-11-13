@@ -1,0 +1,5 @@
+[
+  { "code": "KB-001", "pin": "1234", "nickname": "Elang", "class_name": "VIII-A" },
+  { "code": "KB-002", "pin": "2345", "nickname": "Merpati", "class_name": "VIII-A" },
+  { "code": "KB-003", "pin": "3456", "nickname": "Rajawali", "class_name": "VIII-A" }
+]

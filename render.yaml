@@ -1,0 +1,24 @@
+# Blueprint Render untuk backend FastAPI (New → Blueprint → pilih repo ini).
+# Nilai rahasia (sync: false) diisi manual di dashboard Render.
+services:
+  - type: web
+    name: belajar-kubus-balok-api
+    runtime: python
+    plan: free
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT --proxy-headers --forwarded-allow-ips="*"
+    healthCheckPath: /api/health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.8
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SECRET_KEY
+        sync: false
+      - key: APP_JWT_SECRET
+        generateValue: true
+      - key: ALLOWED_ORIGINS
+        sync: false
+      - key: EVALUATION_MINUTES
+        value: "30"
