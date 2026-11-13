@@ -26,13 +26,13 @@ Aturan: sebuah fitur hanya ditandai **Lulus** jika benar-benar sudah diuji. Kolo
 | M10 | Latihan | Selesaikan 1 level | Umpan balik langsung, pembahasan, progres, skor, bintang | ✅ Lulus (E2E) |
 | M11 | Evaluasi | Kerjakan 10 soal | Tidak ada kunci selama mengerjakan; nilai, benar/salah, pembahasan setelah kirim | ✅ Lulus (E2E) |
 | M12 | Timer | Muat ulang halaman saat evaluasi | Waktu berlanjut, jawaban tidak hilang | ✅ Lulus (E2E, setelah perbaikan bug) |
-| M13 | Simpan online | Cek tabel `quiz_attempts` di Supabase | Baris baru dengan nilai yang sama | ⬜ Belum — menunggu proyek Supabase |
+| M13 | Simpan online | Cek tabel `quiz_attempts` di Supabase | Baris baru dengan nilai yang sama | ✅ Lulus (Supabase, 13 Nov 2026) |
 | M14 | Riwayat | Buka Hasil Belajar | Latihan & evaluasi tercantum; pembahasan evaluasi dapat dibuka | ✅ Lulus (E2E, mode lokal) |
 | M15 | HP Android | Chrome Android, lebar ±360–412 px | Tidak ada scroll horizontal; tombol mudah disentuh; keyboard angka muncul | 🟡 Lulus di emulasi Pixel 7 (412 px); belum di HP Android fisik |
 | M16 | Laptop | Chrome/Edge 1366 px | Tata letak 2 kolom pada materi & visualisasi | ✅ Lulus (E2E 1366 px) |
 | M17 | Offline | Matikan data saat evaluasi, kirim | Banner offline; jawaban tersimpan; "Kirim ulang" berhasil setelah online | ✅ Lulus (E2E, mode offline Playwright) |
 | M18 | Server mati | Hentikan backend, coba login | Pesan "Server belum bisa dihubungi…" | ✅ Lulus (E2E) |
-| M19 | Keamanan DB | Panggil REST Supabase dengan anon key ke `students`/`questions` | Ditolak / data kosong | ⬜ Belum — menunggu proyek Supabase |
+| M19 | Keamanan DB | Panggil REST Supabase dengan anon key ke `students`/`questions` | Ditolak / data kosong | ✅ Lulus (Supabase, 13 Nov 2026) |
 | M20 | Akses data siswa lain | Pakai token A untuk `GET /api/attempts/<id milik B>` | 404 | ✅ Lulus (pytest + E2E) |
 | M21 | Integrasi FE–BE produksi | Alur lengkap di URL Vercel | Semua langkah berhasil | ⬜ Belum — menunggu deployment |
 
@@ -66,4 +66,6 @@ Lihat bagian **Laporan** di bawah. Bagian ini diperbarui setiap kali pengujian d
 | Label p/l/t tidak tampil di 3D & peringatan React | Komponen `Html` drei membuat React root terpisah | Label diganti sprite bertekstur kanvas (tanpa DOM) |
 | Three.js ikut dimuat di halaman awal | Pengaturan `manualChunks` | Pengaturan dihapus; Three.js kembali lazy |
 
-**Belum diuji (jujur):** penyimpanan ke Supabase sungguhan (M13), uji kunci anon terhadap RLS (M19), integrasi produksi Vercel–Render (M21), dan HP Android fisik (M15). Uji 3D dilakukan dengan renderer perangkat lunak (SwiftShader), bukan GPU HP.
+**Uji integrasi Supabase sungguhan (13 Nov 2026)** — backend lokal terhubung ke proyek Supabase, memakai akun uji sementara yang dihapus setelahnya: **17/17 lulus**. Cakupan: login, materi dari DB, evaluasi tanpa kunci jawaban, nilai tersimpan di `quiz_attempts` (M13), 10 baris `quiz_answers`, latihan, riwayat, pembahasan. RLS (M19): kunci publik (publishable) **ditolak (401)** untuk `students`, `questions`, `quiz_attempts`, `quiz_answers`, serta tidak dapat menulis nilai; `materials` boleh dibaca publik sesuai rancangan.
+
+**Belum diuji (jujur):** integrasi produksi Vercel–Render (M21) dan HP Android fisik (M15). Uji 3D dilakukan dengan renderer perangkat lunak (SwiftShader), bukan GPU HP.

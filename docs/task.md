@@ -21,16 +21,16 @@ Pembaruan terakhir: 13 November 2026
 
 ## Tahap 5 — Desain & database ✅ / 🟡
 - ✅ Token desain & wireframe ([design.md](design.md)) diterapkan di CSS
-- 🟡 `supabase/schema.sql` + RLS + `seed_students.sql` ditulis, **belum dijalankan di Supabase sungguhan**
+- ✅ `supabase/schema.sql` + RLS + `seed_students.sql` dijalankan di Supabase
 
 ## Tahap 6 — Frontend & backend ✅
 - ✅ Backend FastAPI: auth, materi, evaluasi, latihan, riwayat, mode lokal & Supabase
 - ✅ Frontend: semua halaman P0 + fitur P1
 
-## Tahap 7 — Integrasi Three.js & Supabase 🟡
+## Tahap 7 — Integrasi Three.js & Supabase ✅
 - ✅ Visualisasi 3D + jaring-jaring + fallback 2D (diuji di Chromium)
-- 👤 Buat proyek Supabase → jalankan `schema.sql` → `seed_students.sql` → `python scripts/seed_supabase.py`
-- ⬜ Uji backend dengan Supabase sungguhan (M13, M19)
+- ✅ Proyek Supabase dibuat, skema & data terisi (4 materi, 10 soal, 3 siswa)
+- ✅ Uji backend dengan Supabase sungguhan 17/17 (M13, M19)
 
 ## Tahap 8 — Pengujian 🟡
 - ✅ Backend pytest 42/42 · Frontend Vitest 25/25 · Build produksi
@@ -38,12 +38,11 @@ Pembaruan terakhir: 13 November 2026
 - ⬜ Uji di HP Android fisik (M15)
 
 ## Tahap 9 — Deployment ⬜
-- 👤 Akun Vercel, Render, GitHub
+- ✅ Akun Vercel, Render, GitHub
 - ⬜ Deploy backend ke Render, frontend ke Vercel, uji ujung-ke-ujung (M21)
 
 ## Tahap 10 — GitHub & presentasi 🟡
-- ✅ Repositori git lokal + commit awal
-- 👤 Buat repo GitHub & push
+- ✅ Repositori git + dipublikasikan ke GitHub
 - ✅ Panduan presentasi ([presentation.md](presentation.md))
 
 ## Backlog (setelah demo)
