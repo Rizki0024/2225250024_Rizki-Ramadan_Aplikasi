@@ -1,9 +1,10 @@
 # Panduan Presentasi (± 10–15 menit)
 
 ## Persiapan (H-1 dan 10 menit sebelum)
-- [ ] Buka `https://<backend>.onrender.com/api/health` agar server Render "bangun" (±30–60 detik).
+- [ ] Buka https://kubus-balok-api.vercel.app/api/health → harus `"storage":"supabase"`.
+- [ ] Buka dashboard Supabase (proyek gratis dijeda bila 7 hari tidak aktif).
 - [ ] Login sekali dengan akun demo (mis. KB-001) di laptop dan HP.
-- [ ] Siapkan tab: aplikasi (Vercel), Supabase Table Editor (`quiz_attempts`), GitHub repo, `docs/`.
+- [ ] Siapkan tab: aplikasi (https://belajar-kubus-balok.vercel.app), Supabase Table Editor (`quiz_attempts`), GitHub repo, `docs/`.
 - [ ] Cadangan bila internet bermasalah: jalankan versi lokal (lihat README) dan siapkan screenshot.
 - [ ] Hubungkan HP ke proyektor / gunakan *screen mirroring*, atau tunjukkan HP langsung.
 
@@ -13,7 +14,7 @@
 |---|---|---|
 | 0–2 | Latar belakang | Hasil wawancara 1 siswa kelas IX (bukan generalisasi): sulit mengingat/memilih rumus, salah hitung, soal cerita sulit, butuh langkah demi langkah, tampilan sederhana |
 | 2–3 | Tujuan & pendekatan | Mathematical Literacy (Formulate–Employ–Interpret) + Cognitive Load (intrinsik, ekstrinsik, germane) |
-| 3–4 | Arsitektur | Diagram di `docs/architecture.md`: React/Vercel → FastAPI/Render → Supabase; tidak ada kunci di frontend |
+| 3–4 | Arsitektur | Diagram di `docs/architecture.md`: React/Vercel → FastAPI/Vercel → Supabase; tidak ada kunci di frontend |
 | 4–6 | Demo login & materi | Login KB-001 + PIN salah (pesan galat) → materi Kubus: penurunan rumus, contoh soal dibuka bertahap |
 | 6–8 | Demo visualisasi | Putar balok, ubah p/l/t → luas tiap warna berubah, buka jaring-jaring; tunjukkan mode 2D |
 | 8–10 | Demo latihan | Jawab salah dengan sengaja (pilih volume) → umpan balik "Itu rumus volume", pembahasan; isi "abc" → validasi |

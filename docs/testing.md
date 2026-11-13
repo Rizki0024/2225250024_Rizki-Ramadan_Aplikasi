@@ -34,7 +34,7 @@ Aturan: sebuah fitur hanya ditandai **Lulus** jika benar-benar sudah diuji. Kolo
 | M18 | Server mati | Hentikan backend, coba login | Pesan "Server belum bisa dihubungi…" | ✅ Lulus (E2E) |
 | M19 | Keamanan DB | Panggil REST Supabase dengan anon key ke `students`/`questions` | Ditolak / data kosong | ✅ Lulus (Supabase, 13 Nov 2026) |
 | M20 | Akses data siswa lain | Pakai token A untuk `GET /api/attempts/<id milik B>` | 404 | ✅ Lulus (pytest + E2E) |
-| M21 | Integrasi FE–BE produksi | Alur lengkap di URL Vercel | Semua langkah berhasil | ⬜ Belum — menunggu deployment |
+| M21 | Integrasi FE–BE produksi | Alur lengkap di URL Vercel | Semua langkah berhasil | ✅ Lulus (produksi Vercel, 13 Nov 2026) |
 
 Uji M19:
 ```bash
@@ -68,4 +68,6 @@ Lihat bagian **Laporan** di bawah. Bagian ini diperbarui setiap kali pengujian d
 
 **Uji integrasi Supabase sungguhan (13 Nov 2026)** — backend lokal terhubung ke proyek Supabase, memakai akun uji sementara yang dihapus setelahnya: **17/17 lulus**. Cakupan: login, materi dari DB, evaluasi tanpa kunci jawaban, nilai tersimpan di `quiz_attempts` (M13), 10 baris `quiz_answers`, latihan, riwayat, pembahasan. RLS (M19): kunci publik (publishable) **ditolak (401)** untuk `students`, `questions`, `quiz_attempts`, `quiz_answers`, serta tidak dapat menulis nilai; `materials` boleh dibaca publik sesuai rancangan.
 
-**Belum diuji (jujur):** integrasi produksi Vercel–Render (M21) dan HP Android fisik (M15). Uji 3D dilakukan dengan renderer perangkat lunak (SwiftShader), bukan GPU HP.
+**Uji ujung-ke-ujung produksi (13 Nov 2026)** — frontend https://belajar-kubus-balok.vercel.app + backend https://kubus-balok-api.vercel.app + Supabase, emulasi Pixel 7 & laptop 1366 px, dua akun uji sementara (dihapus setelahnya): **36/36 lulus** (M21), termasuk penyimpanan online, muat ulang evaluasi, mode offline + kirim ulang, dan isolasi data antarsiswa. CORS diperiksa: hanya domain frontend yang diizinkan.
+
+**Belum diuji (jujur):** HP Android fisik (M15). Uji 3D dilakukan dengan renderer perangkat lunak, bukan GPU HP. Uji 3D dilakukan dengan renderer perangkat lunak (SwiftShader), bukan GPU HP.

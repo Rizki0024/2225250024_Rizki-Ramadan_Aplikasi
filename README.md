@@ -2,6 +2,8 @@
 
 Aplikasi web pembelajaran **luas permukaan kubus dan balok** untuk siswa SMP kelas VIII. Aplikasi ini memuat materi bertahap, visualisasi 3D dengan jaring-jaring yang dapat dibuka, latihan dengan umpan balik diagnostik, evaluasi 10 soal berbatas waktu, dan riwayat hasil belajar yang tersimpan online. Dapat dibuka di smartphone Android maupun laptop.
 
+**Aplikasi online:** https://belajar-kubus-balok.vercel.app · API: https://kubus-balok-api.vercel.app/docs
+
 Proyek mata kuliah Algoritma dan Pemrograman — **Rizki Ramadan (2225250024)**, Pendidikan Matematika.
 
 ## Fitur
@@ -20,7 +22,7 @@ Proyek mata kuliah Algoritma dan Pemrograman — **Rizki Ramadan (2225250024)**,
 - **Frontend**: React 19 + Vite 8, React Router, React Three Fiber + Three.js, CSS biasa
 - **Backend**: Python + FastAPI, Pydantic, PyJWT, bcrypt, httpx
 - **Database**: Supabase PostgreSQL dengan Row Level Security
-- **Hosting**: Vercel (frontend), Render (backend), Supabase (database)
+- **Hosting**: Vercel (frontend & backend FastAPI serverless), Supabase (database). Render tetap didukung lewat `render.yaml`.
 
 ## Struktur folder
 
