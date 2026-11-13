@@ -1,6 +1,19 @@
 # Panduan Deployment
 
-Urutan: **Supabase → Render (backend) → Vercel (frontend) → perbarui CORS → uji**. Semua layanan memiliki paket gratis.
+Urutan: **Supabase → backend → Vercel (frontend) → perbarui CORS → uji**. Semua layanan memiliki paket gratis.
+
+Backend dapat di-hosting di **Render** (§3) atau di **Vercel** (§3B). Gunakan §3B jika Render meminta kartu kredit/debit — paket Hobby Vercel tidak memerlukan metode pembayaran. *Keputusan proyek ini (13 Nov 2026): backend memakai Vercel karena Render meminta kartu.*
+
+## 3B. Vercel (backend FastAPI) — tanpa kartu
+1. Vercel → *Add New → Project* → impor repo yang sama.
+2. **Project Name**: mis. `kubus-balok-api`. **Root Directory**: `backend`. **Framework Preset**: *FastAPI* (jika tidak muncul, pilih *Other*).
+3. *Environment Variables*: `SUPABASE_URL`, `SUPABASE_SECRET_KEY`, `APP_JWT_SECRET` (salin dari `backend/.env`), dan `ALLOWED_ORIGINS` = `http://localhost:5173` (sementara).
+4. *Deploy*. Buka `https://<kubus-balok-api>.vercel.app/api/health` → harus `"storage":"supabase"`.
+
+Catatan teknis Vercel (serverless):
+- Titik masuk: `backend/index.py` (mengimpor `app` dari `app/main.py`); versi Python dari `backend/.python-version`.
+- Tidak ada "tidur" seperti Render; permintaan pertama hanya lambat ±1–3 detik.
+- Pembatas percobaan login disimpan di memori tiap instans, sehingga perlindungan brute-force lebih lemah dibanding satu server. Cukup untuk demo kelas; untuk pemakaian luas, pindahkan penghitung kegagalan ke tabel Supabase.
 
 > Jangan pernah menempelkan secret key ke chat, kode, atau GitHub. Isi hanya di dashboard layanan atau di file `.env` lokal (sudah diabaikan oleh `.gitignore`).
 

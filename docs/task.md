@@ -39,7 +39,7 @@ Pembaruan terakhir: 13 November 2026
 
 ## Tahap 9 — Deployment ⬜
 - ✅ Akun Vercel, Render, GitHub
-- ⬜ Deploy backend ke Render, frontend ke Vercel, uji ujung-ke-ujung (M21)
+- ⬜ Deploy backend ke Vercel (Render meminta kartu), frontend ke Vercel, uji ujung-ke-ujung (M21)
 
 ## Tahap 10 — GitHub & presentasi 🟡
 - ✅ Repositori git + dipublikasikan ke GitHub
