@@ -24,7 +24,7 @@ const noHScroll = () => page.evaluate(() => document.documentElement.scrollWidth
 // --- halaman awal
 await page.goto(BASE);
 await page.getByRole('heading', { name: 'Belajar Kubus dan Balok' }).waitFor();
-ok('H1 Halaman awal: logo, karakter siswa, tombol Mulai Belajar', await page.locator('svg.student').isVisible() && await page.getByRole('link', { name: 'Mulai Belajar' }).isVisible());
+ok('H1 Halaman awal: logo, Bu Sari, tombol Mulai Belajar', await page.locator('.splash-stage [data-character="teacher"]').isVisible() && (await page.locator('[data-character="student"]').count()) === 0 && await page.getByRole('link', { name: 'Mulai Belajar' }).isVisible());
 ok('H2 Halaman awal tanpa scroll horizontal', await noHScroll());
 
 await page.getByRole('link', { name: 'Mulai Belajar' }).click();
@@ -109,7 +109,7 @@ await page.screenshot({ path: `${OUT}/v3-video.png`, fullPage: true });
 await page.goto(`${BASE}/karakter`);
 await page.locator('[data-character="teacher"]').first().waitFor();
 const poses = await page.locator('[data-character="teacher"]').evaluateAll((els) => [...new Set(els.map((e) => e.dataset.pose))]);
-ok('S1 Aset guru baru: 7 pose + siswa tersedia di galeri', poses.length === 7 && (await page.locator('svg[data-character="student"]').count()) === 3, `(${poses.join(',')})`);
+ok('S1 Galeri: 7 pose Bu Sari, tanpa karakter siswa', poses.length === 7 && (await page.locator('[data-character="student"]').count()) === 0, `(${poses.join(',')})`);
 await page.goto(`${BASE}/pengaturan`);
 ok('S1b Tidak ada sisa pilihan tampilan guru lama', (await page.getByRole('radio', { name: /Berkerudung/ }).count()) === 0);
 await page.getByRole('switch', { name: 'Kurangi animasi' }).click();

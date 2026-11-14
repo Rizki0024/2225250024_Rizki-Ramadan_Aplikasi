@@ -165,7 +165,7 @@ Atas permintaan pengembang, **seluruh kode/aset karakter lama dihapus** (`featur
 |---|---|
 | `parts.jsx` | Tangan berjari (terbuka, menunjuk, santai, jempol), lengan bersendi bahu–siku–pergelangan, mata ilustrasi (iris bergradasi, dua kilau, garis kelopak, bulu mata) |
 | `Teacher.jsx` | Bu Sari setengah badan: wajah oval, leher tersambung, rambut cokelat panjang bergelombang (lapisan belakang, poni menyamping, helai di depan bahu), blazer cokelat muda berkerah + kemeja putih. 6 ekspresi × 7 pose, `facing="left"` untuk dicerminkan |
-| `Student.jsx` | Siswa laki-laki: rambut berjambul, kemeja putih berkerah, dasi biru, tali ransel; pose jempol/melambai/diam |
+| ~~`Student.jsx`~~ | Dihapus (15 Nov 2026) atas permintaan: hanya Bu Sari yang ditampilkan. Halaman awal & laci menu memakai Bu Sari; avatar profil memakai huruf awal nama siswa |
 | `characters.css` | Napas, kedip, mulut berbicara, lambaian, gerak tangan, ayunan rambut; dimatikan oleh "kurangi animasi" |
 
 Galeri semua pose & ekspresi: rute `/karakter` (untuk pemeriksaan visual dan presentasi).

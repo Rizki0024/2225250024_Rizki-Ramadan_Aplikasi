@@ -246,3 +246,6 @@ body {
 .profile-card .avatar-xl svg { width: 168px; margin-top: -4px; }
 .slide-stage { grid-template-columns: 132px 1fr; }
 @media (min-width: 760px) { .slide-stage { grid-template-columns: 230px 1fr; } }
+
+/* Avatar profil: huruf awal nama siswa (tanpa karakter siswa) */
+.profile-card .avatar-initial { align-items: center; font-family: var(--font-display, inherit); font-weight: 800; font-size: 2.4rem; color: var(--blue-900, #1e3a8a); }

@@ -3,7 +3,9 @@ from __future__ import annotations
 
 import copy
 import json
+import os
 import threading
+import time
 import uuid
 from datetime import datetime, timezone
 from pathlib import Path
@@ -24,6 +26,7 @@ class LocalRepository(Repository):
     def __init__(self, data_dir: Path) -> None:
         self.path = Path(data_dir) / "db.json"
         self._lock = threading.Lock()
+        self._save_lock = threading.Lock()
         self.path.parent.mkdir(parents=True, exist_ok=True)
         if self.path.exists():
             self._db = json.loads(self.path.read_text(encoding="utf-8"))
@@ -38,9 +41,21 @@ class LocalRepository(Repository):
             self._save()
 
     def _save(self) -> None:
-        tmp = self.path.with_suffix(".tmp")
-        tmp.write_text(json.dumps(self._db, ensure_ascii=False, indent=1), encoding="utf-8")
-        tmp.replace(self.path)
+        # Satu penulis pada satu waktu; file sementara unik; coba ulang bila Windows sesaat mengunci db.json
+        # (antivirus/pengindeks) agar penyimpanan tidak gagal dengan PermissionError.
+        with self._save_lock:
+            data = json.dumps(self._db, ensure_ascii=False, indent=1)
+            tmp = self.path.with_name(f"db.{os.getpid()}.{threading.get_ident()}.tmp")
+            tmp.write_text(data, encoding="utf-8")
+            for attempt in range(10):
+                try:
+                    tmp.replace(self.path)
+                    return
+                except PermissionError:
+                    if attempt == 9:
+                        tmp.unlink(missing_ok=True)
+                        raise
+                    time.sleep(0.05 * (attempt + 1))
 
     # --- siswa ---
     def get_student_by_code(self, code):

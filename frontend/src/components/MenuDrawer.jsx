@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { AnimatePresence, motion } from 'motion/react';
 import Icon from './Icon.jsx';
-import Student from '../features/characters/Student.jsx';
+import Teacher from '../features/characters/BuSari.jsx';
 
 export const MENU = [
   { to: '/materi', icon: 'book', label: 'Materi', bg: '#dbeafe' },
@@ -35,7 +35,7 @@ export default function MenuDrawer({ open, onClose }) {
               <Link to="/pengaturan" className="icon-btn" onClick={onClose} aria-label="Pengaturan"><Icon name="gear" /></Link>
             </div>
             <div className="row" style={{ flexWrap: 'nowrap', alignItems: 'flex-end' }}>
-              <Student size={96} />
+              <Teacher size={96} pose="wave" expression="happy" title="Bu Sari" />
               <h2 className="logo-title" style={{ textAlign: 'left' }}><span className="l1">Belajar</span>{" "}<span className="l2">Kubus <small>dan</small> Balok</span></h2>
             </div>
             <nav className="drawer-list" aria-label="Daftar menu">

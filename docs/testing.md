@@ -178,3 +178,19 @@ Aset: 25 gambar dari pengembang (6 pose; varian mata/mulut dibuat dengan inpaint
 Perubahan uji: pemilih `svg.teacher` diganti `[data-character="teacher"]` (berlaku untuk rig raster & SVG cadangan); v2 B4 memeriksa `.c-body` atau `.rig-body`.
 Pemeriksaan visual: galeri `/karakter`, kelas desktop, beranda HP; wajah saat kedip, kata "balok" (mulut lebar), "kubus" (bulat), "sisi" (terbuka), ekspresi bangga. Ditemukan & diperbaiki: bercak terang di rambut dekat mata kanan saat varian mata tampil (AI sedikit mengubah helai rambut; kotak + mask elips ikut menempelkannya) → diganti topeng per piksel.
 Belum diuji: sinkron bibir dengan suara id-ID sungguhan dan performa di HP Android fisik.
+
+## 9. Karakter siswa dihapus (15 November 2026)
+Atas permintaan pengembang hanya Bu Sari yang ditampilkan: `features/characters/Student.jsx` dihapus; halaman awal & laci menu memakai Bu Sari (pose melambai); avatar profil memakai huruf awal nama siswa; bagian "Siswa" di galeri dihapus.
+
+| Lapisan | Hasil |
+|---|---|
+| pytest | **72/72** (+1 `test_local_repository.py`) |
+| Vitest | **56/56** |
+| Build | berhasil |
+| E2E fitur lama (data bersih) | **36/36** |
+| E2E guru virtual (v2) | **33/33** |
+| E2E v3 | **33/33** (H1 kini: Bu Sari di halaman awal & tidak ada karakter siswa; S1: 7 pose Bu Sari, 0 karakter siswa) |
+| E2E rig | **10/10** |
+
+Ditemukan saat regresi & diperbaiki: penyimpanan lokal JSON (hanya mode pengembangan/E2E, bukan Supabase) sesekali gagal `PermissionError: Access is denied` saat mengganti `db.json` di Windows → evaluasi gagal dikirim (500). Perbaikan: kunci penulisan, file sementara unik, coba ulang. Tes baru gagal pada kode lama dan lulus pada kode baru.
+Catatan: satu run legacy sempat berhenti saat Playwright mengambil *screenshot* halaman penuh (timeout alat uji, bukan fungsi aplikasi); run ulang dengan data bersih lulus 36/36.

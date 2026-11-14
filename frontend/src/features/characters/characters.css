@@ -1,6 +1,6 @@
 /* Animasi karakter v3 — hanya transform/opacity agar ringan di HP. */
-.teacher, .student { overflow: visible; display: block; }
-.teacher .c-body, .student .c-body { animation: c-breathe 3.4s ease-in-out infinite; transform-origin: 130px 300px; }
+.teacher { overflow: visible; display: block; }
+.teacher .c-body { animation: c-breathe 3.4s ease-in-out infinite; transform-origin: 130px 300px; }
 .c-arm, .c-fore, .c-head, .c-head-back { transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1); }
 .c-eyes { animation: c-blink 4.4s infinite; transform-box: fill-box; transform-origin: center; }
 .c-mouth-talk { animation: c-talk 0.22s ease-in-out infinite alternate; transform-box: fill-box; transform-origin: center; }
@@ -23,6 +23,6 @@
 @keyframes c-pulse { 0%, 100% { opacity: 0.35; } 50% { opacity: 1; } }
 
 @media (prefers-reduced-motion: reduce) {
-  .teacher, .teacher *, .student, .student * { animation: none !important; transition: none !important; }
+  .teacher, .teacher * { animation: none !important; transition: none !important; }
 }
-.reduce-motion .teacher, .reduce-motion .teacher *, .reduce-motion .student, .reduce-motion .student * { animation: none !important; transition: none !important; }
+.reduce-motion .teacher, .reduce-motion .teacher * { animation: none !important; transition: none !important; }
