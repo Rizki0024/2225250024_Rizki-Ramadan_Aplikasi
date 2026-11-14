@@ -1,37 +1,92 @@
-import { Link } from 'react-router-dom';
-import Page from '../components/Layout.jsx';
+import { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import Page, { initials } from '../components/Layout.jsx';
 import Icon from '../components/Icon.jsx';
+import { AnimatedBar, CardLink, Stagger, StaggerItem } from '../components/motion.jsx';
 import { useAuth } from '../hooks/useAuth.jsx';
+import { api } from '../services/api.js';
+import { summarize } from '../features/progress/progress.js';
+import TeacherAvatar from '../features/teacher/TeacherAvatar.jsx';
 
-const MENU = [
-  { to: '/materi', icon: 'book', title: 'Materi', desc: 'Konsep & contoh soal', bg: '#dbeafe' },
-  { to: '/visualisasi', icon: 'cube', title: 'Visualisasi 3D', desc: 'Putar & buka jaring-jaring', bg: '#fce7f3' },
-  { to: '/latihan', icon: 'pencil', title: 'Latihan', desc: '4 level, ada bintang', bg: '#dcfce7' },
-  { to: '/evaluasi', icon: 'clipboard', title: 'Evaluasi', desc: '10 soal · 30 menit', bg: '#ede9fe' },
-  { to: '/hasil', icon: 'chart', title: 'Hasil Belajar', desc: 'Nilai & riwayat', bg: '#fef3c7' },
-  { to: '/petunjuk', icon: 'help', title: 'Petunjuk', desc: 'Cara memakai aplikasi', bg: '#e0f2fe' },
+const MORE = [
+  { to: '/visualisasi', icon: 'cube', title: 'Visualisasi 3D', desc: 'Putar & buka jaring-jaring', bg: 'bg-pink' },
+  { to: '/hasil', icon: 'chart', title: 'Hasil Belajar', desc: 'Nilai & riwayat', bg: 'bg-yellow' },
+  { to: '/petunjuk', icon: 'help', title: 'Petunjuk', desc: 'Cara memakai aplikasi', bg: 'bg-blue' },
 ];
 
 export default function Home() {
-  const { student } = useAuth();
+  const { student, logout } = useAuth();
+  const navigate = useNavigate();
+  const [attempts, setAttempts] = useState(null);
+
+  useEffect(() => {
+    api.attempts().then(setAttempts).catch(() => setAttempts([]));
+  }, []);
+
+  const p = summarize(student.code, attempts);
+
   return (
-    <Page title="Beranda" back={null}>
-      <div>
-        <h1 style={{ marginBottom: 4 }}>Halo, {student?.nickname}!</h1>
-        <p className="muted" style={{ margin: 0 }}>Kode: {student?.code}{student?.class_name ? ` · Kelas ${student.class_name}` : ''}</p>
+    <Page title="Beranda" back={null} header={false}>
+      <div className="greet" style={{ paddingTop: 8 }}>
+        <span className="avatar lg" aria-hidden="true">{initials(student.nickname)}</span>
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <h1>Halo, {student.nickname}!</h1>
+          <span className="muted small">Kode {student.code}{student.class_name ? ` · Kelas ${student.class_name}` : ''}</span>
+        </div>
+        <button type="button" className="icon-btn" aria-label="Keluar" title="Keluar" onClick={() => { logout(); navigate('/masuk'); }}>
+          <Icon name="logout" size={20} />
+        </button>
       </div>
-      <div className="card soft small">
-        Urutan belajar yang disarankan: <strong>Materi → Visualisasi → Latihan → Evaluasi</strong>.
-      </div>
-      <nav className="menu-grid" aria-label="Menu utama">
-        {MENU.map((m) => (
-          <Link key={m.to} to={m.to} className="menu-card">
-            <span className="menu-icon" style={{ background: m.bg }}><Icon name={m.icon} size={26} /></span>
-            <strong>{m.title}</strong>
-            <span>{m.desc}</span>
-          </Link>
-        ))}
-      </nav>
+
+      <Stagger className="stack">
+        <StaggerItem className="hero">
+          <div>
+            <h2>Belajar Bersama <span className="highlight">Guru</span></h2>
+            <p>Bu Sari menjelaskan langkah demi langkah. Kamu bisa menyela dan bertanya kapan saja.</p>
+            <Link to="/kelas" className="btn dark small">Mulai belajar <Icon name="arrow" size={18} /></Link>
+          </div>
+          <div className="hero-figure"><TeacherAvatar size={170} expression="happy" pose="wave" /></div>
+        </StaggerItem>
+
+        <StaggerItem className="card progress-card stack">
+          <div className="row between">
+            <strong>Progres belajar</strong>
+            <span className="pct">{p.percent}%</span>
+          </div>
+          <AnimatedBar value={p.percent} className="progress-fat" label="Progres belajar" />
+          <span className="small muted">Dihitung dari materi, kelas guru, bintang latihan, dan nilai evaluasi.</span>
+        </StaggerItem>
+
+        <StaggerItem className="section-head"><h2>Aktivitasmu</h2></StaggerItem>
+        <Stagger className="activity-grid">
+          <CardLink to="/materi" className="activity-card bg-blue">
+            <span className="thumb"><Icon name="book" size={30} /></span>
+            <span><span className="label">Materi</span><br /><span className="big">{p.read}</span><span className="muted small"> / 4 dibuka</span></span>
+            <span className="go" aria-hidden="true"><Icon name="arrow" size={20} /></span>
+          </CardLink>
+          <CardLink to="/latihan" className="activity-card bg-mint">
+            <span className="thumb"><Icon name="pencil" size={30} /></span>
+            <span><span className="label">Latihan</span><br /><span className="big">{p.totalStars}</span><span className="muted small"> / {p.maxStars} bintang</span></span>
+            <span className="go" aria-hidden="true"><Icon name="arrow" size={20} /></span>
+          </CardLink>
+          <CardLink to="/evaluasi" className="activity-card bg-lilac">
+            <span className="thumb"><Icon name="clipboard" size={30} /></span>
+            <span><span className="label">Evaluasi</span><br /><span className="big">{p.bestEval === null ? '–' : Math.round(p.bestEval)}</span><span className="muted small"> nilai terbaik</span></span>
+            <span className="go" aria-hidden="true"><Icon name="arrow" size={20} /></span>
+          </CardLink>
+        </Stagger>
+
+        <StaggerItem className="section-head"><h2>Menu lainnya</h2></StaggerItem>
+        <Stagger as="nav" className="menu-grid three" aria-label="Menu lainnya">
+          {MORE.map((m) => (
+            <CardLink key={m.to} to={m.to} className="menu-card">
+              <span className={`menu-icon ${m.bg}`}><Icon name={m.icon} size={26} /></span>
+              <strong>{m.title}</strong>
+              <span>{m.desc}</span>
+            </CardLink>
+          ))}
+        </Stagger>
+      </Stagger>
     </Page>
   );
 }

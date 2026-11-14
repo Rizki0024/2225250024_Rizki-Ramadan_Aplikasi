@@ -20,7 +20,7 @@ venv/
 *.egg-info/
 
 # Data mode lokal backend
-backend/.localdata/
+backend/.localdata*/
 
 # Editor & OS
 .vscode/*

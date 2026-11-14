@@ -12,11 +12,23 @@ const PATHS = {
   cross: <path d="M6 6l12 12M18 6 6 18" />,
   clock: <><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2" /></>,
   home: <><path d="M3 11 12 4l9 7" /><path d="M5 10v10h14V10" /></>,
+  teacher: <><circle cx="9" cy="7" r="3" /><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6" /><path d="M14 4h7v7h-4" /><path d="M16 8l-3 3" /></>,
+  arrow: <path d="M7 17 17 7M9 7h8v8" />,
+  play: <path d="M7 5v14l12-7z" />,
+  pause: <><path d="M8 5v14M16 5v14" /></>,
+  replay: <><path d="M4 12a8 8 0 1 0 2.3-5.7" /><path d="M4 4v4h4" /></>,
+  prev: <><path d="M18 6 10 12l8 6z" /><path d="M6 6v12" /></>,
+  next: <><path d="M6 6l8 6-8 6z" /><path d="M18 6v12" /></>,
+  mic: <><rect x="9" y="3" width="6" height="11" rx="3" /><path d="M5 11a7 7 0 0 0 14 0M12 18v3" /></>,
+  micOff: <><path d="M15 10V6a3 3 0 0 0-5.7-1.3M9 9v2a3 3 0 0 0 4.6 2.5" /><path d="M5 11a7 7 0 0 0 11 5.7M19 11a7 7 0 0 1-.6 2.8M12 18v3M3 3l18 18" /></>,
+  send: <><path d="M4 12 20 4l-6 16-3-7z" /><path d="M11 13l9-9" /></>,
+  volume: <><path d="M4 9v6h4l5 4V5L8 9z" /><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11" /></>,
+  sparkle: <path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z" />,
 };
 
-export default function Icon({ name, size = 24, title }) {
+export default function Icon({ name, size = 24, title, strokeWidth = 2 }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={strokeWidth}
       strokeLinecap="round" strokeLinejoin="round" aria-hidden={title ? undefined : true} role={title ? 'img' : undefined}>
       {title ? <title>{title}</title> : null}
       {PATHS[name]}

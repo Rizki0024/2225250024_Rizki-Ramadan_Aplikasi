@@ -3,6 +3,7 @@ import { Link, useLocation, useParams } from 'react-router-dom';
 import Page from '../components/Layout.jsx';
 import { ErrorBox, Loading, ProcessBadge, Stars } from '../components/common.jsx';
 import SolutionSteps from '../components/SolutionSteps.jsx';
+import { AnimatedStars, CardLink, Stagger } from '../components/motion.jsx';
 import { LEVELS } from '../features/practice/generators.js';
 import { useAuth } from '../hooks/useAuth.jsx';
 import { api } from '../services/api.js';
@@ -50,19 +51,19 @@ export function ResultList() {
         </div>
       ) : null}
       {data && data.length ? (
-        <div className="stack">
+        <Stagger className="stack">
           <h2>Riwayat</h2>
           {data.map((a) => (
-            <Link key={a.id} to={`/hasil/${a.id}`} className="list-link">
+            <CardLink key={a.id} to={`/hasil/${a.id}`} className="list-link">
               <span className="grow">
                 <strong>{attemptTitle(a)}</strong>
                 <span>{formatDateTime(a.submitted_at || a.started_at)} · {formatDuration(a.duration_seconds)}</span>
                 <span style={{ display: 'block' }}>Benar {a.correct_count} · Salah {a.wrong_count}{a.mode === 'latihan' ? ' · ' : ''}{a.mode === 'latihan' ? <Stars count={a.stars || 0} /> : null}</span>
               </span>
               <strong style={{ fontSize: '1.4rem', color: 'var(--blue-800)' }}>{Math.round(a.score)}</strong>
-            </Link>
+            </CardLink>
           ))}
-        </div>
+        </Stagger>
       ) : null}
     </Page>
   );
@@ -110,7 +111,7 @@ export function ResultDetail() {
           <div className="card stack center">
             {location.state?.fresh ? <div className="alert ok">Evaluasi berhasil dikumpulkan dan tersimpan.</div> : null}
             <h1>{data.mode === 'evaluasi' ? 'Nilai Evaluasi' : `Latihan: ${levelTitle(data.level)}`}</h1>
-            {data.mode === 'latihan' ? <Stars count={data.stars || 0} /> : null}
+            {data.mode === 'latihan' ? <div><AnimatedStars count={data.stars || 0} big /></div> : null}
             <div className="score-big">{Math.round(data.score)}</div>
             <div className="stats">
               <div><strong>{data.correct_count}</strong>benar</div>

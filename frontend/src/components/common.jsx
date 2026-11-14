@@ -13,9 +13,9 @@ export function OfflineBanner() {
 
 export function Loading({ text = 'Memuat…' }) {
   return (
-    <div className="center muted" role="status" style={{ padding: 32 }}>
-      <div className="spinner" />
-      <p style={{ marginTop: 12 }}>{text}</p>
+    <div className="loader" role="status">
+      <div className="loader-cube" aria-hidden="true" />
+      <p style={{ margin: 0 }}>{text}</p>
     </div>
   );
 }

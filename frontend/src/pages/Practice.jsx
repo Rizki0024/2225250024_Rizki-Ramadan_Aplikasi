@@ -2,6 +2,8 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import Page from '../components/Layout.jsx';
 import { ErrorBox, ProgressBar, Stars } from '../components/common.jsx';
+import { AnimatedStars, CardLink, FeedbackMotion, Stagger } from '../components/motion.jsx';
+import TeacherAvatar from '../features/teacher/TeacherAvatar.jsx';
 import SolutionSteps from '../components/SolutionSteps.jsx';
 import QuestionBody from '../features/quiz/QuestionBody.jsx';
 import { feedbackFor, generateLevel, LEVELS, QUESTIONS_PER_LEVEL, starsFor } from '../features/practice/generators.js';
@@ -35,15 +37,15 @@ export function PracticeMenu() {
   return (
     <Page title="Latihan">
       <p className="muted">Setiap level berisi {QUESTIONS_PER_LEVEL} soal dengan angka acak. Jawab, lalu lihat pembahasannya.</p>
-      <div className="stack">
+      <Stagger className="stack">
         {LEVELS.map((lv, i) => (
-          <Link key={lv.id} to={`/latihan/${lv.id}`} className="list-link">
-            <span className="num">{i + 1}</span>
+          <CardLink key={lv.id} to={`/latihan/${lv.id}`} className="list-link">
+            <span className={`num ${['bg-blue', 'bg-mint', 'bg-lilac', 'bg-peach'][i]}`}>{i + 1}</span>
             <span className="grow"><strong>{lv.title}</strong><span>{lv.subtitle}</span></span>
             <Stars count={best[lv.id] || 0} />
-          </Link>
+          </CardLink>
         ))}
-      </div>
+      </Stagger>
       <p className="small muted">★★★ = 5 benar · ★★ = 4 benar · ★ = 3 benar</p>
     </Page>
   );
@@ -138,8 +140,9 @@ function PracticeSession() {
     return (
       <Page title={`Latihan: ${levelInfo.title}`} back="/latihan">
         <div className="card stack center">
+          <div className="center"><TeacherAvatar size={120} expression={stars >= 2 ? 'proud' : 'happy'} pose={stars >= 2 ? 'cheer' : 'idle'} /></div>
           <h1>Latihan selesai!</h1>
-          <Stars count={stars} />
+          <div><AnimatedStars count={stars} big /></div>
           <div className="score-big">{Math.round((correctCount / questions.length) * 100)}</div>
           <div className="stats">
             <div><strong>{correctCount}</strong>benar</div>
@@ -188,10 +191,10 @@ function PracticeSession() {
           onEnter={() => (checked ? next() : check())} />
         {checked ? (
           <>
-            <div className={`feedback ${checked.correct ? 'ok' : 'bad'}`} role="status">
+            <FeedbackMotion correct={checked.correct} className={`feedback ${checked.correct ? 'ok' : 'bad'}`} role="status">
               {checked.correct ? '✔ Benar! Hebat.' : `✘ ${checked.message}`}
               {!checked.correct ? <div style={{ fontWeight: 600, marginTop: 4 }}>Jawaban benar: {q.correctLabel}</div> : null}
-            </div>
+            </FeedbackMotion>
             <details open={!checked.correct}>
               <summary>Pembahasan langkah demi langkah</summary>
               <SolutionSteps solution={q.solution} />
