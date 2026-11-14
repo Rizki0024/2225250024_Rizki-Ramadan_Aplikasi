@@ -44,3 +44,16 @@ export function summarize(code, attempts) {
   const percent = Math.round((parts.reduce((s, v) => s + v, 0) / parts.length) * 100);
   return { read, lessons, totalStars, maxStars: LEVEL_COUNT * 3, bestEval, percent, stars };
 }
+
+/** Poin bintang (gamifikasi ringan) dihitung dari progres; tidak memengaruhi nilai. */
+export function points(p) {
+  return p.read * 10 + p.lessons * 25 + p.totalStars * 10 + Math.round(p.bestEval ?? 0);
+}
+
+export const BADGES = [
+  { id: 'materi', name: 'Penjelajah Materi', desc: 'Membuka keempat materi', color: 'violet', earned: (p) => p.read >= 4 },
+  { id: 'guru', name: 'Murid Bu Sari', desc: 'Menyelesaikan semua kelas guru', color: 'gold', earned: (p) => p.lessons >= 4 },
+  { id: 'bintang', name: 'Bintang Latihan', desc: 'Mengumpulkan 6 bintang latihan', color: 'green', earned: (p) => p.totalStars >= 6 },
+  { id: 'evaluasi', name: 'Juara Evaluasi', desc: 'Nilai evaluasi minimal 80', color: 'pink', earned: (p) => (p.bestEval ?? 0) >= 80 },
+];
+

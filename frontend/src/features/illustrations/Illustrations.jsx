@@ -133,3 +133,105 @@ export function PencilArt({ size = 72 }) {
     </svg>
   );
 }
+
+export function GiftArt({ size = 72 }) {
+  const id = ids(useId());
+  return (
+    <svg viewBox="0 0 100 100" width={size} height={size} aria-hidden="true">
+      <defs><linearGradient id={id('b')} x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#c4b5fd" /><stop offset="1" stopColor="#7c3aed" /></linearGradient></defs>
+      <Shadow rx="28" />
+      <rect x="16" y="42" width="68" height="46" rx="6" fill={`url(#${id('b')})`} />
+      <rect x="10" y="30" width="80" height="16" rx="5" fill="#a78bfa" />
+      <rect x="44" y="30" width="12" height="58" fill="#f9a8d4" />
+      <path d="M50 30 C36 12 20 20 30 30Z M50 30 C64 12 80 20 70 30Z" fill="#f472b6" />
+      <rect x="22" y="48" width="6" height="34" rx="3" fill="#fff" opacity="0.3" />
+    </svg>
+  );
+}
+
+export function HourglassArt({ size = 72 }) {
+  const id = ids(useId());
+  return (
+    <svg viewBox="0 0 100 100" width={size} height={size} aria-hidden="true">
+      <defs><linearGradient id={id('w')} x1="0" x2="1"><stop offset="0" stopColor="#d6a26b" /><stop offset="1" stopColor="#8a5232" /></linearGradient></defs>
+      <Shadow rx="22" />
+      <rect x="24" y="10" width="52" height="8" rx="4" fill={`url(#${id('w')})`} />
+      <rect x="24" y="82" width="52" height="8" rx="4" fill={`url(#${id('w')})`} />
+      <path d="M32 18 H68 C68 38 54 44 54 50 C54 56 68 62 68 82 H32 C32 62 46 56 46 50 C46 44 32 38 32 18Z" fill="#e0f2fe" opacity="0.9" stroke="#93c5fd" strokeWidth="2" />
+      <path d="M38 26 H62 C60 36 52 40 50 46 C48 40 40 36 38 26Z" fill="#fbbf24" />
+      <path d="M36 80 C40 68 46 66 50 64 C54 66 60 68 64 80Z" fill="#fbbf24" />
+      <path d="M50 46 V64" stroke="#fbbf24" strokeWidth="2" />
+    </svg>
+  );
+}
+
+export function StarMascot({ size = 72 }) {
+  const id = ids(useId());
+  return (
+    <svg viewBox="0 0 100 100" width={size} height={size} aria-hidden="true">
+      <defs><radialGradient id={id('s')} cx="0.4" cy="0.3" r="0.8"><stop offset="0" stopColor="#fff3b0" /><stop offset="1" stopColor="#f59e0b" /></radialGradient></defs>
+      <Shadow rx="22" />
+      <path d="M50 6 l12 26 28 3 -21 19 6 28 -25 -14 -25 14 6 -28 -21 -19 28 -3z" fill={`url(#${id('s')})`} stroke="#d97706" strokeWidth="2" strokeLinejoin="round" />
+      <circle cx="42" cy="46" r="3.5" fill="#1b2440" /><circle cx="58" cy="46" r="3.5" fill="#1b2440" />
+      <path d="M42 56 Q50 64 58 56" stroke="#1b2440" strokeWidth="3" fill="none" strokeLinecap="round" />
+      <ellipse cx="36" cy="54" rx="4" ry="2.5" fill="#fb7185" opacity="0.5" /><ellipse cx="64" cy="54" rx="4" ry="2.5" fill="#fb7185" opacity="0.5" />
+    </svg>
+  );
+}
+
+const MEDAL_COLORS = { violet: ['#c4b5fd', '#7c3aed'], gold: ['#fde68a', '#d97706'], green: ['#86efac', '#15803d'], pink: ['#f9a8d4', '#be185d'], blue: ['#93c5fd', '#1d4ed8'] };
+
+export function MedalArt({ size = 64, color = 'gold', locked = false }) {
+  const id = ids(useId());
+  const [a, b] = locked ? ['#e5e7eb', '#9ca3af'] : MEDAL_COLORS[color] || MEDAL_COLORS.gold;
+  return (
+    <svg viewBox="0 0 100 100" width={size} height={size} aria-hidden="true">
+      <defs><radialGradient id={id('m')} cx="0.4" cy="0.3" r="0.8"><stop offset="0" stopColor={a} /><stop offset="1" stopColor={b} /></radialGradient></defs>
+      <path d="M50 6 L86 26 L86 66 L50 94 L14 66 L14 26Z" fill={`url(#${id('m')})`} stroke={b} strokeWidth="3" strokeLinejoin="round" />
+      <path d="M50 22 L74 36 L74 62 L50 80 L26 62 L26 36Z" fill="#fff" opacity="0.25" />
+      <path d="M50 34 l5 11 12 1 -9 8 3 12 -11 -6 -11 6 3 -12 -9 -8 12 -1z" fill={locked ? '#d1d5db' : '#fff7d6'} />
+      {locked ? <g><rect x="40" y="54" width="20" height="16" rx="3" fill="#6b7280" /><path d="M44 54 v-5 a6 6 0 0 1 12 0 v5" stroke="#6b7280" strokeWidth="3" fill="none" /></g> : null}
+    </svg>
+  );
+}
+
+export function GamepadArt({ size = 72 }) {
+  const id = ids(useId());
+  return (
+    <svg viewBox="0 0 100 100" width={size} height={size} aria-hidden="true">
+      <defs><linearGradient id={id('g')} x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#c4b5fd" /><stop offset="1" stopColor="#7c3aed" /></linearGradient></defs>
+      <Shadow rx="30" />
+      <path d="M22 34 H78 C92 34 96 58 92 72 C88 84 76 82 70 72 L64 64 H36 L30 72 C24 82 12 84 8 72 C4 58 8 34 22 34Z" fill={`url(#${id('g')})`} />
+      <path d="M26 48 v14 M19 55 h14" stroke="#fff" strokeWidth="5" strokeLinecap="round" />
+      <circle cx="70" cy="50" r="5" fill="#fde68a" /><circle cx="80" cy="58" r="5" fill="#86efac" />
+      <path d="M26 38 H74" stroke="#fff" strokeWidth="3" opacity="0.35" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+export function ChartArt({ size = 72 }) {
+  return (
+    <svg viewBox="0 0 100 100" width={size} height={size} aria-hidden="true">
+      <Shadow rx="30" />
+      <rect x="16" y="56" width="14" height="30" rx="3" fill="#fbbf24" />
+      <rect x="36" y="44" width="14" height="42" rx="3" fill="#22c55e" />
+      <rect x="56" y="30" width="14" height="56" rx="3" fill="#3b82f6" />
+      <rect x="76" y="40" width="14" height="46" rx="3" fill="#f472b6" />
+      <path d="M14 46 L38 30 L58 38 L86 14" stroke="#16a34a" strokeWidth="4" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M78 14 H86 V22" stroke="#16a34a" strokeWidth="4" fill="none" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+export function BulbArt({ size = 72 }) {
+  const id = ids(useId());
+  return (
+    <svg viewBox="0 0 100 100" width={size} height={size} aria-hidden="true">
+      <defs><radialGradient id={id('b')} cx="0.4" cy="0.35" r="0.7"><stop offset="0" stopColor="#fff7c2" /><stop offset="1" stopColor="#fbbf24" /></radialGradient></defs>
+      <g stroke="#fbbf24" strokeWidth="4" strokeLinecap="round"><path d="M50 4 v8" /><path d="M18 18 l6 6" /><path d="M82 18 l-6 6" /><path d="M6 46 h8" /><path d="M86 46 h8" /></g>
+      <path d="M50 18 C30 18 20 34 26 50 C30 60 38 64 38 74 H62 C62 64 70 60 74 50 C80 34 70 18 50 18Z" fill={`url(#${id('b')})`} />
+      <rect x="38" y="76" width="24" height="8" rx="3" fill="#94a3b8" /><rect x="40" y="86" width="20" height="6" rx="3" fill="#64748b" />
+      <ellipse cx="40" cy="36" rx="6" ry="9" fill="#fff" opacity="0.6" transform="rotate(25 40 36)" />
+    </svg>
+  );
+}

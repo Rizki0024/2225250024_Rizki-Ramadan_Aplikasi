@@ -27,7 +27,7 @@ class ThreeBoundary extends Component {
 }
 
 /** Kanvas 3D dengan cadangan 2D. */
-export function Viewer({ p, l, t, cube, unfolded, showValues, use3D = true }) {
+export function Viewer({ p, l, t, cube, unfolded, showValues, use3D = true, autoRotate = false }) {
   const fallback = unfolded
     ? <NetFigure p={p} l={l} t={t} cube={cube} showArea={showValues} />
     : <BoxFigure p={p} l={l} t={t} cube={cube} />;
@@ -35,7 +35,7 @@ export function Viewer({ p, l, t, cube, unfolded, showValues, use3D = true }) {
   return (
     <ThreeBoundary fallback={<div style={{ padding: 12 }}>{fallback}</div>}>
       <Suspense fallback={<div style={{ padding: 12 }}>{fallback}</div>}>
-        <ShapeViewer3D p={p} l={l} t={t} cube={cube} unfolded={unfolded} showValues={showValues} />
+        <ShapeViewer3D p={p} l={l} t={t} cube={cube} unfolded={unfolded} showValues={showValues} autoRotate={autoRotate} />
       </Suspense>
     </ThreeBoundary>
   );

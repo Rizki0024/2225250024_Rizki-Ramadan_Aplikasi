@@ -11,7 +11,8 @@ Proyek mata kuliah Algoritma dan Pemrograman — **Rizki Ramadan (2225250024)**,
 | Fitur | Keterangan |
 |---|---|
 | **Belajar Bersama Guru** (v2) | Guru virtual 2D "Bu Sari" menjelaskan di papan tulis digital per segmen; siswa menyela dengan **suara** atau ketikan; guru menjawab sesuai materi, memastikan pemahaman, lalu **melanjutkan dari posisi terakhir** |
-| Desain v2 | Biru + pastel, tab bar bawah, beranda dasbor dengan progres, animasi halus (menghormati "kurangi gerakan") |
+| Desain v3 | Mengikuti papan desain: latar gradasi biru, logo bertepi, beranda 6 menu + poin, laci menu, navigasi bawah, profil & lencana, pengaturan |
+| Video Pembelajaran | Guru + papan tulis dalam adegan kelas dengan kontrol video (garis waktu, CC, layar penuh), Ringkasan Materi, dan Ajukan Pertanyaan |
 | Login kode siswa + PIN | Tanpa email; PIN di-hash bcrypt; dikunci 5 menit setelah 5 kali salah |
 | Materi | Prasyarat → Kubus → Balok → Soal Cerita; contoh soal dengan pembahasan bertahap |
 | Visualisasi 3D | Kubus & balok dapat diputar, ukuran dapat diubah, jaring-jaring beranimasi; otomatis 2D jika perangkat tidak mendukung |
@@ -93,9 +94,9 @@ Untuk membuka dari HP di jaringan WiFi yang sama: jalankan backend dengan `--hos
 
 ```bash
 cd backend  && python -m pytest     # 71 tes
-cd frontend && npm test             # 42 tes
+cd frontend && npm test             # 49 tes
 cd frontend && npm run build
-# E2E (Playwright): lihat e2e/README.md — 36 cek fitur lama + 33 cek fitur guru virtual
+# E2E (Playwright): lihat e2e/README.md — 36 cek fitur lama + 33 cek guru virtual + 32 cek v3
 ```
 
 ## Konfigurasi Supabase
@@ -122,4 +123,4 @@ Langkah lengkap untuk Supabase, Render, dan Vercel: [docs/deployment.md](docs/de
 
 ## Dokumentasi
 
-[Guru virtual](docs/virtual-teacher.md) · [Suara](docs/realtime-voice.md) · [Animasi](docs/animation-guide.md) · [Audit v2](docs/redesign-audit.md) · [PRD](docs/prd.md) · [Arsitektur](docs/architecture.md) · [Desain](docs/design.md) · [API](docs/api.md) · [Database](docs/database.md) · [Konten](docs/content.md) · [Kisi-kisi soal](docs/question-blueprint.md) · [Pengujian](docs/testing.md) · [Deployment](docs/deployment.md) · [Tugas](docs/task.md) · [Panduan presentasi](docs/presentation.md)
+[Audit v3](docs/redesign-v3-audit.md) · [Guru virtual](docs/virtual-teacher.md) · [Suara](docs/realtime-voice.md) · [Animasi](docs/animation-guide.md) · [Audit v2](docs/redesign-audit.md) · [PRD](docs/prd.md) · [Arsitektur](docs/architecture.md) · [Desain](docs/design.md) · [API](docs/api.md) · [Database](docs/database.md) · [Konten](docs/content.md) · [Kisi-kisi soal](docs/question-blueprint.md) · [Pengujian](docs/testing.md) · [Deployment](docs/deployment.md) · [Tugas](docs/task.md) · [Panduan presentasi](docs/presentation.md)

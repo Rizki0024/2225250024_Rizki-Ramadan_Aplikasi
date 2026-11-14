@@ -28,19 +28,22 @@ function Item({ item }) {
   }
 }
 
-export default function Whiteboard({ board, revealed, active, segmentKey }) {
+export default function Whiteboard({ board, revealed, active, segmentKey, autoScroll = true, maxItems = null }) {
   const refs = useRef({});
   useEffect(() => {
-    if (active === null || active === undefined) return;
+    if (!autoScroll || active === null || active === undefined) return;
     refs.current[active]?.scrollIntoView?.({ block: 'nearest', behavior: 'smooth' });
-  }, [active]);
+  }, [active, autoScroll]);
 
   const figure = board.findIndex((b) => b.type === 'figure');
   return (
     <div className="whiteboard" aria-label="Papan tulis" aria-live="polite">
       <div className={`wb-grid${figure >= 0 ? ' has-figure' : ''}`}>
         <AnimatePresence initial={false}>
-          {board.slice(0, revealed).map((item, i) => (
+          {board.slice(0, revealed).map((item, i) => ({ item, i }))
+            // Mode video: judul + beberapa butir terakhir saja agar muat di papan kecil.
+            .filter(({ i }) => maxItems === null || i === 0 || i >= revealed - maxItems)
+            .map(({ item, i }) => (
             <motion.div key={`${segmentKey}-${i}`} ref={(el) => { refs.current[i] = el; }}
               className={`wb-item wb-${item.type}${i === active ? ' is-active' : ''}`}
               data-board-index={i}

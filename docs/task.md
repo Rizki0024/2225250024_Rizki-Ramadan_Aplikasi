@@ -60,3 +60,13 @@ Pembaruan terakhir: 13 November 2026
 - 🟡 Fase E: suara Web Speech API — diuji dengan mikrofon tiruan; ⬜ uji di HP fisik
 - ✅ Fase F: tutor curated + Claude opsional (pytest; Claude hanya dengan client tiruan)
 - 🟡 Fase G: integrasi & dokumentasi selesai; ⬜ push branch + deploy pratinjau; ⬜ gabung ke `main` setelah disetujui
+
+## Versi 3 — Redesign mengikuti papan desain (branch `redesign-v3`)
+- ✅ Audit + pemetaan panel ([redesign-v3-audit.md](redesign-v3-audit.md)); cadangan tag `v2.1-guru-virtual`
+- ✅ Halaman awal, beranda (6 menu, poin), laci menu, navigasi bawah
+- ✅ Materi per slide + guru; Video Pembelajaran (baru); Interaksi guru (foto + mikrofon besar)
+- ✅ Visualisasi (Putar/Jaring-jaring/Mode 2D/layar penuh), Latihan, Evaluasi, Hasil, Petunjuk
+- ✅ Profil & lencana (baru), Pengaturan (baru: suara, kecepatan, tampilan guru, 2D, kurangi animasi)
+- ✅ Karakter guru (2 tampilan) & siswa sebagai aset terpisah
+- ✅ Tes: pytest 71, vitest 49, E2E 36 + 33 + 32
+- ⬜ Uji HP Android fisik · ⬜ gabung ke `main` & deploy setelah disetujui

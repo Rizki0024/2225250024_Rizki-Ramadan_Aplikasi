@@ -42,12 +42,12 @@ await page.goto(`${BASE}/masuk`);
 await page.fill('#code', CODE); await page.fill('#pin', PIN);
 await page.getByRole('button', { name: 'Masuk' }).click();
 await page.getByRole('heading', { name: `Halo, ${NAME}!` }).waitFor();
-ok('B1 Beranda v2: kartu hero guru & progres', await page.getByRole('heading', { name: /Belajar Bersama/ }).isVisible() && await page.getByText('Progres belajar').isVisible());
+ok('B1 Beranda: menu Belajar Bersama Guru & progres', await page.getByRole('link', { name: /Belajar Bersama Guru/ }).first().isVisible() && await page.getByText('Progres Belajar').isVisible());
 ok('B2 Tab bar tampil di beranda', await page.locator('nav.tabbar').isVisible());
 ok('C1 Karakter guru tampil (SVG)', await page.locator('svg.teacher').first().isVisible());
 
 // --- daftar kelas
-await page.locator('nav.tabbar').getByRole('link', { name: 'Guru' }).click();
+await page.getByRole('link', { name: /Belajar Bersama Guru/ }).first().click();
 await page.getByRole('heading', { name: 'Halo, aku Bu Sari!' }).waitFor();
 await page.locator('.list-link').nth(3).waitFor();
 ok('D1 Daftar 4 pelajaran guru', (await page.locator('.list-link').count()) === 4);
@@ -174,8 +174,9 @@ await page.goto(`${BASE}/kelas`);
 await page.locator('.list-link', { hasText: 'Luas Permukaan Kubus' }).getByText(/Selesai/).waitFor();
 ok('D12 Status pelajaran "Selesai" di daftar', true);
 await page.goto(`${BASE}/beranda`);
-await page.getByText('Progres belajar').waitFor();
-const pct = Number((await page.locator('.progress-card .pct').innerText()).replace('%', ''));
+await page.getByText('Progres Belajar').waitFor();
+await page.waitForTimeout(800);
+const pct = Number(((await page.locator('.progress-hero').innerText()).match(/(\d+)%/) || [0, 0])[1]);
 ok('B3 Progres belajar di beranda bertambah', pct > 0, `(${pct}%)`);
 await ctx.close();
 

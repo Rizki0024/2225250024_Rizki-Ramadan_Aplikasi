@@ -5,6 +5,12 @@ import Icon from '../../components/Icon.jsx';
 import { api } from '../../services/api.js';
 import { listen, speak, stopSpeaking, sttSupported } from '../voice/speech.js';
 import { classifyUnderstanding } from './player.js';
+import TeacherAvatar from '../teacher/TeacherAvatar.jsx';
+
+function Face({ role }) {
+  if (role === 'student') return <span className="bubble-face me" aria-hidden="true"><Icon name="user" size={22} /></span>;
+  return <span className="bubble-face" aria-hidden="true"><TeacherAvatar size={66} expression="happy" /></span>;
+}
 
 const AUTO_SEND_MS = 1800;
 
@@ -149,13 +155,17 @@ export default function AskPanel({ lessonSlug, segment, muted, startListening, o
         {log.length === 0 ? <p className="muted small" style={{ margin: 0 }}>Contoh: "Kenapa dikali 6?", "Apa bedanya luas dan volume?", "Tolong ulangi".</p> : null}
         <AnimatePresence initial={false}>
           {log.map((m, i) => (
-            <motion.div key={i} className={`bubble ${m.role}`} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }}>
-              {m.text}
-              {m.followUp ? <div className="bubble-follow">{m.followUp}</div> : null}
+            <motion.div key={i} className={`bubble-row ${m.role}`} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }}>
+              {m.role === 'teacher' ? <Face role="teacher" /> : null}
+              <div className={`bubble ${m.role}`}>
+                {m.text}
+                {m.followUp ? <div className="bubble-follow">{m.followUp}</div> : null}
+              </div>
+              {m.role === 'student' ? <Face role="student" /> : null}
             </motion.div>
           ))}
         </AnimatePresence>
-        {phase === 'thinking' ? <div className="bubble teacher typing" aria-label="Bu Sari sedang berpikir"><span /><span /><span /></div> : null}
+        {phase === 'thinking' ? <div className="bubble-row teacher"><Face role="teacher" /><div className="bubble teacher typing" aria-label="Bu Sari sedang berpikir"><span /><span /><span /></div></div> : null}
         <div ref={logEnd} />
       </div>
 
@@ -186,12 +196,20 @@ export default function AskPanel({ lessonSlug, segment, muted, startListening, o
 
       {error ? <div className="alert error small" role="alert">{error}</div> : null}
 
+      <div className="mic-hero">
+        <div className="row">
+          <span className={`wave${phase === 'listening' ? ' live' : ''}`} aria-hidden="true"><i /><i /><i /><i /><i /></span>
+          <button type="button" className={`mic-big${phase === 'listening' ? ' on' : ''}`} aria-label={phase === 'listening' ? 'Matikan mikrofon' : 'Bicara dengan mikrofon'}
+            onClick={() => (phase === 'listening' ? stopMic() : startMic(phase === 'confirm'))} disabled={!sttSupported() || phase === 'thinking'}
+            title={sttSupported() ? 'Bicara' : 'Pengenalan suara tidak tersedia, silakan ketik'}>
+            <Icon name={phase === 'listening' ? 'micOff' : 'mic'} size={32} />
+          </button>
+          <span className={`wave${phase === 'listening' ? ' live' : ''}`} aria-hidden="true"><i /><i /><i /><i /><i /></span>
+        </div>
+        <span className="small muted">{!sttSupported() ? 'Mikrofon tidak tersedia — ketik pertanyaanmu' : phase === 'listening' ? 'Ketuk untuk berhenti' : 'Klik untuk berbicara'}</span>
+      </div>
+
       <form className="ask-input" onSubmit={(e) => { e.preventDefault(); send(); }}>
-        <button type="button" className={`mic-btn${phase === 'listening' ? ' on' : ''}`} aria-label={phase === 'listening' ? 'Matikan mikrofon' : 'Bicara dengan mikrofon'}
-          onClick={() => (phase === 'listening' ? stopMic() : startMic(phase === 'confirm'))} disabled={!sttSupported() || phase === 'thinking'}
-          title={sttSupported() ? 'Bicara' : 'Pengenalan suara tidak tersedia, silakan ketik'}>
-          <Icon name={phase === 'listening' ? 'micOff' : 'mic'} />
-        </button>
         <input className="input" value={text} maxLength={300} placeholder={phase === 'confirm' ? 'Ketik: sudah / belum' : 'Ketik pertanyaanmu…'}
           aria-label="Pertanyaan untuk Bu Sari" onChange={(e) => { setText(e.target.value); editing(); }} onFocus={editing}
           disabled={phase === 'thinking'} onKeyDown={() => { if (phase === 'confirm') setAwaitingReply(true); }} />

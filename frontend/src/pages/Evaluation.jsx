@@ -9,6 +9,7 @@ import { api } from '../services/api.js';
 import { parseNumber } from '../utils/number.js';
 import { load, remove, save } from '../utils/storage.js';
 import { useAuth } from '../hooks/useAuth.jsx';
+import { BulbArt, ClipboardArt, HourglassArt } from '../features/illustrations/Illustrations.jsx';
 
 // Jawaban evaluasi disimpan di perangkat agar tidak hilang saat koneksi putus / halaman dimuat ulang.
 // Kunci per siswa agar aman bila satu perangkat dipakai bergantian.
@@ -20,7 +21,7 @@ export function EvaluationIntro() {
   return (
     <Page title="Evaluasi">
       <div className="card stack">
-        <h1>Evaluasi Luas Permukaan</h1>
+        <div className="row" style={{ flexWrap: 'nowrap' }}><ClipboardArt size={64} /><h1 style={{ margin: 0 }}>Evaluasi Luas Permukaan</h1></div>
         <ul style={{ margin: 0, paddingLeft: 22 }}>
           <li><strong>10 soal</strong>, dari mudah ke sulit.</li>
           <li>Waktu <strong>30 menit</strong>. Saat waktu habis, jawaban otomatis dikumpulkan.</li>
@@ -29,7 +30,7 @@ export function EvaluationIntro() {
           <li>Nilai dan pembahasan muncul setelah dikumpulkan dan tersimpan di Hasil Belajar.</li>
         </ul>
         <div className="tip">Siapkan kertas coretan. Tulis yang diketahui dan ditanyakan sebelum menghitung.</div>
-        <Link to="/evaluasi/kerjakan" className="btn block">{pending ? 'Lanjutkan evaluasi' : 'Mulai evaluasi'}</Link>
+        <Link to="/evaluasi/kerjakan" className="btn yellow block">{pending ? 'Lanjutkan evaluasi' : 'Mulai evaluasi'}</Link>
       </div>
     </Page>
   );
@@ -138,22 +139,26 @@ export function EvaluationSession() {
     <Page title="Evaluasi" back="/beranda">
       {state.resumed ? <div className="alert info small">Melanjutkan evaluasi sebelumnya. Waktu tetap berjalan.</div> : null}
       <div className="stack">
-        <div className="q-head">
-          <strong>Soal {idx + 1} dari {questions.length}</strong>
+        <div className="panel-head">
+          <span className="pill"><BulbArt size={26} /> Evaluasi</span>
           <span className={`timer${low ? ' low' : ''}`} aria-live="off"><Icon name="clock" size={16} /> {formatClock(remaining)}</span>
         </div>
         <ProgressBar value={answeredCount} max={questions.length} label="Soal terjawab" />
       </div>
 
-      <div className="card stack" key={q.id}>
+      <div className="deco-wrap">
+      <span className="deco float-y slow" style={{ right: -6, bottom: 64 }} aria-hidden="true"><HourglassArt size={64} /></span>
+      <div className="q-card stack" key={q.id}>
+        <strong style={{ color: 'var(--blue-700)' }}>Soal {idx + 1} dari {questions.length}</strong>
         <QuestionBody question={q} value={answers[q.id] ?? ''} onChange={(v) => setAnswer(q.id, v)} error={numError}
           inputId={`ev-${q.id}`} onEnter={() => idx < questions.length - 1 && setIdx(idx + 1)} />
         <div className="btn-row">
           <button type="button" className="btn secondary" disabled={idx === 0} onClick={() => setIdx(idx - 1)}>Sebelumnya</button>
           {idx < questions.length - 1
-            ? <button type="button" className="btn" onClick={() => setIdx(idx + 1)}>Berikutnya</button>
-            : <button type="button" className="btn" onClick={() => setConfirm(true)} disabled={submitting}>Kumpulkan</button>}
+            ? <button type="button" className="btn" onClick={() => setIdx(idx + 1)}>Selanjutnya <Icon name="arrow" size={18} /></button>
+            : <button type="button" className="btn yellow" onClick={() => setConfirm(true)} disabled={submitting}>Kumpulkan</button>}
         </div>
+      </div>
       </div>
 
       <div className="card stack">

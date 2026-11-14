@@ -129,7 +129,11 @@ function ReviewItem({ item }) {
   );
 }
 
+const cheer = (score) => (score >= 75 ? 'Hebat' : score >= 50 ? 'Bagus' : 'Tetap semangat');
+const formatClockSec = (sec) => (sec === null || sec === undefined ? '–' : `${Math.floor(sec / 60)}:${String(Math.round(sec % 60)).padStart(2, '0')}`);
+
 export function ResultDetail() {
+  const { student } = useAuth();
   const { id } = useParams();
   const location = useLocation();
   const fresh = location.state?.result;
@@ -143,19 +147,27 @@ export function ResultDetail() {
       {!data && !error ? <Loading /> : null}
       {data ? (
         <>
-          <div className="card stack center">
-            {location.state?.fresh ? <div className="alert ok">Evaluasi berhasil dikumpulkan dan tersimpan.</div> : null}
-            <h1>{data.mode === 'evaluasi' ? 'Nilai Evaluasi' : `Latihan: ${levelTitle(data.level)}`}</h1>
-            {data.mode === 'latihan' ? <div><AnimatedStars count={data.stars || 0} big /></div> : null}
-            <div className="score-big">{Math.round(data.score)}</div>
-            <div className="stats">
-              <div><strong>{data.correct_count}</strong>benar</div>
-              <div><strong>{data.wrong_count}</strong>salah</div>
-              <div><strong>{formatDuration(data.duration_seconds).replace(' detik', ' dtk')}</strong>waktu</div>
+          {location.state?.fresh ? <div className="alert ok">Evaluasi berhasil dikumpulkan dan tersimpan.</div> : null}
+          <div className="card result-card">
+            <div className="result-hero">
+              <span className="float-y" style={{ display: 'inline-block' }}><TrophyArt size={96} /></span>
+              <h1 className="who">{cheer(data.score)}, {student.nickname}!</h1>
+              {data.mode === 'latihan' ? <div><span className="small muted">Latihan: {levelTitle(data.level)}</span><br /><AnimatedStars count={data.stars || 0} big /></div> : null}
+              <div style={{ fontWeight: 900 }}>Nilai Akhir</div>
+              <div className="score-big">{Math.round(data.score)}</div>
             </div>
-            {data.timed_out ? <div className="alert warn small">Dikumpulkan setelah batas waktu.</div> : null}
+            <div className="result-stats">
+              <div className="row"><span><span className="dot" style={{ background: '#22c55e' }} />Benar</span><strong>{data.correct_count}</strong></div>
+              <div className="row"><span><span className="dot" style={{ background: '#ef4444' }} />Salah</span><strong>{data.wrong_count}</strong></div>
+              <div className="row"><span><span className="dot" style={{ background: '#3b82f6' }} />Waktu</span><strong>{formatClockSec(data.duration_seconds)}</strong></div>
+              {data.timed_out ? <div className="alert warn small">Dikumpulkan setelah batas waktu.</div> : null}
+            </div>
+            <div className="btn-row" style={{ gridColumn: '1 / -1' }}>
+              <button type="button" className="btn" onClick={() => document.getElementById('pembahasan')?.scrollIntoView({ behavior: 'smooth' })}>Lihat Pembahasan</button>
+              <Link className="btn secondary" to="/beranda">Kembali ke Beranda</Link>
+            </div>
           </div>
-          <h2>Pembahasan</h2>
+          <h2 id="pembahasan">Pembahasan</h2>
           <div className="stack">
             {data.review.map((item) => <ReviewItem key={item.position} item={item} />)}
           </div>

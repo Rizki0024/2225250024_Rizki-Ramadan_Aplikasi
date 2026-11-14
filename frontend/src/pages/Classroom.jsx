@@ -13,6 +13,7 @@ import { boardState, progressPercent, reducer as playerReducer, restore, teacher
 import { hasIndonesianVoice, speak, stopSpeaking, sttSupported, ttsSupported, voicesReady } from '../features/voice/speech.js';
 import { doneLessons, markLessonDone } from '../features/progress/progress.js';
 import { useAuth } from '../hooks/useAuth.jsx';
+import { useSettings } from '../hooks/useSettings.jsx';
 import { api } from '../services/api.js';
 import { load, save } from '../utils/storage.js';
 
@@ -35,7 +36,7 @@ export function ClassroomList() {
   const done = new Set(doneLessons(student.code));
   return (
     <Page title="Belajar Bersama Guru">
-      <div className="hero" style={{ minHeight: 0 }}>
+      <div className="hero" style={{ minHeight: 0, background: '#fff' }}>
         <div>
           <h2>Halo, aku Bu Sari!</h2>
           <p>Aku menjelaskan materi di papan tulis. Kalau bingung, tekan <strong>mikrofon</strong> dan tanyakan saja, lalu kita lanjutkan dari bagian terakhir.</p>
@@ -51,11 +52,14 @@ export function ClassroomList() {
             const pos = load(posKey(student.code, x.slug));
             const status = done.has(x.slug) ? 'Selesai' : pos && (pos.seg || pos.line) ? 'Lanjutkan' : `${x.segment_count} bagian`;
             return (
-              <CardLink key={x.slug} to={`/kelas/${x.slug}`} className="list-link">
+              <div key={x.slug} className="lesson-row">
+              <CardLink to={`/kelas/${x.slug}`} className="list-link">
                 <span className={`num ${['bg-blue', 'bg-mint', 'bg-lilac', 'bg-peach'][i % 4]}`}>{x.order_no}</span>
                 <span className="grow"><strong>{x.title}</strong><span>{x.summary} · {status}</span></span>
                 {done.has(x.slug) ? <span className="check-badge"><Icon name="check" size={16} /></span> : <span aria-hidden="true"><Icon name="play" size={18} /></span>}
               </CardLink>
+              <Link to={`/video/${x.slug}`} className="video-btn" aria-label={`Video: ${x.title}`}><Icon name="video" size={24} />Video</Link>
+              </div>
             );
           })}
         </Stagger>
@@ -69,13 +73,13 @@ export function ClassroomRoute() {
   return <Classroom key={slug} slug={slug} />;
 }
 
-function CheckCard({ check, onContinue, muted }) {
+function CheckCard({ check, onContinue, muted, rate }) {
   const [picked, setPicked] = useState(null);
   const correct = picked === check.answer;
   useEffect(() => {
-    const s = speak(`Coba jawab dulu. ${check.question}`, { muted });
+    const s = speak(`Coba jawab dulu. ${check.question}`, { muted, rate });
     return () => s.cancel();
-  }, [check, muted]);
+  }, [check, muted, rate]);
   return (
     <motion.section className="card stack check-card" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} aria-label="Cek pemahaman">
       <span className="badge">Cek pemahaman</span>
@@ -89,7 +93,7 @@ function CheckCard({ check, onContinue, muted }) {
             <button key={opt} type="button" className={cls} disabled={picked !== null} onClick={() => {
               setPicked(i);
               stopSpeaking();
-              speak(i === check.answer ? `Benar! ${check.explain}` : `Belum tepat. ${check.explain}`, { muted });
+              speak(i === check.answer ? `Benar! ${check.explain}` : `Belum tepat. ${check.explain}`, { muted, rate });
             }}>
               <span className="letter">{String.fromCharCode(65 + i)}</span><span>{opt}</span>
             </button>
@@ -113,7 +117,8 @@ function Classroom({ slug }) {
   const [state, dispatch] = useReducer((s, a) => playerReducer(s, { ...a, lesson: a.lesson }), null, () => restore(null, null));
   const restored = useRef(false);
   const [speaking, setSpeaking] = useState(false);
-  const [muted, setMuted] = useState(() => load('kb_muted', false) === true);
+  const { settings, update } = useSettings();
+  const { muted, rate } = settings;
   const [voiceNote, setVoiceNote] = useState('');
   const [qaPhase, setQaPhase] = useState(null);
   const [qaMic, setQaMic] = useState(false);
@@ -149,17 +154,17 @@ function Classroom({ slug }) {
   const line = lesson && state ? lesson.segments[state.seg]?.script[state.line] : null;
   useEffect(() => {
     if (!lesson || state?.status !== 'playing' || !line) return undefined;
-    const s = speak(line.say, { muted, onStart: () => setSpeaking(true) });
+    const s = speak(line.say, { muted, rate, onStart: () => setSpeaking(true) });
     s.done.then((why) => {
       setSpeaking(false);
       if (why === 'end') dispatch({ type: 'LINE_DONE', lesson });
     });
     return () => { s.cancel(); setSpeaking(false); };
-  }, [lesson, state?.status, state?.seg, state?.line, line, muted]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [lesson, state?.status, state?.seg, state?.line, line, muted, rate]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (state?.status !== 'finished') return undefined;
-    const s = speak('Hebat! Kamu sudah menyelesaikan pelajaran ini.', { muted });
+    const s = speak('Hebat! Kamu sudah menyelesaikan pelajaran ini.', { muted, rate });
     return () => s.cancel();
   }, [state?.status, muted]);
 
@@ -223,7 +228,7 @@ function Classroom({ slug }) {
       </div>
 
       {state.status === 'check' && segment.check ? (
-        <CheckCard key={segment.id} check={segment.check} muted={muted} onContinue={() => act('CHECK_CONTINUE')} />
+        <CheckCard key={segment.id} check={segment.check} muted={muted} rate={rate} onContinue={() => act('CHECK_CONTINUE')} />
       ) : null}
 
       {state.status === 'qa' ? (
@@ -251,7 +256,7 @@ function Classroom({ slug }) {
             <Icon name={playing ? 'pause' : 'play'} size={28} />
           </button>
           <button type="button" className="ctrl" onClick={() => act('NEXT_SEGMENT')} aria-label="Bagian berikutnya" disabled={state.status === 'finished'}><Icon name="next" /></button>
-          <button type="button" className={`ctrl${muted ? ' off' : ''}`} onClick={() => { setMuted((m) => { save('kb_muted', !m); return !m; }); }}
+          <button type="button" className={`ctrl${muted ? ' off' : ''}`} onClick={() => update({ muted: !muted })}
             aria-label={muted ? 'Nyalakan suara guru' : 'Matikan suara guru'} aria-pressed={muted}><Icon name="volume" /></button>
           <button type="button" className="ctrl ask" onClick={() => interrupt(sttSupported())} aria-label="Tanya Bu Sari">
             <Icon name={sttSupported() ? 'mic' : 'send'} size={24} /><span>Tanya</span>

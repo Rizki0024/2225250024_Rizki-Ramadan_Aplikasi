@@ -148,3 +148,12 @@ Grafik mingguan: satu seri (aktivitas latihan + evaluasi per hari), satu warna `
 
 Ilustrasi: `frontend/src/features/illustrations/Illustrations.jsx` (`BookArt`, `ClockArt`, `TrophyArt`, `CubeArt`, `ClipboardArt`, `PencilArt`). Bisa diganti dengan gambar berlisensi milik pengembang kapan saja.
 
+## 9. Desain v3 — mengikuti papan desain referensi (14 November 2026)
+Sumber visual: papan desain 14 panel dari pengembang (Halaman Awal, Beranda, Materi, Video, Interaksi Guru, Visualisasi 3D, Latihan, Evaluasi, Hasil, Petunjuk, Profil, Menu Utama). Gambar dipakai sebagai **panduan**, bukan latar; setiap panel dibangun dari komponen React.
+
+- **Latar**: gradasi biru (`#2f62f2 → #7cabff`) dengan cahaya pastel; konten di kartu putih radius 24 px. File gaya: `frontend/src/styles/v3.css` (dimuat setelah `global.css`).
+- **Logo**: "Belajar" putih + "Kubus dan Balok" kuning, bertepi biru tua (`.logo-title`).
+- **Tombol 3D**: biru (aksi utama), kuning (`.btn.yellow`, ajakan besar: Mulai Belajar, Ajukan Pertanyaan, Tonton video), putih (sekunder).
+- **Navigasi**: navigasi bawah putih (Beranda · Profil · Pengaturan) + laci menu berisi semua menu; disembunyikan di halaman fokus (materi, latihan, evaluasi, kelas, video).
+- **Karakter** (aset terpisah): `TeacherAvatar` dengan tampilan `rambut` (bawaan, sesuai referensi) dan `kerudung`; `StudentAvatar` untuk halaman awal, laci, dan profil.
+- **Ilustrasi** tambahan: hadiah, jam pasir, bintang maskot, lencana, stik permainan, grafik, lampu (`Illustrations.jsx`); `pickArt()` memilih ilustrasi sesuai konteks soal.

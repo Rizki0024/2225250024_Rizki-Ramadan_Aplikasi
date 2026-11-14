@@ -117,3 +117,27 @@ Lingkungan: branch `redesign-guru-virtual`, backend mode lokal (data bersih), Ch
 pytest **71/71**, vitest **42/42**, build berhasil, E2E fitur lama **36/36** (data bersih), E2E v2 **33/33**.
 Catatan: pada satu run pertama setelah perubahan kode, E2E lama sempat *timeout* (kemungkinan server dev Vite sedang mengompilasi modul baru). Run ulang pada data bersih lulus 36/36. Dicatat sebagai potensi uji *flaky*.
 
+## 5. Pengujian v3 — redesign mengikuti papan desain (14 November 2026)
+
+| Lapisan | Hasil |
+|---|---|
+| Backend pytest | **71/71** (backend tidak diubah) |
+| Frontend Vitest | **49/49** (+7: garis waktu video, aksi GOTO, poin & lencana) |
+| Build produksi | berhasil; bundel awal ±167 KB gzip |
+| E2E fitur lama | **36/36** (data bersih) |
+| E2E guru virtual (v2) | **33/33** |
+| E2E v3 (`e2e/v3.e2e.mjs`) | **32/32**: halaman awal, 6 menu, poin, navigasi bawah, laci menu (Escape), visualisasi (Putar, Jaring-jaring, Mode 2D), slide materi (Lanjut/Kembali/bacakan/Lihat semua), video (waktu berjalan, CC, Ringkasan Materi, Ajukan Pertanyaan, kembali), pengaturan (tampilan guru, kurangi animasi, tersimpan), profil (lencana + syarat), keluar |
+
+**Perubahan selektor pada skrip uji lama** (cakupan pemeriksaan tidak dikurangi):
+| Pemeriksaan | Sebelum | Sesudah | Alasan |
+|---|---|---|---|
+| Petunjuk | heading "Cara memakai aplikasi" | "Cara Menggunakan Aplikasi" | teks sesuai referensi |
+| Materi | langsung mencari rumus | klik "Lihat semua" dulu | materi kini per slide |
+| Visualisasi | balok tampil awal; tombol "Buka jaring-jaring", "2D/3D" | klik tab Balok; "Jaring-jaring"; "Mode 2D" | kontrol sesuai referensi |
+| Evaluasi | tombol "Berikutnya" | "Selanjutnya" | label sesuai referensi |
+| Hasil | heading "Nilai Evaluasi", `.stats` | teks "Nilai Akhir", `.result-stats` | kartu hasil baru |
+| Beranda (v2) | heading "Belajar Bersama", tab "Guru", `.progress-card` | tautan "Belajar Bersama Guru", `.progress-hero` | beranda grid 6 menu |
+
+**Masalah yang ditemukan & diperbaiki saat uji visual v3**: label 3D terlalu besar menutupi kubus; navigasi bawah menutupi tombol slide materi; judul logo terbaca "BelajarKubus" oleh pembaca layar; teks kelas guru kurang kontras di atas gradasi; baris pengaturan terlalu sempit; lencana belum bisa diketuk di HP.
+
+**Belum diuji**: HP Android fisik (suara, mikrofon, performa 3D) dan versi v3 di produksi.

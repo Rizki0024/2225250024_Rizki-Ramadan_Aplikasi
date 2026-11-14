@@ -44,6 +44,12 @@ export function reducer(state, action) {
       return { ...state, seg: Math.max(0, state.seg - 1), line: 0, status: 'playing', resume: null };
     case 'NEXT_SEGMENT':
       return advanceSegment({ ...state, resume: null }, lesson);
+    case 'GOTO': {
+      const seg = Math.min(Math.max(0, action.seg), lesson.segments.length - 1);
+      const line = Math.min(Math.max(0, action.line), lesson.segments[seg].script.length - 1);
+      const status = state.status === 'playing' ? 'playing' : 'paused';
+      return { ...state, seg, line, status, resume: null };
+    }
     case 'GOTO_SEGMENT':
       return { ...state, seg: Math.min(Math.max(0, action.seg), lesson.segments.length - 1), line: 0, status: 'playing', resume: null };
     case 'INTERRUPT':

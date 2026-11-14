@@ -44,7 +44,7 @@ ok('M15 Beranda tanpa scroll horizontal', await noHorizontalScroll(page));
 await page.screenshot({ path: `${OUT}/hp-03-beranda.png` });
 
 // Navigasi semua menu
-for (const [link, heading] of [['Petunjuk', 'Cara memakai aplikasi'], ['Hasil Belajar', 'Elang'], ['Evaluasi', 'Evaluasi Luas Permukaan']]) {
+for (const [link, heading] of [['Petunjuk', 'Cara Menggunakan Aplikasi'], ['Hasil Belajar', 'Elang'], ['Evaluasi', 'Evaluasi Luas Permukaan']]) {
   await page.goto(`${BASE}/beranda`);
   await page.getByRole('link', { name: new RegExp(link) }).first().click();
   await page.getByRole('heading', { name: heading }).first().waitFor();
@@ -56,6 +56,8 @@ await page.goto(`${BASE}/beranda`);
 await page.getByRole('link', { name: /Materi/ }).first().click();
 await page.getByRole('link', { name: /Luas Permukaan Kubus/ }).click();
 await page.getByRole('heading', { name: 'Luas Permukaan Kubus', level: 1 }).waitFor();
+// v3: materi tampil per slide; tombol "Lihat semua" menampilkan materi lengkap seperti v1/v2.
+await page.getByRole('button', { name: 'Lihat semua' }).click();
 await page.getByText('L = 6 × s × s').first().waitFor();
 await page.locator('canvas').first().waitFor({ timeout: 20000 });
 ok('M6/M7 Materi kubus + kanvas 3D dalam materi', true);
@@ -69,16 +71,16 @@ for (const p of parts) allParts = allParts && await ex.locator('dt', { hasText: 
 ok('F6 Contoh soal memuat 7 bagian', allParts);
 ok('M15 Materi tanpa scroll horizontal', await noHorizontalScroll(page));
 await page.screenshot({ path: `${OUT}/hp-04-materi-kubus.png`, fullPage: true });
-await page.goto(`${BASE}/materi/balok`);
-await page.getByText('Alas & tutup').first().waitFor();
-await page.goto(`${BASE}/materi/soal-cerita`);
-await page.getByText('Formulate – Employ – Interpret').waitFor();
-await page.goto(`${BASE}/materi/prasyarat`);
-await page.getByText('L = p × l').first().waitFor();
+for (const [slug, text] of [['balok', 'Alas & tutup'], ['soal-cerita', 'Formulate – Employ – Interpret'], ['prasyarat', 'L = p × l']]) {
+  await page.goto(`${BASE}/materi/${slug}`);
+  await page.getByRole('button', { name: 'Lihat semua' }).click();
+  await page.getByText(text).first().waitFor();
+}
 ok('M6 Keempat materi terbuka', true);
 
 // Visualisasi
 await page.goto(`${BASE}/visualisasi`);
+await page.getByRole('tab', { name: 'Balok' }).click(); // v3: Kubus menjadi pilihan awal
 await page.locator('.canvas-box canvas').waitFor({ timeout: 20000 });
 await page.waitForTimeout(800);
 ok('M7 Kanvas 3D balok tampil', await page.locator('.canvas-box canvas').isVisible());
@@ -92,18 +94,18 @@ await page.mouse.move(box.x + box.width / 2 + 120, box.y + box.height / 2 + 30, 
 await page.mouse.up();
 await page.locator('#dim-p').fill('10');
 ok('M7 Ubah ukuran → luas diperbarui', await page.getByText('L = 2 × (50 + 30 + 15) = 190 cm²').isVisible());
-await page.getByRole('button', { name: 'Buka jaring-jaring' }).click();
+await page.getByRole('button', { name: 'Jaring-jaring' }).click();
 await page.waitForTimeout(1600);
 await page.screenshot({ path: `${OUT}/hp-06-visual-jaring.png` });
 await page.getByRole('tab', { name: 'Kubus' }).click();
 ok('Kubus: 6 × luas sisi', await page.getByText('L = 6 × 16 = 96 cm²').isVisible());
 await page.waitForTimeout(1200);
 await page.screenshot({ path: `${OUT}/hp-07-visual-kubus-jaring.png` });
-await page.getByRole('button', { name: '2D' }).click();
+await page.getByRole('button', { name: 'Mode 2D' }).click();
 await page.locator('svg[aria-label*="Jaring-jaring kubus"]').waitFor();
 ok('M8 Tampilan 2D tersedia', true);
 await page.screenshot({ path: `${OUT}/hp-08-visual-2d.png` });
-await page.getByRole('button', { name: '3D' }).click();
+await page.getByRole('button', { name: 'Mode 2D' }).click(); // kembali ke 3D
 
 // Latihan
 await page.goto(`${BASE}/latihan/kubus`);
@@ -146,7 +148,7 @@ ok('F9b Timer tampil', /\d\d:\d\d/.test(await page.locator('.timer').innerText()
 for (let i = 0; i < 2; i += 1) {
   if (await page.locator('input[inputmode="decimal"]').count()) await page.locator('input[inputmode="decimal"]').fill('158');
   else await page.locator('.option').nth(1).click();
-  await page.getByRole('button', { name: 'Berikutnya' }).click();
+  await page.getByRole('button', { name: 'Selanjutnya' }).click();
 }
 await page.screenshot({ path: `${OUT}/hp-11-evaluasi.png`, fullPage: true });
 const t1 = await page.locator('.timer').innerText();
@@ -164,9 +166,9 @@ ok('M17 Offline: banner + pesan gagal kirim', await page.locator('.banner.offlin
 await page.screenshot({ path: `${OUT}/hp-12-offline.png`, fullPage: true });
 await ctx.setOffline(false);
 await page.getByRole('button', { name: 'Kirim ulang' }).click();
-await page.getByRole('heading', { name: 'Nilai Evaluasi' }).waitFor({ timeout: 15000 });
+await page.getByText('Nilai Akhir').waitFor({ timeout: 15000 });
 ok('M17 Kirim ulang berhasil setelah online', true);
-ok('M11 Benar/salah tampil', await page.locator('.stats').innerText().then((t) => /benar/.test(t) && /salah/.test(t)));
+ok('M11 Benar/salah tampil', await page.locator('.result-stats').innerText().then((t) => /Benar/.test(t) && /Salah/.test(t)));
 ok('M11 Pembahasan tersedia', (await page.locator('.review-item').count()) === 10);
 await page.screenshot({ path: `${OUT}/hp-13-hasil-evaluasi.png`, fullPage: true });
 
@@ -176,7 +178,7 @@ await page.getByRole('heading', { name: 'Riwayat' }).waitFor();
 const rows = await page.locator('.list-link').count();
 ok('M14 Riwayat memuat latihan & evaluasi', rows === 2, `(baris=${rows})`);
 await page.locator('.list-link', { hasText: 'Evaluasi' }).click();
-await page.getByRole('heading', { name: 'Nilai Evaluasi' }).waitFor();
+await page.getByText('Nilai Akhir').waitFor();
 ok('M14 Pembahasan evaluasi dapat dibuka ulang', (await page.locator('.review-item').count()) === 10);
 await page.screenshot({ path: `${OUT}/hp-14-riwayat-detail.png` });
 

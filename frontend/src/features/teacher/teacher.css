@@ -24,3 +24,10 @@
 @media (prefers-reduced-motion: reduce) {
   .teacher *, .teacher { animation: none !important; transition: none !important; }
 }
+.teacher .t-head-back { transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1); }
+.student { overflow: visible; display: block; }
+.student .t-body { animation: t-breathe 3.2s ease-in-out infinite; transform-origin: 100px 240px; }
+.student .t-eyes { animation: t-blink 4.6s infinite; transform-box: fill-box; transform-origin: center; }
+.student .t-arm-anim.wave { animation: t-gesture 1.6s ease-in-out infinite alternate; }
+.reduce-motion .teacher, .reduce-motion .teacher *, .reduce-motion .student, .reduce-motion .student * { animation: none !important; transition: none !important; }
+@media (prefers-reduced-motion: reduce) { .student, .student * { animation: none !important; } }

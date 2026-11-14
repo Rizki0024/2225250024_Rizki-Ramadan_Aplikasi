@@ -4,6 +4,8 @@ import Page from '../components/Layout.jsx';
 import { ErrorBox, ProgressBar, Stars } from '../components/common.jsx';
 import { AnimatedStars, CardLink, FeedbackMotion, Stagger } from '../components/motion.jsx';
 import TeacherAvatar from '../features/teacher/TeacherAvatar.jsx';
+import pickArt from '../features/illustrations/pickArt.jsx';
+import { StarMascot } from '../features/illustrations/Illustrations.jsx';
 import SolutionSteps from '../components/SolutionSteps.jsx';
 import QuestionBody from '../features/quiz/QuestionBody.jsx';
 import { feedbackFor, generateLevel, LEVELS, QUESTIONS_PER_LEVEL, starsFor } from '../features/practice/generators.js';
@@ -179,15 +181,17 @@ function PracticeSession() {
   return (
     <Page title={`Latihan: ${levelInfo.title}`} back="/latihan">
       <div className="stack">
-        <div className="q-head">
-          <strong>Soal {idx + 1} dari {questions.length}</strong>
-          <span className="muted small">Benar: {correctCount}</span>
+        <div className="panel-head">
+          <span className="pill">★ Level {LEVELS.findIndex((l) => l.id === level) + 1} · Soal {idx + 1} dari {questions.length}</span>
+          <Stars count={starsFor(correctCount, questions.length)} />
         </div>
         <ProgressBar value={records.length} max={questions.length} label="Progres latihan" />
       </div>
-      <div className="card stack" key={q.id}>
+      <div className="deco-wrap">
+      <span className="deco float-y" style={{ left: -10, top: -26 }} aria-hidden="true"><StarMascot size={56} /></span>
+      <div className="q-card stack" key={q.id}>
         <QuestionBody question={q} value={value} onChange={(v) => { setValue(v); setError(''); }}
-          locked={!!checked} correctId={q.type === 'mc' ? q.answer : undefined} error={error}
+          locked={!!checked} correctId={q.type === 'mc' ? q.answer : undefined} error={error} art={pickArt(q.prompt)}
           onEnter={() => (checked ? next() : check())} />
         {checked ? (
           <>
@@ -204,8 +208,9 @@ function PracticeSession() {
             </button>
           </>
         ) : (
-          <button type="button" className="btn block" onClick={check}>Periksa jawaban</button>
+          <button type="button" className="btn block" onClick={check}>Periksa Jawaban</button>
         )}
+      </div>
       </div>
     </Page>
   );

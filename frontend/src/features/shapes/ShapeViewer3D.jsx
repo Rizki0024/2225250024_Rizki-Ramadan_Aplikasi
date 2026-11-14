@@ -65,7 +65,7 @@ function Box({ p, l, t, unfolded, labels }) {
   const u = useRef(unfolded ? 1 : 0);
   const { invalidate } = useThree();
   const m = Math.max(p, l, t);
-  const kFold = 3.8 / m;
+  const kFold = 3.3 / m;
   const kNet = 6.4 / Math.max(p + 2 * t, 2 * l + 2 * t);
 
   useEffect(() => { invalidate(); }, [unfolded, p, l, t, invalidate]);
@@ -90,7 +90,7 @@ function Box({ p, l, t, unfolded, labels }) {
     outer.current.scale.setScalar(kFold + (kNet - kFold) * v);
   });
 
-  const o = 0.2 * m; // jarak label dari rusuk
+  const o = 0.18 * m; // jarak label dari rusuk
   return (
     <group ref={outer}>
       <group ref={inner}>
@@ -111,26 +111,26 @@ function Box({ p, l, t, unfolded, labels }) {
           <Face w={t} h={l} color={FACE_COLORS.c} position={[-t / 2, 0, 0]} />
         </group>
         <group>
-          <Label height={0.2 * m} visible={!unfolded} position={[0, -o * 0.4, l / 2 + o]}>{labels.p}</Label>
-          <Label height={0.2 * m} visible={!unfolded} position={[p / 2 + o, -o * 0.4, 0]}>{labels.l}</Label>
-          <Label height={0.2 * m} visible={!unfolded} position={[p / 2 + o * 0.7, t / 2, l / 2 + o * 0.7]}>{labels.t}</Label>
+          <Label height={0.13 * m} visible={!unfolded} position={[0, -o * 0.4, l / 2 + o]}>{labels.p}</Label>
+          <Label height={0.13 * m} visible={!unfolded} position={[p / 2 + o, -o * 0.4, 0]}>{labels.l}</Label>
+          <Label height={0.13 * m} visible={!unfolded} position={[p / 2 + o * 0.7, t / 2, l / 2 + o * 0.7]}>{labels.t}</Label>
         </group>
       </group>
     </group>
   );
 }
 
-export default function ShapeViewer3D({ p, l, t, cube = false, unfolded = false, showValues = false }) {
+export default function ShapeViewer3D({ p, l, t, cube = false, unfolded = false, showValues = false, autoRotate = false }) {
   const labels = cube
     ? { p: showValues ? `s = ${p}` : 's', l: showValues ? `s = ${l}` : 's', t: showValues ? `s = ${t}` : 's' }
     : { p: showValues ? `p = ${p}` : 'p', l: showValues ? `l = ${l}` : 'l', t: showValues ? `t = ${t}` : 't' };
   return (
-    <Canvas frameloop="demand" dpr={[1, 1.75]} camera={{ position: [4.6, 4.2, 6.4], fov: 45 }}
+    <Canvas frameloop={autoRotate ? 'always' : 'demand'} dpr={[1, 1.75]} camera={{ position: [4.6, 4.2, 6.4], fov: 45 }}
       gl={{ antialias: true, powerPreference: 'low-power' }}>
       <ambientLight intensity={1.6} />
       <directionalLight position={[5, 8, 6]} intensity={1.4} />
       <Box p={p} l={l} t={t} unfolded={unfolded} labels={labels} />
-      <OrbitControls makeDefault enablePan={false} minDistance={4} maxDistance={14} />
+      <OrbitControls makeDefault enablePan={false} minDistance={4} maxDistance={14} autoRotate={autoRotate} autoRotateSpeed={2.4} />
     </Canvas>
   );
 }

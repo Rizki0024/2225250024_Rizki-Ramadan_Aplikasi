@@ -10,14 +10,17 @@ import { ProcessBadge } from '../../components/common.jsx';
  *  correctId id opsi benar untuk diwarnai saat locked (latihan)
  *  error     pesan validasi input
  */
-export default function QuestionBody({ question, value, onChange, locked = false, correctId, error, inputId = 'jawaban', onEnter }) {
+export default function QuestionBody({ question, value, onChange, locked = false, correctId, error, inputId = 'jawaban', onEnter, art = null }) {
+  const grid = question.type === 'mc' && question.options.every((o) => o.label.length <= 22);
   return (
     <div className="stack">
       <div><ProcessBadge process={question.process} /></div>
-      <p style={{ fontSize: '1.08rem', fontWeight: 600 }}>{question.prompt}</p>
+      {art ? (
+        <div className="q-art-row"><span aria-hidden="true">{art}</span><p style={{ fontSize: '1.05rem', fontWeight: 700, margin: 0 }}>{question.prompt}</p></div>
+      ) : <p style={{ fontSize: '1.08rem', fontWeight: 600 }}>{question.prompt}</p>}
 
       {question.type === 'mc' ? (
-        <div className="options" role="radiogroup" aria-label="Pilihan jawaban">
+        <div className={`options${grid ? ' grid2' : ''}`} role="radiogroup" aria-label="Pilihan jawaban">
           {question.options.map((opt, i) => {
             let cls = 'option';
             if (locked && opt.id === correctId) cls += ' correct';
@@ -37,7 +40,7 @@ export default function QuestionBody({ question, value, onChange, locked = false
           <label htmlFor={inputId}>Jawabanmu</label>
           <div className="input-unit">
             <input id={inputId} className={`input${error ? ' invalid' : ''}`} type="text" inputMode="decimal"
-              autoComplete="off" placeholder="Tulis angka" value={value ?? ''} disabled={locked} maxLength={20}
+              autoComplete="off" placeholder={`Masukkan jawaban…${question.unit ? ` ${question.unit}` : ''}`} value={value ?? ''} disabled={locked} maxLength={20}
               aria-invalid={!!error} aria-describedby={error ? `${inputId}-err` : undefined}
               onChange={(e) => onChange(e.target.value)}
               onKeyDown={(e) => { if (e.key === 'Enter' && onEnter) onEnter(); }} />

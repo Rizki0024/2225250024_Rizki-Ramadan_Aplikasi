@@ -1,6 +1,8 @@
+import { useEffect } from 'react';
 import { BrowserRouter, Link, Route, Routes, useLocation } from 'react-router-dom';
 import { AnimatePresence, MotionConfig } from 'motion/react';
 import { AuthProvider } from './hooks/useAuth.jsx';
+import { SettingsProvider, useSettings } from './hooks/useSettings.jsx';
 import RequireAuth from './components/RequireAuth.jsx';
 import TabBar from './components/TabBar.jsx';
 import { OfflineBanner } from './components/common.jsx';
@@ -15,14 +17,17 @@ import { EvaluationIntro, EvaluationSession } from './pages/Evaluation.jsx';
 import { ResultDetail, ResultList } from './pages/Results.jsx';
 import Guide from './pages/Guide.jsx';
 import { ClassroomList, ClassroomRoute } from './pages/Classroom.jsx';
+import VideoLesson from './pages/VideoLesson.jsx';
+import Profile from './pages/Profile.jsx';
+import Settings from './pages/Settings.jsx';
 
 const guard = (el) => <RequireAuth>{el}</RequireAuth>;
 
 function NotFound() {
   return (
-    <PageMotion className="landing">
-      <h1>Halaman tidak ditemukan</h1>
-      <Link className="btn" to="/">Kembali ke awal</Link>
+    <PageMotion className="splash">
+      <h1 className="on-blue">Halaman tidak ditemukan</h1>
+      <Link className="btn yellow" to="/">Kembali ke awal</Link>
     </PageMotion>
   );
 }
@@ -35,8 +40,11 @@ function AnimatedRoutes() {
         <Route path="/" element={<Landing />} />
         <Route path="/masuk" element={<Login />} />
         <Route path="/beranda" element={guard(<Home />)} />
+        <Route path="/profil" element={guard(<Profile />)} />
+        <Route path="/pengaturan" element={guard(<Settings />)} />
         <Route path="/kelas" element={guard(<ClassroomList />)} />
         <Route path="/kelas/:slug" element={guard(<ClassroomRoute />)} />
+        <Route path="/video/:slug" element={guard(<VideoLesson />)} />
         <Route path="/materi" element={guard(<MaterialList />)} />
         <Route path="/materi/:slug" element={guard(<MaterialDetail />)} />
         <Route path="/visualisasi" element={guard(<Visualization />)} />
@@ -53,18 +61,30 @@ function AnimatedRoutes() {
   );
 }
 
+function Shell() {
+  const { settings } = useSettings();
+  useEffect(() => {
+    document.documentElement.classList.toggle('reduce-motion', !!settings.reduceMotion);
+  }, [settings.reduceMotion]);
+  return (
+    <MotionConfig reducedMotion={settings.reduceMotion ? 'always' : 'user'}>
+      <div className="app">
+        <OfflineBanner />
+        <AnimatedRoutes />
+        <TabBar />
+      </div>
+    </MotionConfig>
+  );
+}
+
 export default function App() {
   return (
     <BrowserRouter>
-      <MotionConfig reducedMotion="user">
+      <SettingsProvider>
         <AuthProvider>
-          <div className="app">
-            <OfflineBanner />
-            <AnimatedRoutes />
-            <TabBar />
-          </div>
+          <Shell />
         </AuthProvider>
-      </MotionConfig>
+      </SettingsProvider>
     </BrowserRouter>
   );
 }
