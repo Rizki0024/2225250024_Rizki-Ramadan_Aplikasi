@@ -112,3 +112,8 @@ Lingkungan: branch `redesign-guru-virtual`, backend mode lokal (data bersih), Ch
 | Mesin Claude dengan kunci asli | Tidak ada API key (berbayar); diuji dengan client tiruan termasuk kegagalan & penolakan |
 | Koneksi lambat sungguhan | Hanya offline & layanan gagal yang disimulasikan |
 | Versi v2 di produksi (Vercel + Supabase) | Branch belum di-push/deploy; menunggu persetujuan |
+
+### Regresi setelah desain v2.1 (14 November 2026)
+pytest **71/71**, vitest **42/42**, build berhasil, E2E fitur lama **36/36** (data bersih), E2E v2 **33/33**.
+Catatan: pada satu run pertama setelah perubahan kode, E2E lama sempat *timeout* (kemungkinan server dev Vite sedang mengompilasi modul baru). Run ulang pada data bersih lulus 36/36. Dicatat sebagai potensi uji *flaky*.
+

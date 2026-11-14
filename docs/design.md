@@ -132,3 +132,19 @@ Token baru di `global.css`: `--pastel-blue #dce8ff`, `--pastel-lilac #ebe5ff`, `
 - **Beranda**: sapaan + avatar inisial → kartu hero "Belajar Bersama Guru" → progres belajar → kartu aktivitas berwarna → menu lainnya.
 - **Kelas**: papan tulis (kiri) + Bu Sari dan gelembung subtitle (kanan) di laptop; di HP papan di atas dan Bu Sari di sampingnya dengan subtitle. Kontrol berupa bilah pil gelap; tombol **Tanya** berwarna merah muda agar mudah ditemukan.
 - Animasi: lihat [animation-guide.md](animation-guide.md).
+
+## 8. Desain v2.1 — mengikuti gambar referensi (14 November 2026)
+Keputusan pengembang: **warna utama tetap biru**, aksen ungu (`--violet-*`) dan stabilo kuning (`--hl-yellow`). Ilustrasi berupa **SVG bergaya kartun-3D buatan sendiri** (gradasi, kilau, bayangan); ilustrasi pada gambar referensi tidak disalin.
+
+| Elemen referensi | Implementasi |
+|---|---|
+| Layar sambutan dengan judul miring + stabilo, karakter besar, tombol geser | `Landing.jsx` (`.welcome`, `.swipe-btn`), ilustrasi kubus/buku/pensil melayang |
+| Kartu hero ungu dengan ilustrasi | Beranda: "Belajar Bersama Guru Virtual" + Bu Sari bersorak + piala |
+| Kartu aktivitas berilustrasi besar + angka besar + tombol panah | Materi (buku), Latihan (pensil), Evaluasi (papan klip) |
+| Tab bar hitam dengan ikon bulat | Tab aktif melebar menampilkan label |
+| "Learning Plan": kartu statistik, slider progres, grafik batang mingguan | Hasil Belajar → "Rencana belajar" (`WeekChart.jsx`) |
+
+Grafik mingguan: satu seri (aktivitas latihan + evaluasi per hari), satu warna `#2563eb` (kontras ≥ 3:1). Hari ini ditandai **label tebal + angka**, bukan warna berbeda, karena dua biru yang diuji gagal batas pembeda penglihatan normal (ΔE 13,9 < 15). Grafik dilengkapi tooltip sentuh/fokus dan tabel tersembunyi untuk pembaca layar.
+
+Ilustrasi: `frontend/src/features/illustrations/Illustrations.jsx` (`BookArt`, `ClockArt`, `TrophyArt`, `CubeArt`, `ClipboardArt`, `PencilArt`). Bisa diganti dengan gambar berlisensi milik pengembang kapan saja.
+

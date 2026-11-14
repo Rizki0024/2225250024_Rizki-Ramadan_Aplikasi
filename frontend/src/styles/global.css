@@ -433,3 +433,91 @@ details > summary { cursor: pointer; font-weight: 900; color: var(--blue-700); m
 .send-btn { flex: none; }
 .confirm-row { display: grid; gap: 8px; }
 @keyframes t-pulse { 0%, 100% { opacity: 0.35; } 50% { opacity: 1; } }
+
+/* =====================================================================
+   v2.1 — gaya mengikuti referensi: biru + aksen ungu/kuning, ilustrasi besar
+   ===================================================================== */
+:root {
+  --violet-600: #7c3aed;
+  --violet-500: #8b5cf6;
+  --violet-100: #ede9fe;
+  --hl-yellow: #fde68a;
+}
+.highlight { background: var(--hl-yellow); padding: 0 10px; border-radius: 10px; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+
+/* tab bar: ikon bulat; tab aktif melebar menampilkan label */
+.tabbar { background: #14182b; padding: 8px; gap: 6px; width: auto; max-width: calc(100% - 24px); }
+.tabbar a {
+  flex: none; width: 52px; height: 52px; min-height: 0; border-radius: 999px;
+  background: #262c45; color: #cfd6ef; flex-direction: row; gap: 6px; font-size: 0.82rem;
+  transition: width 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.tabbar a .tab-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; }
+.tabbar a.active { width: auto; padding: 0 16px; background: transparent; color: var(--blue-900); }
+.tabbar a.active .tab-label { position: static; width: auto; height: auto; clip: auto; overflow: visible; }
+.tabbar a .tab-bg { background: linear-gradient(135deg, #e0e9ff, #ede9fe); }
+.tabbar a.teacher-tab .tab-dot { top: 6px; right: 6px; }
+
+/* layar sambutan */
+.welcome {
+  position: relative; overflow: hidden; width: min(460px, 100%); min-height: min(720px, 92vh);
+  border-radius: 36px; padding: 26px 22px 22px; display: flex; flex-direction: column;
+  background: radial-gradient(500px 300px at 90% 10%, #e9e3ff 0%, transparent 60%), linear-gradient(170deg, #dbe6ff 0%, #e6deff 100%);
+  box-shadow: var(--shadow-lg); text-align: left;
+}
+.welcome-title {
+  align-self: flex-start; transform: rotate(-4deg); margin-top: 18px;
+  background: rgba(255, 255, 255, 0.55); border: 2px solid rgba(255, 255, 255, 0.9);
+  border-radius: 22px; padding: 14px 18px; box-shadow: var(--shadow);
+}
+.welcome-title h1 { font-size: 2.2rem; line-height: 1.12; margin: 0; color: var(--blue-900); }
+.welcome-art { position: relative; flex: 1; display: flex; align-items: flex-end; justify-content: center; min-height: 300px; }
+.welcome-art .float { position: absolute; }
+.welcome-sub { color: #35406a; font-weight: 700; margin: 6px 4px 14px; }
+.swipe-btn {
+  display: flex; align-items: center; gap: 12px; padding: 8px 18px 8px 8px; border-radius: 999px;
+  background: #14182b; color: #fff; text-decoration: none; font-weight: 900; font-size: 1.05rem; box-shadow: var(--shadow-lg);
+}
+.swipe-btn .knob { width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg, #e0e9ff, #ede9fe); display: flex; align-items: center; justify-content: center; color: var(--blue-900); }
+.swipe-btn .chev { margin-left: auto; letter-spacing: 2px; opacity: 0.7; }
+.float-y { animation: float-y 3.6s ease-in-out infinite; }
+.float-y.slow { animation-duration: 4.8s; }
+@keyframes float-y { 0%, 100% { transform: translateY(0) rotate(var(--r, 0deg)); } 50% { transform: translateY(-8px) rotate(var(--r, 0deg)); } }
+
+/* hero beranda */
+.hero { background: linear-gradient(135deg, #cddcff 0%, #ddd3ff 100%); border-radius: 28px; }
+.hero h2 { font-size: 1.6rem; line-height: 1.15; }
+.hero-figure { position: relative; }
+.hero-figure .trophy { position: absolute; left: -36px; top: 4px; }
+.greet-sub { font-size: 0.85rem; color: var(--muted); font-weight: 700; }
+
+/* kartu aktivitas gaya referensi */
+.activity-card { position: relative; grid-template-columns: auto 1fr; padding: 12px; border-radius: 24px; min-height: 120px; }
+.activity-card .thumb { width: 104px; height: 96px; border-radius: 18px; background: rgba(255, 255, 255, 0.65); }
+.activity-card .go { position: absolute; right: 10px; bottom: 10px; width: 46px; height: 46px; }
+.activity-card .label { font-size: 1.02rem; }
+.activity-card .big { font-size: 2rem; }
+@media (min-width: 640px) {
+  .activity-card { grid-template-columns: 1fr; padding: 14px 14px 64px; }
+  .activity-card .thumb { width: 100%; height: 110px; }
+}
+
+/* rencana belajar (Hasil Belajar) */
+.plan-tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.plan-tile { position: relative; border-radius: 22px; padding: 10px 10px 12px; min-height: 132px; display: flex; flex-direction: column; justify-content: space-between; }
+.plan-tile .tile-art { width: 46px; height: 46px; border-radius: 14px; background: rgba(255, 255, 255, 0.7); display: flex; align-items: center; justify-content: center; }
+.plan-tile .tile-go { position: absolute; top: 10px; right: 10px; color: var(--blue-900); }
+.plan-tile .tile-label { font-weight: 800; font-size: 0.82rem; line-height: 1.2; }
+.plan-tile .tile-num { font-size: 1.7rem; font-weight: 900; line-height: 1; color: var(--blue-900); }
+.plan-tile .tile-num small { font-size: 0.72rem; color: var(--muted); font-weight: 700; margin-left: 3px; }
+.slider-track { position: relative; height: 20px; border-radius: 999px; background: repeating-linear-gradient(90deg, #e5e9f5 0 6px, #eef1f9 6px 12px); }
+.slider-fill { position: absolute; inset: 0 auto 0 0; border-radius: 999px; background: linear-gradient(90deg, #fde68a, #c4b5fd 55%, #93c5fd); }
+.slider-thumb { position: absolute; top: 50%; width: 30px; height: 30px; margin: -15px 0 0 -15px; border-radius: 50%; background: #fff; box-shadow: 0 0 0 4px #c4b5fd, var(--shadow); }
+.week-chart { width: 100%; overflow: visible; }
+.week-chart .bar-hit { cursor: pointer; }
+.chart-tip { position: absolute; transform: translate(-50%, -110%); background: #14182b; color: #fff; font-size: 0.8rem; font-weight: 800; padding: 4px 10px; border-radius: 999px; pointer-events: none; white-space: nowrap; }
+@media (prefers-reduced-motion: reduce) { .float-y { animation: none; } }
+.plan-tile { color: var(--ink); text-decoration: none; }
+.welcome-title h1 { font-size: clamp(1.7rem, 7.6vw, 2.2rem); }
+.hero-figure .trophy { left: auto; right: -8px; top: -10px; }

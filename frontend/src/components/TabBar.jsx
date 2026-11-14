@@ -32,7 +32,7 @@ export default function TabBar() {
             <>
               {isActive ? <motion.span layoutId="tab-bg" className="tab-bg" transition={{ type: 'spring', stiffness: 420, damping: 34 }} /> : null}
               <Icon name={t.icon} size={22} />
-              <span>{t.label}</span>
+              <span className="tab-label">{t.label}</span>
               {t.teacher && !isActive ? <span className="tab-dot" aria-hidden="true" /> : null}
             </>
           )}
