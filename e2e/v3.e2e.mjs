@@ -63,7 +63,7 @@ await page.getByRole('button', { name: 'Mode 2D' }).click();
 // --- slide materi
 await page.goto(`${BASE}/materi/balok`);
 await page.getByText(/Slide 1 dari \d+/).waitFor();
-ok('M1 Materi per slide dengan guru di samping papan', await page.locator('.slide-stage svg.teacher').isVisible());
+ok('M1 Materi per slide dengan guru di samping papan', await page.locator('.slide-stage [data-character="teacher"]').isVisible());
 ok('M2 Navigasi bawah disembunyikan saat belajar materi', !(await page.locator('nav.tabbar').isVisible()));
 await page.getByRole('button', { name: /^Lanjut/ }).first().click();
 await page.getByText(/Slide 2 dari \d+/).waitFor();
@@ -71,7 +71,7 @@ ok('M3 Tombol Lanjut berpindah slide', true);
 await page.getByRole('button', { name: 'Kembali' }).click();
 await page.getByText(/Slide 1 dari \d+/).waitFor();
 await page.getByRole('button', { name: 'Bacakan slide ini' }).click();
-ok('M4 Tombol bacakan (guru berbicara)', (await page.locator('.slide-stage svg.teacher').getAttribute('data-expression')) === 'explaining');
+ok('M4 Tombol bacakan (guru berbicara)', (await page.locator('.slide-stage [data-character="teacher"]').getAttribute('data-expression')) === 'explaining');
 await page.getByRole('button', { name: 'Lihat semua' }).click();
 await page.getByText('L = 2 × (p × l + p × t + l × t)').first().waitFor();
 ok('M5 "Lihat semua" menampilkan materi lengkap', true);
@@ -107,8 +107,8 @@ await page.screenshot({ path: `${OUT}/v3-video.png`, fullPage: true });
 // --- pengaturan
 // v3.1: aset karakter lama (termasuk pilihan "berkerudung") dihapus; guru & siswa digambar ulang dari nol.
 await page.goto(`${BASE}/karakter`);
-await page.locator('svg[data-character="teacher"]').first().waitFor();
-const poses = await page.locator('svg[data-character="teacher"]').evaluateAll((els) => [...new Set(els.map((e) => e.dataset.pose))]);
+await page.locator('[data-character="teacher"]').first().waitFor();
+const poses = await page.locator('[data-character="teacher"]').evaluateAll((els) => [...new Set(els.map((e) => e.dataset.pose))]);
 ok('S1 Aset guru baru: 7 pose + siswa tersedia di galeri', poses.length === 7 && (await page.locator('svg[data-character="student"]').count()) === 3, `(${poses.join(',')})`);
 await page.goto(`${BASE}/pengaturan`);
 ok('S1b Tidak ada sisa pilihan tampilan guru lama', (await page.getByRole('radio', { name: /Berkerudung/ }).count()) === 0);

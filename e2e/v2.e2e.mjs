@@ -44,7 +44,7 @@ await page.getByRole('button', { name: 'Masuk' }).click();
 await page.getByRole('heading', { name: `Halo, ${NAME}!` }).waitFor();
 ok('B1 Beranda: menu Belajar Bersama Guru & progres', await page.getByRole('link', { name: /Belajar Bersama Guru/ }).first().isVisible() && await page.getByText('Progres Belajar').isVisible());
 ok('B2 Tab bar tampil di beranda', await page.locator('nav.tabbar').isVisible());
-ok('C1 Karakter guru tampil (SVG)', await page.locator('svg.teacher').first().isVisible());
+ok('C1 Karakter guru tampil', await page.locator('[data-character="teacher"]').first().isVisible());
 
 // --- daftar kelas
 await page.getByRole('link', { name: /Belajar Bersama Guru/ }).first().click();
@@ -77,7 +77,7 @@ await page.screenshot({ path: `${OUT}/v2-hp-kelas-papan.png`, fullPage: true });
 await page.getByRole('button', { name: 'Tanya Bu Sari' }).click();
 await page.getByText('Mendengarkan…').waitFor();
 ok('E1 Indikator mikrofon aktif', true);
-ok('E2 Guru berganti ekspresi mendengarkan', (await page.locator('svg.teacher').getAttribute('data-expression')) === 'listening');
+ok('E2 Guru berganti ekspresi mendengarkan', (await page.locator('[data-character="teacher"]').getAttribute('data-expression')) === 'listening');
 await page.getByText(/Bu Sari mendengar: "kenapa dikali enam"/).waitFor();
 ok('E3 Konfirmasi teks hasil pengenalan suara', true);
 await page.locator('.bubble.teacher', { hasText: '6 sisi' }).waitFor({ timeout: 15000 });
@@ -168,7 +168,7 @@ for (let i = 0; i < 3; i += 1) {
   }
 }
 await page.getByText('Pelajaran selesai!').waitFor({ timeout: 20000 });
-ok('D11 Pelajaran selesai + guru memberi apresiasi', (await page.locator('svg.teacher').getAttribute('data-expression')) === 'proud');
+ok('D11 Pelajaran selesai + guru memberi apresiasi', (await page.locator('[data-character="teacher"]').getAttribute('data-expression')) === 'proud');
 await page.evaluate(() => localStorage.removeItem('kb_tts_fast'));
 await page.goto(`${BASE}/kelas`);
 await page.locator('.list-link', { hasText: 'Luas Permukaan Kubus' }).getByText(/Selesai/).waitFor();
@@ -189,7 +189,7 @@ await p2.goto(`${BASE}/masuk`);
 await p2.fill('#code', CODE); await p2.fill('#pin', PIN);
 await p2.getByRole('button', { name: 'Masuk' }).click();
 await p2.getByRole('heading', { name: `Halo, ${NAME}!` }).waitFor();
-const anim = await p2.evaluate(() => getComputedStyle(document.querySelector('svg.teacher .c-body')).animationName);
+const anim = await p2.evaluate(() => getComputedStyle(document.querySelector('[data-character="teacher"] .c-body, [data-character="teacher"] .rig-body')).animationName);
 ok('B4 Kurangi gerakan (reduced motion) dihormati', anim === 'none', `(animation=${anim})`);
 await p2.goto(`${BASE}/kelas/balok`);
 await p2.getByRole('button', { name: 'Mulai' }).click();

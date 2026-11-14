@@ -2,7 +2,7 @@
 // sinkron bibir per kata, napas idle, dan cross-fade antar-pose. Lihat docs/character-assets.md.
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
-import { faceState, REGIONS, regionMask, resolvePose, visemeForWord } from './rigLogic.js';
+import { faceState, frameBox, REGIONS, regionMask, resolvePose, stageStyle, visemeForWord } from './rigLogic.js';
 import './rig.css';
 
 /** Berkedip acak setiap 2,8–6 detik: setengah → tertutup → setengah. */
@@ -65,12 +65,13 @@ function PoseLayer({ manifest, base, poseName, face }) {
   );
 }
 
-export default function CharacterRig({ manifest, base, expression = 'neutral', pose = 'idle', speaking = false, size = 220, facing = 'right', title = 'Bu Sari, guru virtual' }) {
+export default function CharacterRig({ manifest, base, expression = 'neutral', pose = 'idle', speaking = false, size = 220, facing = 'right', framing = 'frame', title = 'Bu Sari, guru virtual' }) {
   const poseName = resolvePose(manifest, pose);
   const blink = useBlink(true);
   const viseme = useLipSync(speaking);
   const face = faceState(manifest, poseName, { expression, blink, viseme });
   const preloaded = useRef(false);
+  const frame = frameBox(manifest, framing);
 
   // Muat semua varian lebih dulu agar kedipan/bicara tidak berkedip kosong.
   const sources = useMemo(() => {
@@ -86,15 +87,17 @@ export default function CharacterRig({ manifest, base, expression = 'neutral', p
 
   return (
     <div className={`rig teacher${speaking ? ' is-speaking' : ''}`} role="img" aria-label={title}
-      style={{ width: size, aspectRatio: `${manifest.width} / ${manifest.height}`, transform: facing === 'left' ? 'scaleX(-1)' : undefined }}
+      style={{ width: size, aspectRatio: `${frame.w} / ${frame.h}`, overflow: 'hidden', transform: facing === 'left' ? 'scaleX(-1)' : undefined }}
       data-expression={expression} data-pose={pose} data-speaking={speaking ? 'true' : 'false'} data-character="teacher" data-rig="raster"
       data-eyes={face.eyes || 'base'} data-mouth={face.mouth || 'base'}>
+      <div className="rig-stage" style={stageStyle(manifest, frame)}>
       <div className="rig-body">
         <AnimatePresence initial={false}>
           <motion.div key={poseName} className="rig-fade" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.25 }}>
             <PoseLayer manifest={manifest} base={base} poseName={poseName} face={face} />
           </motion.div>
         </AnimatePresence>
+      </div>
       </div>
     </div>
   );

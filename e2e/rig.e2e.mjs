@@ -14,7 +14,20 @@ const ctx = await browser.newContext({ viewport: { width: 1100, height: 900 } })
 const page = await ctx.newPage();
 page.on('pageerror', (e) => errors.push(e.message));
 
-// 1) Tanpa aset → cadangan SVG
+// 0) Aset asli Bu Sari (public/characters/bu-sari) terpasang → rig raster dengan semua gambar termuat
+{
+  const real = await browser.newPage();
+  real.on('pageerror', (e) => errors.push(e.message));
+  await real.goto(`${BASE}/karakter`);
+  await real.getByText('ilustrasi raster berlapis').waitFor();
+  await real.waitForFunction(() => [...document.querySelectorAll('[data-rig="raster"] img')].every((i) => i.complete && i.naturalWidth === 1024), null, { timeout: 15000 });
+  const broken = await real.evaluate(() => [...document.querySelectorAll('[data-rig="raster"] img')].filter((i) => !i.naturalWidth).length);
+  ok('R9 Aset asli: rig raster tampil & tidak ada gambar rusak', (await real.locator('[data-rig="raster"]').count()) >= 13 && broken === 0);
+  await real.close();
+}
+
+// 1) Tanpa aset (manifest disimulasikan hilang) → cadangan SVG
+await page.route('**/characters/bu-sari/manifest.json', (r) => r.fulfill({ status: 404, body: 'x' }));
 await page.goto(`${BASE}/karakter`);
 await page.getByText('SVG cadangan').waitFor();
 ok('R1 Tanpa aset: memakai karakter SVG cadangan', (await page.locator('[data-rig="raster"]').count()) === 0 && (await page.locator('svg[data-character="teacher"]').count()) > 0);

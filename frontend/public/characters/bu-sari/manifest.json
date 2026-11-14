@@ -1,0 +1,191 @@
+{
+  "name": "Bu Sari",
+  "version": 2,
+  "width": 1024,
+  "height": 1536,
+  "frame": {
+    "x": 200,
+    "y": 0,
+    "w": 744,
+    "h": 830
+  },
+  "poseMap": {
+    "idle": "explain",
+    "talk": "explain",
+    "point": "point",
+    "wave": "wave",
+    "listen": "listen",
+    "think": "think",
+    "cheer": "appreciate"
+  },
+  "expressions": {
+    "neutral": {},
+    "happy": {
+      "mouth": "smile"
+    },
+    "explaining": {
+      "mouth": "open"
+    },
+    "thinking": {
+      "eyes": "up"
+    },
+    "listening": {},
+    "proud": {
+      "eyes": "happy",
+      "mouth": "smile"
+    }
+  },
+  "poses": {
+    "explain": {
+      "base": "explain/base.png",
+      "regions": {
+        "eyes": {
+          "x": 418,
+          "y": 148,
+          "w": 143,
+          "h": 67,
+          "mask": "baked"
+        },
+        "mouth": {
+          "x": 468,
+          "y": 224,
+          "w": 54,
+          "h": 40,
+          "mask": "baked"
+        }
+      },
+      "variants": {
+        "eyes": {
+          "closed": "explain/eyes-closed.png",
+          "half": "explain/eyes-half.png",
+          "happy": "explain/eyes-happy.png"
+        },
+        "mouth": {
+          "o": "explain/mouth-o.png",
+          "open": "explain/mouth-open.png",
+          "smile": "explain/mouth-smile.png",
+          "wide": "explain/mouth-wide.png"
+        }
+      }
+    },
+    "point": {
+      "base": "point/base.png",
+      "regions": {
+        "eyes": {
+          "x": 417,
+          "y": 140,
+          "w": 142,
+          "h": 67,
+          "mask": "baked"
+        },
+        "mouth": {
+          "x": 468,
+          "y": 216,
+          "w": 54,
+          "h": 38,
+          "mask": "baked"
+        }
+      },
+      "variants": {
+        "eyes": {
+          "closed": "point/eyes-closed.png"
+        },
+        "mouth": {
+          "open": "point/mouth-open.png",
+          "smile": "point/mouth-smile.png"
+        }
+      }
+    },
+    "wave": {
+      "base": "wave/base.png",
+      "regions": {
+        "eyes": {
+          "x": 418,
+          "y": 140,
+          "w": 141,
+          "h": 67,
+          "mask": "baked"
+        },
+        "mouth": {
+          "x": 468,
+          "y": 216,
+          "w": 54,
+          "h": 38,
+          "mask": "baked"
+        }
+      },
+      "variants": {
+        "eyes": {
+          "closed": "wave/eyes-closed.png"
+        },
+        "mouth": {
+          "open": "wave/mouth-open.png",
+          "smile": "wave/mouth-smile.png"
+        }
+      }
+    },
+    "listen": {
+      "base": "listen/base.png",
+      "regions": {
+        "eyes": {
+          "x": 418,
+          "y": 143,
+          "w": 142,
+          "h": 65,
+          "mask": "baked"
+        }
+      },
+      "variants": {
+        "eyes": {
+          "closed": "listen/eyes-closed.png"
+        }
+      }
+    },
+    "think": {
+      "base": "think/base.png",
+      "regions": {
+        "eyes": {
+          "x": 419,
+          "y": 145,
+          "w": 143,
+          "h": 62,
+          "mask": "baked"
+        }
+      },
+      "variants": {
+        "eyes": {
+          "closed": "think/eyes-closed.png",
+          "up": "think/eyes-up.png"
+        }
+      }
+    },
+    "appreciate": {
+      "base": "appreciate/base.png",
+      "regions": {
+        "eyes": {
+          "x": 417,
+          "y": 140,
+          "w": 144,
+          "h": 67,
+          "mask": "baked"
+        },
+        "mouth": {
+          "x": 467,
+          "y": 216,
+          "w": 56,
+          "h": 38,
+          "mask": "baked"
+        }
+      },
+      "variants": {
+        "eyes": {
+          "happy": "appreciate/eyes-happy.png"
+        },
+        "mouth": {
+          "open": "appreciate/mouth-open.png",
+          "smile": "appreciate/mouth-smile.png"
+        }
+      }
+    }
+  }
+}

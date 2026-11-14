@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { allImages, faceState, regionMask, resolvePose, validateManifest, visemeForWord } from './rigLogic.js';
+import { allImages, faceState, regionMask, resolvePose, validateManifest, visemeForWord, frameBox, stageStyle } from './rigLogic.js';
 
 const manifest = {
   width: 1024, height: 1536,
@@ -49,5 +49,21 @@ describe('rig karakter raster', () => {
     expect(m.maskSize).toBe(`${(100 / 1024) * 100}% ${(70 / 1536) * 100}%`);
     expect(allImages(manifest, '/c/')).toContain('/c/point/eyes-closed.png');
     expect(allImages(manifest)).toHaveLength(8); // explain: 1 + 2 + 3, point: 1 + 1
+  });
+
+  it('frame memotong tampilan tanpa mengubah kanvas', () => {
+    const m = { width: 1024, height: 1536, poses: {} };
+    expect(frameBox(m)).toEqual({ x: 0, y: 0, w: 1024, h: 1536 });
+    const framed = { ...m, frame: { x: 200, y: 0, w: 744, h: 830 } };
+    expect(frameBox(framed)).toEqual({ x: 200, y: 0, w: 744, h: 830 });
+    expect(frameBox(framed, 'full')).toEqual({ x: 0, y: 0, w: 1024, h: 1536 });
+    const st = stageStyle(framed, frameBox(framed));
+    expect(st.width).toBe(`${(1024 / 744) * 100}%`);
+    expect(st.left).toBe(`${(-200 / 744) * 100}%`);
+    expect(validateManifest({ ...framed, poses: { explain: { base: 'a.png' } }, frame: { w: 0, h: 0 } })).toContain('frame harus punya w dan h > 0.');
+  });
+
+  it('topeng "baked" tidak memakai mask CSS', () => {
+    expect(regionMask({ x: 1, y: 1, w: 10, h: 10, mask: 'baked' }, 1024, 1536)).toEqual({});
   });
 });

@@ -161,3 +161,20 @@ Catatan:
 - Satu run v3 berhenti karena `/karakter` *timeout* saat dimuat, tepat setelah file diubah (server dev sedang memproses ulang). Diukur ulang: halaman dimuat ±0,5 dtk (3×), run ulang lulus 33/33. Dicatat sebagai potensi uji *flaky*.
 - Belum diuji: aset karakter asli (belum tersedia) dan sinkron bibir dengan suara id-ID sungguhan di HP.
 
+
+## 8. Pengujian v3.3 — aset asli Bu Sari terpasang (15 November 2026)
+Aset: 25 gambar dari pengembang (6 pose; varian mata/mulut dibuat dengan inpainting). Diproses dengan `frontend/scripts/build_character_assets.py`: latar putih JPG *think*/*listen* dihapus (termasuk sisa latar yang terkurung rambut), varian disimpan dengan topeng per piksel (`"mask": "baked"`), frame tampilan kepala–pinggang. Total aset 3,6 MB (varian 10–30 KB).
+
+| Lapisan | Hasil |
+|---|---|
+| Pemeriksa aset `scripts/check-character-assets.mjs` | **35 OK, 0 gagal** |
+| Vitest | **56/56** (+2: frame tampilan, topeng baked) |
+| Build | berhasil |
+| E2E fitur lama (data bersih) | **36/36** |
+| E2E guru virtual (v2) | **33/33** |
+| E2E v3 | **33/33** |
+| E2E rig | **10/10** (+R9: aset asli tampil, tidak ada gambar rusak; R1 kini menyimulasikan manifest hilang) |
+
+Perubahan uji: pemilih `svg.teacher` diganti `[data-character="teacher"]` (berlaku untuk rig raster & SVG cadangan); v2 B4 memeriksa `.c-body` atau `.rig-body`.
+Pemeriksaan visual: galeri `/karakter`, kelas desktop, beranda HP; wajah saat kedip, kata "balok" (mulut lebar), "kubus" (bulat), "sisi" (terbuka), ekspresi bangga. Ditemukan & diperbaiki: bercak terang di rambut dekat mata kanan saat varian mata tampil (AI sedikit mengubah helai rambut; kotak + mask elips ikut menempelkannya) → diganti topeng per piksel.
+Belum diuji: sinkron bibir dengan suara id-ID sungguhan dan performa di HP Android fisik.

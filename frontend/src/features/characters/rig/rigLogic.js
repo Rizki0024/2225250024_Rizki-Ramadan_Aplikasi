@@ -15,6 +15,7 @@ export function validateManifest(m) {
   if (!m || typeof m !== 'object') return ['Manifest tidak terbaca.'];
   if (!(m.width > 0 && m.height > 0)) problems.push('width/height wajib diisi.');
   if (!m.poses || !m.poses.explain) problems.push('Pose "explain" wajib ada.');
+  if (m.frame && !(m.frame.w > 0 && m.frame.h > 0)) problems.push('frame harus punya w dan h > 0.');
   for (const [name, p] of Object.entries(m.poses || {})) {
     if (!p.base) problems.push(`Pose ${name}: base wajib diisi.`);
     for (const [region, variants] of Object.entries(p.variants || {})) {
@@ -65,8 +66,12 @@ export function faceState(manifest, poseName, { expression = 'neutral', blink = 
   return { eyes, mouth };
 }
 
-/** Gaya CSS mask agar varian hanya tampil di kotak area dengan tepi halus. */
+/**
+ * Gaya CSS mask agar varian hanya tampil di kotak area dengan tepi halus.
+ * mask: "baked" = varian sudah membawa topeng per piksel di kanal alfanya → tanpa mask CSS.
+ */
 export function regionMask(region, width, height) {
+  if (region?.mask === 'baked') return {};
   const { x, y, w, h, feather = 14 } = region;
   const fx = Math.min(49, (feather / w) * 100);
   const fy = Math.min(49, (feather / h) * 100);
@@ -89,4 +94,21 @@ export function allImages(manifest, base = '') {
     for (const variants of Object.values(p.variants || {})) for (const src of Object.values(variants)) out.push(base + src);
   }
   return [...new Set(out)];
+}
+
+/** Kotak tampilan (frame) dari manifest; framing "full" = seluruh kanvas. */
+export function frameBox(manifest, framing = 'frame') {
+  const full = { x: 0, y: 0, w: manifest.width, h: manifest.height };
+  const f = manifest.frame;
+  if (framing === 'full' || !f || !(f.w > 0 && f.h > 0)) return full;
+  return { x: Math.max(0, f.x || 0), y: Math.max(0, f.y || 0), w: Math.min(f.w, manifest.width), h: Math.min(f.h, manifest.height) };
+}
+
+/** Posisi panggung gambar agar hanya isi frame yang terlihat (persen relatif terhadap frame). */
+export function stageStyle(manifest, frame) {
+  return {
+    position: 'absolute',
+    width: `${(manifest.width / frame.w) * 100}%`, height: `${(manifest.height / frame.h) * 100}%`,
+    left: `${(-frame.x / frame.w) * 100}%`, top: `${(-frame.y / frame.h) * 100}%`,
+  };
 }

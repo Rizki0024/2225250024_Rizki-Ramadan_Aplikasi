@@ -1,6 +1,6 @@
 # Aset Karakter Bu Sari (raster berlapis) — Spesifikasi & Panduan Pembuatan
 
-Status: **menunggu aset dari pengembang**. Sampai aset lolos pemeriksaan, aplikasi otomatis memakai karakter SVG cadangan (`features/characters/Teacher.jsx`).
+Status: **aset terpasang & diuji (15 November 2026)** — 25 gambar di `frontend/public/characters/bu-sari/`. Karakter SVG cadangan (`features/characters/Teacher.jsx`) tetap ada sebagai cadangan bila manifest/aset gagal dimuat.
 
 Acuan desain (*model sheet*): gambar karakter guru buatan pengembang (rambut cokelat panjang bergelombang, blazer krem, kemeja putih, rok biru tua, sepatu hitam). Asal: dibuat sendiri oleh pengembang dengan alat AI — **periksa syarat layanan alat AI tersebut** untuk pemakaian publik/pendidikan dan catat nama alatnya di bagian akhir dokumen ini.
 
@@ -47,6 +47,14 @@ Folder per pose. Varian dibuat dari gambar dasar pose yang sama dengan inpaintin
 Tips: jangan mengubah ukuran/posisi saat inpainting; jika alat tidak bisa transparan, gunakan latar putih polos lalu hapus latar dengan alat penghapus latar (pastikan tepi rambut rapi).
 
 ## 5. Pemeriksaan & pemasangan
+Cara cepat (otomatis): simpan gambar mentah sebagai `<folder>/<pose>/base.png|jpg` dan `<folder>/<pose>/<eyes|mouth>-<nama>.png|jpg`, lalu
+```bash
+pip install pillow numpy scipy
+python scripts/build_character_assets.py <folder> public/characters/bu-sari
+```
+Skrip menghapus latar putih (JPG), membuat topeng per piksel untuk varian (`"mask": "baked"`, hanya piksel yang berubah), menghitung kotak area, dan menulis `manifest.json` (termasuk `frame` kepala–pinggang agar proporsi sama dengan tata letak halaman).
+
+Cara manual:
 ```bash
 # salin file ke frontend/public/characters/bu-sari/<pose>/...
 cd frontend
@@ -73,6 +81,8 @@ Di halaman **Penyetel Rig** (`/karakter/rig`): pilih pose, atur kotak area mata 
 
 ## 8. Catatan sumber aset
 - Alat AI yang dipakai: _(isi oleh pengembang)_
+- Pemetaan file: `explain` (base, eyes-closed/half/happy, mouth-open/wide/o/smile), `point` (base, eyes-closed, mouth-open/smile), `wave` (base, eyes-closed, mouth-open/smile), `listen` (base, eyes-closed), `think` (base, eyes-closed, eyes-up), `appreciate` (base, eyes-happy, mouth-open/smile).
+- Catatan: varian `think/eyes-up` hanya sedikit berbeda dari base (mata menatap lurus), belum benar-benar melirik ke atas.
 - Tanggal pembuatan: _(isi)_
 - Syarat layanan sudah diperiksa: ☐
 
@@ -82,7 +92,7 @@ Di halaman **Penyetel Rig** (`/karakter/rig`): pilih pose, atur kotak area mata 
 | Spesifikasi aset & panduan AI (dokumen ini) | ✅ |
 | Mesin rig `features/characters/rig/` (CharacterRig, rigLogic, rig.css) | ✅ diuji: vitest 5 tes + E2E `e2e/rig.e2e.mjs` 9/9 memakai gambar uji kanvas |
 | Pembungkus `features/characters/BuSari.jsx` (rig raster bila aset valid, cadangan SVG bila tidak) | ✅ semua halaman sudah memakainya |
-| Sinkron bibir per kata (`kb:speech` dari `voice/speech.js`) | ✅ diuji dengan sinyal tiruan; ⬜ belum diuji dengan suara id-ID sungguhan |
+| Sinkron bibir per kata (`kb:speech` dari `voice/speech.js`) | ✅ diuji dengan sinyal tiruan & aset asli; ⬜ belum diuji dengan suara id-ID sungguhan |
 | Penyetel Rig `/karakter/rig` & pemeriksa `scripts/check-character-assets.mjs` | ✅ |
-| Aset Bu Sari dari model sheet | ⬜ menunggu file dari pengembang |
-| Penghapusan karakter SVG lama | ⬜ hanya setelah aset raster lolos pemeriksaan & semua tes |
+| Aset Bu Sari dari model sheet | ✅ 25 file (6 pose), lolos pemeriksa 35/0; E2E rig 10/10 |
+| Penghapusan karakter SVG lama | ⬜ menunggu keputusan pengembang (aset raster sudah lolos semua tes; SVG kini hanya cadangan) |
