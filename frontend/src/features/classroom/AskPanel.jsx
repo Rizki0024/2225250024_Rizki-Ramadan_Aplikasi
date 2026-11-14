@@ -5,11 +5,11 @@ import Icon from '../../components/Icon.jsx';
 import { api } from '../../services/api.js';
 import { listen, speak, stopSpeaking, sttSupported } from '../voice/speech.js';
 import { classifyUnderstanding } from './player.js';
-import TeacherAvatar from '../teacher/TeacherAvatar.jsx';
+import Teacher from '../characters/Teacher.jsx';
 
 function Face({ role }) {
   if (role === 'student') return <span className="bubble-face me" aria-hidden="true"><Icon name="user" size={22} /></span>;
-  return <span className="bubble-face" aria-hidden="true"><TeacherAvatar size={66} expression="happy" /></span>;
+  return <span className="bubble-face" aria-hidden="true"><Teacher size={66} expression="happy" /></span>;
 }
 
 const AUTO_SEND_MS = 1800;

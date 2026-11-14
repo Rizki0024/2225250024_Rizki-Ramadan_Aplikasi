@@ -241,3 +241,8 @@ body {
 
 .lesson-head { color: #fff; }
 .lesson-head .muted, .lesson-head p.muted { color: rgba(255, 255, 255, 0.9) !important; }
+
+/* karakter v3.1 */
+.profile-card .avatar-xl svg { width: 168px; margin-top: -4px; }
+.slide-stage { grid-template-columns: 132px 1fr; }
+@media (min-width: 760px) { .slide-stage { grid-template-columns: 230px 1fr; } }

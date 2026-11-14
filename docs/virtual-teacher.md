@@ -18,7 +18,7 @@ flowchart LR
 ```
 
 ## 2. Karakter (Fase C)
-- File: `frontend/src/features/teacher/TeacherAvatar.jsx` + `teacher.css`. SVG buatan sendiri (bukan aset pihak ketiga), sehingga tidak ada masalah lisensi.
+- File (v3.1, ditulis ulang dari nol): `frontend/src/features/characters/Teacher.jsx`, `parts.jsx`, `characters.css`. SVG buatan sendiri (bukan aset pihak ketiga).
 - **Ekspresi**: `neutral`, `happy`, `explaining`, `thinking`, `listening`, `proud`.
 - **Pose**: `idle`, `wave`, `talk` (gerak tangan), `point` (menunjuk papan), `listen` (tangan di telinga), `think` (tangan di dagu), `cheer`.
 - Animasi ringan: napas, kedip, mulut bergerak saat berbicara, lambaian. Hanya `transform`/`opacity`; dimatikan saat "kurangi gerakan".

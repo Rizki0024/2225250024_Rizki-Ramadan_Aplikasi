@@ -3,12 +3,13 @@ import { createContext, useCallback, useContext, useMemo, useState } from 'react
 import { load, save } from '../utils/storage.js';
 
 const KEY = 'kb_settings';
-export const DEFAULT_SETTINGS = { muted: false, rate: 1, teacherLook: 'rambut', prefer2D: false, reduceMotion: false };
+export const DEFAULT_SETTINGS = { muted: false, rate: 1, prefer2D: false, reduceMotion: false };
 
 const SettingsContext = createContext({ settings: DEFAULT_SETTINGS, update: () => {} });
 
 function initial() {
   const s = { ...DEFAULT_SETTINGS, ...(load(KEY, {}) || {}) };
+  delete s.teacherLook; // pilihan tampilan guru lama dihapus pada v3.1
   // kompatibel dengan kunci lama v2
   if (load('kb_muted', null) === true) s.muted = true;
   if (load('kb_view2d', null) === true) s.prefer2D = true;

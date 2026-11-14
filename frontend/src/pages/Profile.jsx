@@ -6,7 +6,7 @@ import { Stagger, StaggerItem } from '../components/motion.jsx';
 import { useAuth } from '../hooks/useAuth.jsx';
 import { api } from '../services/api.js';
 import { BADGES, points, summarize } from '../features/progress/progress.js';
-import StudentAvatar from '../features/student/StudentAvatar.jsx';
+import Student from '../features/characters/Student.jsx';
 import { MedalArt } from '../features/illustrations/Illustrations.jsx';
 
 export default function Profile() {
@@ -21,7 +21,7 @@ export default function Profile() {
     <Page title="Profil & Progres" back="/beranda">
       <Stagger className="stack">
         <StaggerItem className="card profile-card">
-          <span className="avatar-xl" aria-hidden="true"><StudentAvatar size={130} pose="wave" /></span>
+          <span className="avatar-xl" aria-hidden="true"><Student size={130} pose="wave" /></span>
           <div>
             <h1 style={{ margin: 0, fontSize: '1.5rem' }}>{student.nickname}</h1>
             <span className="muted">{student.code}{student.class_name ? ` • ${student.class_name}` : ''}</span><br />

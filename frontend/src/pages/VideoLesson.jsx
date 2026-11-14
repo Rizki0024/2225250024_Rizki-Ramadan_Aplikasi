@@ -5,7 +5,7 @@ import { Link, useParams } from 'react-router-dom';
 import Page from '../components/Layout.jsx';
 import Icon from '../components/Icon.jsx';
 import { ErrorBox, Loading } from '../components/common.jsx';
-import TeacherAvatar from '../features/teacher/TeacherAvatar.jsx';
+import Teacher from '../features/characters/Teacher.jsx';
 import Whiteboard from '../features/classroom/Whiteboard.jsx';
 import AskPanel from '../features/classroom/AskPanel.jsx';
 import { boardState, reducer as playerReducer, restore, teacherLook } from '../features/classroom/player.js';
@@ -103,7 +103,7 @@ export default function VideoLesson() {
         <div className="video-scene" onClick={() => state.status !== 'qa' && act(playing ? 'PAUSE' : 'PLAY')} role="presentation">
           <div className="window" /><div className="shelf" />
           <div className="chalk"><Whiteboard board={segment.board} revealed={revealed} active={active} segmentKey={segment.id} autoScroll={false} maxItems={3} /></div>
-          <div className="teacher-pos"><TeacherAvatar size={220} expression={look.expression} pose={look.pose} speaking={speaking && playing} /></div>
+          <div className="teacher-pos"><Teacher size={220} expression={look.expression} pose={look.pose} speaking={speaking && playing} /></div>
           {!playing && state.status !== 'qa' ? (
             <button type="button" className="video-bigplay" aria-label={state.status === 'finished' ? 'Putar ulang video' : 'Putar video'}
               onClick={(e) => { e.stopPropagation(); act('PLAY'); }}>

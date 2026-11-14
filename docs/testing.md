@@ -141,3 +141,9 @@ Catatan: pada satu run pertama setelah perubahan kode, E2E lama sempat *timeout*
 **Masalah yang ditemukan & diperbaiki saat uji visual v3**: label 3D terlalu besar menutupi kubus; navigasi bawah menutupi tombol slide materi; judul logo terbaca "BelajarKubus" oleh pembaca layar; teks kelas guru kurang kontras di atas gradasi; baris pengaturan terlalu sempit; lencana belum bisa diketuk di HP.
 
 **Belum diuji**: HP Android fisik (suara, mikrofon, performa 3D) dan versi v3 di produksi.
+
+## 6. Pengujian v3.1 — aset karakter baru (15 November 2026)
+pytest **71/71**, vitest **49/49**, build berhasil, E2E fitur lama **36/36** (data bersih), E2E guru virtual **33/33**, E2E v3 **33/33**.
+Perubahan uji: v2 B4 kini memeriksa kelas animasi `.c-body` milik aset baru; v3 S1 (ganti tampilan guru "berkerudung") **dihapus karena fiturnya dihapus atas permintaan**, diganti S1 (7 pose guru + 3 pose siswa di galeri) dan S1b (tidak ada sisa pilihan lama).
+Pemeriksaan visual galeri `/karakter` menemukan & memperbaiki: rambut kaku → bergelombang; tangan kecil & menggantung → lebih besar, tubuh dipotong di pinggang; leher terlalu panjang (guru & siswa); tangan pose berpikir/mendengar tertutup tubuh/rambut → dipindah ke lapisan depan; lengan kemeja siswa tak terlihat di latar putih → diberi garis tepi.
+

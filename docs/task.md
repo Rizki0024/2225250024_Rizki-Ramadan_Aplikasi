@@ -70,3 +70,8 @@ Pembaruan terakhir: 13 November 2026
 - ✅ Karakter guru (2 tampilan) & siswa sebagai aset terpisah
 - ✅ Tes: pytest 71, vitest 49, E2E 36 + 33 + 32
 - ⬜ Uji HP Android fisik · ⬜ gabung ke `main` & deploy setelah disetujui
+
+## Versi 3.1 — Aset karakter baru
+- ✅ Hapus total aset karakter lama; guru & siswa digambar ulang dari nol (`features/characters/`)
+- ✅ Galeri karakter `/karakter`; semua halaman memakai aset baru
+- ⬜ Uji HP Android fisik · ⬜ gabung ke `main` & deploy setelah disetujui

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
-import TeacherAvatar from '../features/teacher/TeacherAvatar.jsx';
+import Teacher from '../features/characters/Teacher.jsx';
 import { speak } from '../features/voice/speech.js';
 import { useSettings } from '../hooks/useSettings.jsx';
 import { Link, useParams } from 'react-router-dom';
@@ -127,7 +127,7 @@ export function MaterialDetail() {
           ) : (
             <>
               <div className="slide-stage">
-                <TeacherAvatar size={220} expression={speaking ? 'explaining' : 'happy'} pose={speaking ? 'talk' : 'point'} speaking={speaking} />
+                <Teacher size={220} expression={speaking ? 'explaining' : 'happy'} pose={speaking ? 'talk' : 'point'} speaking={speaking} />
                 <AnimatePresence mode="wait">
                   <motion.div key={idx} className="slide-board stack" initial={{ opacity: 0, x: 24 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -24 }} transition={{ duration: 0.25 }}>
                     <h2 style={{ marginBottom: 0 }}>{slide.title}</h2>

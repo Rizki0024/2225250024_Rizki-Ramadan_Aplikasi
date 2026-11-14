@@ -8,13 +8,13 @@ import { CardLink, Stagger, StaggerItem } from '../components/motion.jsx';
 import { useAuth } from '../hooks/useAuth.jsx';
 import { api } from '../services/api.js';
 import { points, summarize } from '../features/progress/progress.js';
-import TeacherAvatar from '../features/teacher/TeacherAvatar.jsx';
+import Teacher from '../features/characters/Teacher.jsx';
 import { BookArt, ChartArt, ClipboardArt, CubeArt, GamepadArt, TrophyArt } from '../features/illustrations/Illustrations.jsx';
 
 function TeacherIcon() {
   return (
     <span style={{ width: 64, height: 64, borderRadius: '50%', overflow: 'hidden', display: 'inline-flex', justifyContent: 'center', background: '#fff' }}>
-      <span style={{ width: 96, marginTop: 2 }}><TeacherAvatar size={96} expression="happy" /></span>
+      <span style={{ width: 96, marginTop: 2 }}><Teacher size={96} expression="happy" /></span>
     </span>
   );
 }

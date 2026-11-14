@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import Page from '../components/Layout.jsx';
 import Icon from '../components/Icon.jsx';
-import TeacherAvatar from '../features/teacher/TeacherAvatar.jsx';
+import Teacher from '../features/characters/Teacher.jsx';
 import { BulbArt } from '../features/illustrations/Illustrations.jsx';
 
 const QUICK = [
@@ -33,7 +33,7 @@ export default function Guide() {
           <ol className="steps" style={{ margin: '8px 0' }}>
             {QUICK.map((q) => <li key={q}><strong>{q}</strong></li>)}
           </ol>
-          <TeacherAvatar size={130} expression="happy" pose="point" />
+          <Teacher size={130} expression="happy" pose="point" />
         </div>
         <button type="button" className="btn block" onClick={() => navigate('/beranda')}>Mengerti <Icon name="check" size={18} /></button>
       </div>

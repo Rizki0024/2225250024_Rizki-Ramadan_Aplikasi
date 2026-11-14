@@ -43,3 +43,4 @@ npm run build
 11. Guru virtual wajib memberi tahu bahwa ia program komputer, menolak topik di luar materi, dan tidak menyimpan audio.
 12. Animasi hanya `transform`/`opacity` dan harus menghormati `prefers-reduced-motion`.
 13. Logika pemutar ada di `features/classroom/player.js` (fungsi murni). Ubah beserta `player.test.js`.
+14. Aset karakter hanya di `frontend/src/features/characters/` (Teacher, Student, parts). Aset lama `features/teacher` & `features/student` sudah dihapus dan tidak boleh dipakai lagi.

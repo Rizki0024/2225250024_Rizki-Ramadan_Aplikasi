@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { api } from '../services/api.js';
 import { useAuth } from '../hooks/useAuth.jsx';
-import StudentAvatar from '../features/student/StudentAvatar.jsx';
+import Student from '../features/characters/Student.jsx';
 import { CubeArt } from '../features/illustrations/Illustrations.jsx';
 import { PageMotion } from '../components/motion.jsx';
 import Icon from '../components/Icon.jsx';
@@ -29,7 +29,7 @@ export default function Landing() {
       <div className="splash-stage" aria-hidden="true">
         <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2, type: 'spring', stiffness: 160, damping: 16 }}
           style={{ marginRight: '28%' }}>
-          <StudentAvatar size={190} />
+          <Student size={190} />
         </motion.div>
         <span className="float float-y" style={{ right: '22%', bottom: '10%', '--r': '-8deg' }}><CubeArt size={86} colors={['#93c5fd', '#3b82f6', '#a78bfa']} /></span>
         <span className="float float-y slow" style={{ right: '0%', bottom: '18%', '--r': '8deg' }}><CubeArt size={96} colors={['#fde68a', '#fb923c', '#f97316']} /></span>

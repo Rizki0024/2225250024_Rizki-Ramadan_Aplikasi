@@ -157,3 +157,16 @@ Sumber visual: papan desain 14 panel dari pengembang (Halaman Awal, Beranda, Mat
 - **Navigasi**: navigasi bawah putih (Beranda · Profil · Pengaturan) + laci menu berisi semua menu; disembunyikan di halaman fokus (materi, latihan, evaluasi, kelas, video).
 - **Karakter** (aset terpisah): `TeacherAvatar` dengan tampilan `rambut` (bawaan, sesuai referensi) dan `kerudung`; `StudentAvatar` untuk halaman awal, laci, dan profil.
 - **Ilustrasi** tambahan: hadiah, jam pasir, bintang maskot, lencana, stik permainan, grafik, lampu (`Illustrations.jsx`); `pickArt()` memilih ilustrasi sesuai konteks soal.
+
+## 10. Aset karakter v3.1 — digambar ulang dari nol (15 November 2026)
+Atas permintaan pengembang, **seluruh kode/aset karakter lama dihapus** (`features/teacher/`, `features/student/`, termasuk pilihan "berkerudung") dan diganti aset baru yang ditulis dari baris pertama di `frontend/src/features/characters/`:
+
+| File | Isi |
+|---|---|
+| `parts.jsx` | Tangan berjari (terbuka, menunjuk, santai, jempol), lengan bersendi bahu–siku–pergelangan, mata ilustrasi (iris bergradasi, dua kilau, garis kelopak, bulu mata) |
+| `Teacher.jsx` | Bu Sari setengah badan: wajah oval, leher tersambung, rambut cokelat panjang bergelombang (lapisan belakang, poni menyamping, helai di depan bahu), blazer cokelat muda berkerah + kemeja putih. 6 ekspresi × 7 pose, `facing="left"` untuk dicerminkan |
+| `Student.jsx` | Siswa laki-laki: rambut berjambul, kemeja putih berkerah, dasi biru, tali ransel; pose jempol/melambai/diam |
+| `characters.css` | Napas, kedip, mulut berbicara, lambaian, gerak tangan, ayunan rambut; dimatikan oleh "kurangi animasi" |
+
+Galeri semua pose & ekspresi: rute `/karakter` (untuk pemeriksaan visual dan presentasi).
+Catatan jujur: karakter berupa vektor SVG dari kode agar dapat dianimasikan (berkedip, berbicara, berganti pose); gayanya mengikuti referensi, tetapi tidak identik dengan ilustrasi raster pada papan desain.

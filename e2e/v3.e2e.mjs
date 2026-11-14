@@ -105,13 +105,13 @@ ok('VD7 Kembali ke video setelah bertanya', true);
 await page.screenshot({ path: `${OUT}/v3-video.png`, fullPage: true });
 
 // --- pengaturan
+// v3.1: aset karakter lama (termasuk pilihan "berkerudung") dihapus; guru & siswa digambar ulang dari nol.
+await page.goto(`${BASE}/karakter`);
+await page.locator('svg[data-character="teacher"]').first().waitFor();
+const poses = await page.locator('svg[data-character="teacher"]').evaluateAll((els) => [...new Set(els.map((e) => e.dataset.pose))]);
+ok('S1 Aset guru baru: 7 pose + siswa tersedia di galeri', poses.length === 7 && (await page.locator('svg[data-character="student"]').count()) === 3, `(${poses.join(',')})`);
 await page.goto(`${BASE}/pengaturan`);
-await page.getByRole('radio', { name: /Berkerudung/ }).click();
-await page.goto(`${BASE}/kelas`);
-await page.locator('svg.teacher').first().waitFor();
-ok('S1 Tampilan guru dapat diganti (kerudung)', (await page.locator('svg.teacher').first().getAttribute('data-look')) === 'kerudung');
-await page.goto(`${BASE}/pengaturan`);
-await page.getByRole('radio', { name: /Rambut panjang/ }).click();
+ok('S1b Tidak ada sisa pilihan tampilan guru lama', (await page.getByRole('radio', { name: /Berkerudung/ }).count()) === 0);
 await page.getByRole('switch', { name: 'Kurangi animasi' }).click();
 ok('S2 Kurangi animasi menambahkan kelas reduce-motion', await page.evaluate(() => document.documentElement.classList.contains('reduce-motion')));
 await page.getByRole('switch', { name: 'Kurangi animasi' }).click();

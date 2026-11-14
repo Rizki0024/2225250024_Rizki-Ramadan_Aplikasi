@@ -3,7 +3,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import Page from '../components/Layout.jsx';
 import { ErrorBox, ProgressBar, Stars } from '../components/common.jsx';
 import { AnimatedStars, CardLink, FeedbackMotion, Stagger } from '../components/motion.jsx';
-import TeacherAvatar from '../features/teacher/TeacherAvatar.jsx';
+import Teacher from '../features/characters/Teacher.jsx';
 import pickArt from '../features/illustrations/pickArt.jsx';
 import { StarMascot } from '../features/illustrations/Illustrations.jsx';
 import SolutionSteps from '../components/SolutionSteps.jsx';
@@ -142,7 +142,7 @@ function PracticeSession() {
     return (
       <Page title={`Latihan: ${levelInfo.title}`} back="/latihan">
         <div className="card stack center">
-          <div className="center"><TeacherAvatar size={120} expression={stars >= 2 ? 'proud' : 'happy'} pose={stars >= 2 ? 'cheer' : 'idle'} /></div>
+          <div className="center"><Teacher size={120} expression={stars >= 2 ? 'proud' : 'happy'} pose={stars >= 2 ? 'cheer' : 'idle'} /></div>
           <h1>Latihan selesai!</h1>
           <div><AnimatedStars count={stars} big /></div>
           <div className="score-big">{Math.round((correctCount / questions.length) * 100)}</div>

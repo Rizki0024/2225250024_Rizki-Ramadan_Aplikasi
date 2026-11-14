@@ -20,6 +20,7 @@ import { ClassroomList, ClassroomRoute } from './pages/Classroom.jsx';
 import VideoLesson from './pages/VideoLesson.jsx';
 import Profile from './pages/Profile.jsx';
 import Settings from './pages/Settings.jsx';
+import CharacterGallery from './pages/CharacterGallery.jsx';
 
 const guard = (el) => <RequireAuth>{el}</RequireAuth>;
 
@@ -55,6 +56,7 @@ function AnimatedRoutes() {
         <Route path="/hasil" element={guard(<ResultList />)} />
         <Route path="/hasil/:id" element={guard(<ResultDetail />)} />
         <Route path="/petunjuk" element={guard(<Guide />)} />
+        <Route path="/karakter" element={<CharacterGallery />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </AnimatePresence>

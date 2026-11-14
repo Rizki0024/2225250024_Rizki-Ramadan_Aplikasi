@@ -4,7 +4,7 @@ import Icon from '../components/Icon.jsx';
 import { Stagger, StaggerItem } from '../components/motion.jsx';
 import { useAuth } from '../hooks/useAuth.jsx';
 import { useSettings } from '../hooks/useSettings.jsx';
-import TeacherAvatar, { LOOKS } from '../features/teacher/TeacherAvatar.jsx';
+import Teacher from '../features/characters/Teacher.jsx';
 import { speak } from '../features/voice/speech.js';
 
 function Switch({ checked, onChange, label }) {
@@ -34,17 +34,8 @@ export default function Settings() {
               ))}
             </div>
           </div>
-          <div className="setting-row" style={{ alignItems: 'flex-start' }}>
-            <span className="label"><strong>Tampilan guru</strong><span>Karakter yang mengajar di kelas</span></span>
-          </div>
-          <div className="row" role="radiogroup" aria-label="Tampilan guru" style={{ justifyContent: 'center', gap: 16 }}>
-            {Object.entries(LOOKS).map(([key, label]) => (
-              <button key={key} type="button" role="radio" aria-checked={settings.teacherLook === key} onClick={() => update({ teacherLook: key })}
-                className="card" style={{ border: settings.teacherLook === key ? '3px solid var(--blue-600)' : '3px solid transparent', cursor: 'pointer', padding: 8, display: 'grid', justifyItems: 'center', gap: 4, font: 'inherit', fontWeight: 800 }}>
-                <TeacherAvatar size={90} look={key} expression="happy" />
-                {label}
-              </button>
-            ))}
+          <div className="row" style={{ justifyContent: 'center' }}>
+            <Teacher size={120} expression="happy" pose="wave" />
           </div>
         </StaggerItem>
 

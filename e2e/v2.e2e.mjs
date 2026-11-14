@@ -189,7 +189,7 @@ await p2.goto(`${BASE}/masuk`);
 await p2.fill('#code', CODE); await p2.fill('#pin', PIN);
 await p2.getByRole('button', { name: 'Masuk' }).click();
 await p2.getByRole('heading', { name: `Halo, ${NAME}!` }).waitFor();
-const anim = await p2.evaluate(() => getComputedStyle(document.querySelector('svg.teacher .t-body')).animationName);
+const anim = await p2.evaluate(() => getComputedStyle(document.querySelector('svg.teacher .c-body')).animationName);
 ok('B4 Kurangi gerakan (reduced motion) dihormati', anim === 'none', `(animation=${anim})`);
 await p2.goto(`${BASE}/kelas/balok`);
 await p2.getByRole('button', { name: 'Mulai' }).click();

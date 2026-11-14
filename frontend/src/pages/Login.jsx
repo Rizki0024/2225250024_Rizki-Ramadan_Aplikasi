@@ -3,7 +3,7 @@ import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth.jsx';
 import Icon from '../components/Icon.jsx';
 import { PageMotion } from '../components/motion.jsx';
-import TeacherAvatar from '../features/teacher/TeacherAvatar.jsx';
+import Teacher from '../features/characters/Teacher.jsx';
 
 const CODE_RE = /^[A-Z0-9-]{3,20}$/;
 const PIN_RE = /^\d{4,6}$/;
@@ -62,7 +62,7 @@ export default function Login() {
       <main className="page">
         <div className="container" style={{ maxWidth: 440 }}>
           <form className="card stack" onSubmit={onSubmit} noValidate>
-            <div className="center"><TeacherAvatar size={110} expression={error ? 'thinking' : 'happy'} pose={error ? 'think' : 'wave'} /></div>
+            <div className="center"><Teacher size={110} expression={error ? 'thinking' : 'happy'} pose={error ? 'think' : 'wave'} /></div>
             <h1>Masuk dengan kode siswa</h1>
             {notice ? <div className="alert warn">{notice}</div> : null}
             <div className="field">

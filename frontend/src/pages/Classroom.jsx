@@ -6,7 +6,7 @@ import Page from '../components/Layout.jsx';
 import Icon from '../components/Icon.jsx';
 import { ErrorBox, Loading } from '../components/common.jsx';
 import { AnimatedBar, CardLink, FeedbackMotion, Stagger } from '../components/motion.jsx';
-import TeacherAvatar from '../features/teacher/TeacherAvatar.jsx';
+import Teacher from '../features/characters/Teacher.jsx';
 import Whiteboard from '../features/classroom/Whiteboard.jsx';
 import AskPanel from '../features/classroom/AskPanel.jsx';
 import { boardState, progressPercent, reducer as playerReducer, restore, teacherLook } from '../features/classroom/player.js';
@@ -42,7 +42,7 @@ export function ClassroomList() {
           <p>Aku menjelaskan materi di papan tulis. Kalau bingung, tekan <strong>mikrofon</strong> dan tanyakan saja, lalu kita lanjutkan dari bagian terakhir.</p>
           <span className="small" style={{ color: '#35406a' }}>Bu Sari adalah guru virtual (program komputer), bukan manusia.</span>
         </div>
-        <div className="hero-figure"><TeacherAvatar size={140} expression="happy" pose="wave" /></div>
+        <div className="hero-figure"><Teacher size={140} expression="happy" pose="wave" /></div>
       </div>
       {error && !data ? <ErrorBox error={error} onRetry={retry} /> : null}
       {!data && !error ? <Loading /> : null}
@@ -123,6 +123,13 @@ function Classroom({ slug }) {
   const [qaPhase, setQaPhase] = useState(null);
   const [qaMic, setQaMic] = useState(false);
   const [qaKey, setQaKey] = useState(0);
+  // Di laptop guru berdiri di kanan papan → menghadap/menunjuk ke kiri.
+  const [wide, setWide] = useState(() => typeof window !== 'undefined' && window.innerWidth >= 900);
+  useEffect(() => {
+    const onResize = () => setWide(window.innerWidth >= 900);
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
 
   const act = useCallback((type, extra = {}) => dispatch({ type, lesson, ...extra }), [lesson]);
 
@@ -216,7 +223,7 @@ function Classroom({ slug }) {
         <Whiteboard board={segment.board} revealed={revealed} active={active} segmentKey={segment.id} />
         <div className="teacher-col">
           <div className="teacher-stage">
-            <TeacherAvatar size={170} expression={look.expression} pose={look.pose} speaking={speaking && (playing || qaPhase === 'answering')} />
+            <Teacher size={200} facing={wide ? 'left' : 'right'} expression={look.expression} pose={look.pose} speaking={speaking && (playing || qaPhase === 'answering')} />
           </div>
           <AnimatePresence mode="wait">
             <motion.div key={`${state.status}-${state.seg}-${state.line}`} className="speech-bubble" aria-live="polite"
