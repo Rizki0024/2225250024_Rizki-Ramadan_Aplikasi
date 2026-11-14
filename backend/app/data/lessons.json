@@ -1,0 +1,367 @@
+[
+  {
+    "slug": "prasyarat",
+    "title": "Mengingat Luas Persegi & Persegi Panjang",
+    "material_slug": "prasyarat",
+    "order_no": 1,
+    "summary": "Pemanasan sebelum masuk ke kubus dan balok.",
+    "segments": [
+      {
+        "id": "pra-1",
+        "title": "Luas persegi",
+        "goal": "Menghitung luas persegi dengan s × s.",
+        "concept": "luas-persegi",
+        "board": [
+          { "type": "title", "text": "Luas Persegi" },
+          { "type": "figure", "figure": "square", "dims": { "s": 6 } },
+          { "type": "formula", "text": "L = s × s" },
+          { "type": "line", "text": "L = 6 × 6 = 36 cm²" }
+        ],
+        "script": [
+          { "say": "Halo! Saya Bu Sari, guru virtualmu. Hari ini kita mengingat dulu cara menghitung luas persegi.", "show": 0, "pose": "wave", "expression": "happy" },
+          { "say": "Perhatikan persegi ini. Semua sisinya sama panjang. Panjang sisinya kita sebut s.", "show": 1, "pose": "point", "expression": "explaining" },
+          { "say": "Luas persegi dihitung dengan s dikali s.", "show": 2, "pose": "point", "expression": "explaining" },
+          { "say": "Kalau s sama dengan 6 sentimeter, luasnya 6 kali 6, yaitu 36 sentimeter persegi.", "show": 3, "pose": "talk", "expression": "explaining" }
+        ],
+        "check": {
+          "question": "Sebuah persegi memiliki sisi 5 cm. Berapa luasnya?",
+          "options": ["10 cm²", "20 cm²", "25 cm²"],
+          "answer": 2,
+          "explain": "Luas persegi = s × s = 5 × 5 = 25 cm². Angka 20 adalah keliling (4 × 5), bukan luas."
+        }
+      },
+      {
+        "id": "pra-2",
+        "title": "Luas persegi panjang",
+        "goal": "Menghitung luas persegi panjang dengan p × l.",
+        "concept": "luas-persegi-panjang",
+        "board": [
+          { "type": "title", "text": "Luas Persegi Panjang" },
+          { "type": "figure", "figure": "rectangle", "dims": { "p": 8, "l": 5 } },
+          { "type": "formula", "text": "L = p × l" },
+          { "type": "line", "text": "L = 8 × 5 = 40 cm²" },
+          { "type": "tip", "text": "Satuan luas berpangkat dua: cm²" }
+        ],
+        "script": [
+          { "say": "Sekarang persegi panjang. Sisinya ada dua jenis: panjang, kita sebut p, dan lebar, kita sebut l.", "show": 1, "pose": "point", "expression": "explaining" },
+          { "say": "Luas persegi panjang adalah p dikali l.", "show": 2, "pose": "point", "expression": "explaining" },
+          { "say": "Panjangnya 8 sentimeter dan lebarnya 5 sentimeter. Jadi luasnya 8 kali 5, yaitu 40 sentimeter persegi.", "show": 3, "pose": "talk", "expression": "explaining" },
+          { "say": "Ingat ya, satuan luas selalu berpangkat dua, misalnya sentimeter persegi.", "show": 4, "pose": "idle", "expression": "happy" }
+        ],
+        "check": {
+          "question": "Persegi panjang berukuran 7 cm × 4 cm. Berapa luasnya?",
+          "options": ["11 cm²", "22 cm²", "28 cm²"],
+          "answer": 2,
+          "explain": "L = p × l = 7 × 4 = 28 cm². Angka 22 adalah keliling: 2 × (7 + 4)."
+        }
+      }
+    ]
+  },
+  {
+    "slug": "kubus",
+    "title": "Luas Permukaan Kubus",
+    "material_slug": "kubus",
+    "order_no": 2,
+    "summary": "Dari 6 sisi persegi menjadi rumus 6 × s × s.",
+    "segments": [
+      {
+        "id": "kub-1",
+        "title": "Mengenal kubus",
+        "goal": "Menyebutkan unsur-unsur kubus.",
+        "concept": "unsur-kubus",
+        "board": [
+          { "type": "title", "text": "Kubus" },
+          { "type": "figure", "figure": "cube", "dims": { "s": 4 } },
+          { "type": "line", "text": "6 sisi berbentuk persegi yang sama besar" },
+          { "type": "line", "text": "12 rusuk sama panjang (s)" },
+          { "type": "line", "text": "8 titik sudut" }
+        ],
+        "script": [
+          { "say": "Ini kubus. Contohnya seperti dadu atau kotak kado yang semua sisinya sama.", "show": 1, "pose": "point", "expression": "happy" },
+          { "say": "Kubus memiliki 6 sisi. Semua sisinya berbentuk persegi yang sama besar.", "show": 2, "pose": "talk", "expression": "explaining" },
+          { "say": "Kubus juga memiliki 12 rusuk yang sama panjang. Panjang rusuknya kita sebut s.", "show": 3, "pose": "point", "expression": "explaining" },
+          { "say": "Terakhir, kubus memiliki 8 titik sudut.", "show": 4, "pose": "idle", "expression": "explaining" }
+        ],
+        "check": {
+          "question": "Berapa banyak sisi pada kubus?",
+          "options": ["4 sisi", "6 sisi", "8 sisi"],
+          "answer": 1,
+          "explain": "Kubus punya 6 sisi: depan, belakang, kiri, kanan, atas, dan bawah. Angka 8 adalah banyak titik sudut."
+        }
+      },
+      {
+        "id": "kub-2",
+        "title": "Jaring-jaring kubus",
+        "goal": "Memahami bahwa luas permukaan adalah jumlah luas semua sisi.",
+        "concept": "luas-permukaan",
+        "board": [
+          { "type": "title", "text": "Luas permukaan = jumlah luas semua sisi" },
+          { "type": "figure", "figure": "cube-net", "dims": { "s": 4 } },
+          { "type": "line", "text": "Jaring-jaring kubus = 6 persegi sama besar" }
+        ],
+        "script": [
+          { "say": "Bayangkan kubus kita buka dan kita bentangkan. Hasilnya disebut jaring-jaring.", "show": 1, "pose": "point", "expression": "explaining" },
+          { "say": "Sekarang semua sisinya terlihat. Ada 6 persegi yang sama besar.", "show": 2, "pose": "talk", "expression": "explaining" },
+          { "say": "Luas permukaan kubus adalah jumlah luas keenam persegi itu. Jadi bukan isi kubus, melainkan luas kulit luarnya.", "show": 0, "pose": "point", "expression": "explaining" }
+        ]
+      },
+      {
+        "id": "kub-3",
+        "title": "Rumus luas permukaan kubus",
+        "goal": "Menurunkan rumus L = 6 × s × s.",
+        "concept": "rumus-kubus",
+        "board": [
+          { "type": "title", "text": "Menurunkan rumus" },
+          { "type": "line", "text": "① Luas satu sisi = s × s" },
+          { "type": "line", "text": "② Ada 6 sisi yang sama besar" },
+          { "type": "formula", "text": "L = 6 × s × s" }
+        ],
+        "script": [
+          { "say": "Mari kita buat rumusnya. Satu sisi kubus berbentuk persegi, jadi luasnya s dikali s.", "show": 1, "pose": "point", "expression": "explaining" },
+          { "say": "Kubus punya 6 sisi yang sama besar.", "show": 2, "pose": "talk", "expression": "explaining" },
+          { "say": "Jadi, luas permukaan kubus sama dengan 6 dikali s dikali s.", "show": 3, "pose": "point", "expression": "happy" }
+        ],
+        "check": {
+          "question": "Rumus luas permukaan kubus yang benar adalah…",
+          "options": ["s × s × s", "6 × s × s", "4 × s × s"],
+          "answer": 1,
+          "explain": "6 × s × s, karena ada 6 sisi dan setiap sisi luasnya s × s. Rumus s × s × s adalah volume."
+        }
+      },
+      {
+        "id": "kub-4",
+        "title": "Contoh: kertas kado",
+        "goal": "Menerapkan rumus pada soal cerita.",
+        "concept": "contoh-kubus",
+        "board": [
+          { "type": "title", "text": "Kotak kado kubus, s = 10 cm" },
+          { "type": "line", "text": "Diketahui: s = 10 cm" },
+          { "type": "line", "text": "Ditanya: luas kertas kado minimal" },
+          { "type": "line", "text": "L = 6 × 10 × 10" },
+          { "type": "line", "text": "L = 6 × 100 = 600 cm²" },
+          { "type": "tip", "text": "Kertas kado minimal 600 cm² (belum termasuk lipatan)." }
+        ],
+        "script": [
+          { "say": "Sekarang contoh soal. Sebuah kotak kado berbentuk kubus dengan rusuk 10 sentimeter akan dibungkus kertas kado.", "show": 0, "pose": "talk", "expression": "explaining" },
+          { "say": "Pertama, tulis yang diketahui: s sama dengan 10 sentimeter.", "show": 1, "pose": "point", "expression": "explaining" },
+          { "say": "Yang ditanya adalah luas kertas kado. Karena seluruh kotak dibungkus, kita hitung luas permukaannya.", "show": 2, "pose": "point", "expression": "explaining" },
+          { "say": "Masukkan ke rumus: 6 dikali 10 dikali 10.", "show": 3, "pose": "point", "expression": "explaining" },
+          { "say": "10 kali 10 sama dengan 100. Lalu 6 kali 100 sama dengan 600 sentimeter persegi.", "show": 4, "pose": "talk", "expression": "explaining" },
+          { "say": "Jadi, kertas kado yang dibutuhkan paling sedikit 600 sentimeter persegi. Hebat!", "show": 5, "pose": "cheer", "expression": "proud" }
+        ],
+        "check": {
+          "question": "Kubus dengan rusuk 3 cm. Berapa luas permukaannya?",
+          "options": ["27 cm²", "36 cm²", "54 cm²"],
+          "answer": 2,
+          "explain": "L = 6 × 3 × 3 = 6 × 9 = 54 cm². 27 adalah volume (3 × 3 × 3), dan 36 hanya 4 sisi."
+        }
+      }
+    ]
+  },
+  {
+    "slug": "balok",
+    "title": "Luas Permukaan Balok",
+    "material_slug": "balok",
+    "order_no": 3,
+    "summary": "Tiga pasang sisi: p×l, p×t, dan l×t.",
+    "segments": [
+      {
+        "id": "bal-1",
+        "title": "Mengenal balok",
+        "goal": "Mengenali panjang, lebar, dan tinggi balok.",
+        "concept": "unsur-balok",
+        "board": [
+          { "type": "title", "text": "Balok" },
+          { "type": "figure", "figure": "cuboid", "dims": { "p": 6, "l": 4, "t": 3 } },
+          { "type": "line", "text": "Panjang (p), lebar (l), tinggi (t)" },
+          { "type": "line", "text": "6 sisi persegi panjang, sisi berhadapan sama besar" }
+        ],
+        "script": [
+          { "say": "Ini balok, seperti kotak sepatu atau lemari.", "show": 1, "pose": "point", "expression": "happy" },
+          { "say": "Balok punya tiga ukuran: panjang p, lebar l, dan tinggi t.", "show": 2, "pose": "point", "expression": "explaining" },
+          { "say": "Balok punya 6 sisi berbentuk persegi panjang. Sisi yang berhadapan selalu sama besar.", "show": 3, "pose": "talk", "expression": "explaining" }
+        ],
+        "check": {
+          "question": "Pada balok, sisi depan dan sisi belakang luasnya…",
+          "options": ["sama besar", "berbeda", "selalu persegi"],
+          "answer": 0,
+          "explain": "Sisi yang berhadapan pada balok selalu sama besar, jadi sisi depan dan belakang luasnya sama."
+        }
+      },
+      {
+        "id": "bal-2",
+        "title": "Tiga pasang sisi",
+        "goal": "Menentukan luas tiap pasangan sisi.",
+        "concept": "pasangan-sisi",
+        "board": [
+          { "type": "title", "text": "Pasangan sisi berhadapan" },
+          { "type": "figure", "figure": "cuboid-net", "dims": { "p": 6, "l": 4, "t": 3 } },
+          { "type": "pair", "color": "a", "text": "Alas & tutup: p × l" },
+          { "type": "pair", "color": "b", "text": "Depan & belakang: p × t" },
+          { "type": "pair", "color": "c", "text": "Kiri & kanan: l × t" }
+        ],
+        "script": [
+          { "say": "Ini jaring-jaring balok. Warna yang sama berarti luasnya sama.", "show": 1, "pose": "point", "expression": "explaining" },
+          { "say": "Yang biru adalah alas dan tutup. Luas masing-masing p dikali l.", "show": 2, "pose": "point", "expression": "explaining" },
+          { "say": "Yang merah muda adalah depan dan belakang. Luas masing-masing p dikali t.", "show": 3, "pose": "point", "expression": "explaining" },
+          { "say": "Yang hijau adalah kiri dan kanan. Luas masing-masing l dikali t.", "show": 4, "pose": "point", "expression": "explaining" }
+        ]
+      },
+      {
+        "id": "bal-3",
+        "title": "Rumus luas permukaan balok",
+        "goal": "Menurunkan rumus L = 2 × (p×l + p×t + l×t).",
+        "concept": "rumus-balok",
+        "board": [
+          { "type": "title", "text": "Menurunkan rumus" },
+          { "type": "line", "text": "2 × (p × l) + 2 × (p × t) + 2 × (l × t)" },
+          { "type": "formula", "text": "L = 2 × (p×l + p×t + l×t)" }
+        ],
+        "script": [
+          { "say": "Setiap pasangan ada dua sisi. Jadi kita jumlahkan dua kali p l, dua kali p t, dan dua kali l t.", "show": 1, "pose": "point", "expression": "explaining" },
+          { "say": "Karena semuanya dikali dua, kita bisa menuliskannya lebih ringkas: 2 dikali, dalam kurung, p l ditambah p t ditambah l t.", "show": 2, "pose": "point", "expression": "explaining" },
+          { "say": "Tips: hitung tiga perkaliannya dulu, jumlahkan, lalu jangan lupa dikali dua.", "show": 2, "pose": "talk", "expression": "happy" }
+        ],
+        "check": {
+          "question": "Rina menghitung p×l + p×t + l×t lalu berhenti. Apa yang terlupa?",
+          "options": ["Dikali 2", "Dikali 6", "Tidak ada yang terlupa"],
+          "answer": 0,
+          "explain": "Setiap pasangan sisi ada dua, jadi jumlahnya harus dikali 2."
+        }
+      },
+      {
+        "id": "bal-4",
+        "title": "Contoh: kotak sepatu",
+        "goal": "Menghitung luas permukaan balok dalam konteks.",
+        "concept": "contoh-balok",
+        "board": [
+          { "type": "title", "text": "Kotak sepatu 30 cm × 20 cm × 12 cm" },
+          { "type": "line", "text": "p × l = 30 × 20 = 600" },
+          { "type": "line", "text": "p × t = 30 × 12 = 360" },
+          { "type": "line", "text": "l × t = 20 × 12 = 240" },
+          { "type": "line", "text": "600 + 360 + 240 = 1.200" },
+          { "type": "formula", "text": "L = 2 × 1.200 = 2.400 cm²" }
+        ],
+        "script": [
+          { "say": "Contoh: kotak sepatu berukuran panjang 30, lebar 20, dan tinggi 12 sentimeter. Berapa luas kartonnya?", "show": 0, "pose": "talk", "expression": "explaining" },
+          { "say": "p kali l: 30 kali 20 sama dengan 600.", "show": 1, "pose": "point", "expression": "explaining" },
+          { "say": "p kali t: 30 kali 12 sama dengan 360.", "show": 2, "pose": "point", "expression": "explaining" },
+          { "say": "l kali t: 20 kali 12 sama dengan 240.", "show": 3, "pose": "point", "expression": "explaining" },
+          { "say": "Jumlahkan: 600 ditambah 360 ditambah 240 sama dengan 1.200.", "show": 4, "pose": "talk", "expression": "explaining" },
+          { "say": "Terakhir dikali 2. Luas kartonnya 2.400 sentimeter persegi.", "show": 5, "pose": "cheer", "expression": "proud" }
+        ],
+        "check": {
+          "question": "Balok 5 cm × 4 cm × 2 cm. Berapa luas permukaannya?",
+          "options": ["38 cm²", "40 cm²", "76 cm²"],
+          "answer": 2,
+          "explain": "5×4 = 20, 5×2 = 10, 4×2 = 8. Jumlahnya 38, lalu dikali 2 menjadi 76 cm². 40 adalah volume."
+        }
+      }
+    ]
+  },
+  {
+    "slug": "soal-cerita",
+    "title": "Soal Cerita: Formulate, Employ, Interpret",
+    "material_slug": "soal-cerita",
+    "order_no": 4,
+    "summary": "Memahami soal, menghitung, lalu menafsirkan hasilnya.",
+    "segments": [
+      {
+        "id": "cer-1",
+        "title": "Tiga langkah soal cerita",
+        "goal": "Mengenal langkah Formulate, Employ, dan Interpret.",
+        "concept": "langkah-soal-cerita",
+        "board": [
+          { "type": "title", "text": "3 langkah soal cerita" },
+          { "type": "line", "text": "① Pahami (Formulate): diketahui, ditanya, sisi mana yang dihitung" },
+          { "type": "line", "text": "② Hitung (Employ): masukkan ke rumus, hitung bertahap" },
+          { "type": "line", "text": "③ Tafsirkan (Interpret): cek satuan dan apakah masuk akal" }
+        ],
+        "script": [
+          { "say": "Soal cerita bisa diselesaikan dengan tiga langkah.", "show": 0, "pose": "talk", "expression": "happy" },
+          { "say": "Langkah pertama, pahami soalnya. Tulis yang diketahui dan yang ditanya, lalu tentukan sisi mana saja yang dihitung.", "show": 1, "pose": "point", "expression": "explaining" },
+          { "say": "Langkah kedua, hitung. Masukkan angka ke rumus dan hitung langkah demi langkah.", "show": 2, "pose": "point", "expression": "explaining" },
+          { "say": "Langkah ketiga, tafsirkan. Cek satuannya dan pastikan jawabannya masuk akal untuk situasi di soal.", "show": 3, "pose": "point", "expression": "explaining" }
+        ]
+      },
+      {
+        "id": "cer-2",
+        "title": "Kata kunci \"tanpa tutup\"",
+        "goal": "Menentukan sisi yang dihitung pada balok tanpa tutup.",
+        "concept": "tanpa-tutup",
+        "board": [
+          { "type": "title", "text": "Kolam tanpa tutup 2 m × 1 m × 1 m" },
+          { "type": "line", "text": "Tanpa tutup → sisi atas tidak dihitung" },
+          { "type": "line", "text": "Alas: 2 × 1 = 2" },
+          { "type": "line", "text": "Depan & belakang: 2 × (2 × 1) = 4" },
+          { "type": "line", "text": "Kiri & kanan: 2 × (1 × 1) = 2" },
+          { "type": "formula", "text": "L = 2 + 4 + 2 = 8 m²" }
+        ],
+        "script": [
+          { "say": "Bagian dalam sebuah kolam tanpa tutup akan dipasang keramik. Ukurannya 2 meter, 1 meter, dan dalamnya 1 meter.", "show": 0, "pose": "talk", "expression": "explaining" },
+          { "say": "Perhatikan kata tanpa tutup. Artinya sisi atas tidak dihitung, jadi hanya 5 sisi.", "show": 1, "pose": "point", "expression": "explaining" },
+          { "say": "Alasnya 2 kali 1 sama dengan 2.", "show": 2, "pose": "point", "expression": "explaining" },
+          { "say": "Depan dan belakang: 2 kali, 2 kali 1, sama dengan 4.", "show": 3, "pose": "point", "expression": "explaining" },
+          { "say": "Kiri dan kanan: 2 kali, 1 kali 1, sama dengan 2.", "show": 4, "pose": "point", "expression": "explaining" },
+          { "say": "Jumlahnya 8 meter persegi. Jadi keramik yang dipasang seluas 8 meter persegi.", "show": 5, "pose": "cheer", "expression": "proud" }
+        ],
+        "check": {
+          "question": "Kotak tanpa tutup berbentuk kubus. Berapa sisi yang dihitung?",
+          "options": ["4 sisi", "5 sisi", "6 sisi"],
+          "answer": 1,
+          "explain": "Kubus punya 6 sisi. Tanpa tutup berarti satu sisi tidak dihitung, jadi 6 − 1 = 5 sisi."
+        }
+      },
+      {
+        "id": "cer-3",
+        "title": "Membulatkan ke atas",
+        "goal": "Menafsirkan hasil pembagian dalam konteks barang.",
+        "concept": "pembulatan",
+        "board": [
+          { "type": "title", "text": "Cat dinding kamar 5 m × 4 m × 3 m" },
+          { "type": "line", "text": "Hanya 4 dinding: 2 × (5 × 3) + 2 × (4 × 3)" },
+          { "type": "line", "text": "= 30 + 24 = 54 m²" },
+          { "type": "line", "text": "1 kaleng = 12 m² → 54 : 12 = 4,5 kaleng" },
+          { "type": "formula", "text": "Beli 5 kaleng" }
+        ],
+        "script": [
+          { "say": "Dinding kamar berukuran 5 meter, 4 meter, dan tinggi 3 meter akan dicat. Lantai dan langit-langit tidak dicat.", "show": 0, "pose": "talk", "expression": "explaining" },
+          { "say": "Jadi yang dihitung hanya 4 dinding: 2 kali 5 kali 3, ditambah 2 kali 4 kali 3.", "show": 1, "pose": "point", "expression": "explaining" },
+          { "say": "Hasilnya 30 ditambah 24, yaitu 54 meter persegi.", "show": 2, "pose": "point", "expression": "explaining" },
+          { "say": "Satu kaleng cukup untuk 12 meter persegi. 54 dibagi 12 sama dengan 4 koma 5 kaleng.", "show": 3, "pose": "point", "expression": "thinking" },
+          { "say": "Kaleng tidak bisa dibeli setengah. Kalau hanya 4 kaleng, catnya kurang. Jadi kita bulatkan ke atas: beli 5 kaleng.", "show": 4, "pose": "cheer", "expression": "proud" }
+        ],
+        "check": {
+          "question": "Butuh 3,2 kaleng cat. Berapa kaleng yang harus dibeli?",
+          "options": ["3 kaleng", "3,2 kaleng", "4 kaleng"],
+          "answer": 2,
+          "explain": "Kaleng tidak dijual sebagian, dan 3 kaleng tidak cukup. Jadi dibulatkan ke atas menjadi 4 kaleng."
+        }
+      },
+      {
+        "id": "cer-4",
+        "title": "Luas permukaan atau volume?",
+        "goal": "Membedakan luas permukaan dan volume.",
+        "concept": "luas-vs-volume",
+        "board": [
+          { "type": "title", "text": "Luas permukaan vs volume" },
+          { "type": "line", "text": "Luas permukaan: membungkus / menutupi / mengecat → cm²" },
+          { "type": "line", "text": "Volume: mengisi / menampung → cm³" },
+          { "type": "tip", "text": "Kubus: luas 6 × s × s, volume s × s × s" }
+        ],
+        "script": [
+          { "say": "Terakhir, jangan tertukar antara luas permukaan dan volume.", "show": 0, "pose": "talk", "expression": "explaining" },
+          { "say": "Luas permukaan dipakai untuk membungkus, menutupi, atau mengecat. Satuannya sentimeter persegi.", "show": 1, "pose": "point", "expression": "explaining" },
+          { "say": "Volume dipakai untuk mengisi atau menampung, misalnya air. Satuannya sentimeter kubik.", "show": 2, "pose": "point", "expression": "explaining" },
+          { "say": "Kamu sudah menyelesaikan semua pelajaran. Sekarang coba latihan dan evaluasi ya!", "show": 3, "pose": "cheer", "expression": "proud" }
+        ],
+        "check": {
+          "question": "Menghitung banyak air untuk mengisi akuarium memakai…",
+          "options": ["Luas permukaan", "Volume"],
+          "answer": 1,
+          "explain": "Mengisi atau menampung air memakai volume. Luas permukaan dipakai untuk membungkus atau membuat kotaknya."
+        }
+      }
+    ]
+  }
+]

@@ -27,6 +27,9 @@ class Settings:
     local_data_dir: Path = BACKEND_DIR / ".localdata"
     login_max_failures: int = 5
     login_lock_seconds: int = 300
+    anthropic_api_key: str = ""
+    tutor_model: str = "claude-opus-5-5"
+    tutor_max_requests: int = 30
 
     @property
     def storage_mode(self) -> str:
@@ -51,4 +54,7 @@ def load_settings() -> Settings:
         allowed_origins=[o for o in origins if o],
         evaluation_minutes=int(env.get("EVALUATION_MINUTES", "30")),
         local_data_dir=Path(env.get("LOCAL_DATA_DIR", str(BACKEND_DIR / ".localdata"))),
+        anthropic_api_key=env.get("ANTHROPIC_API_KEY", "").strip(),
+        tutor_model=env.get("TUTOR_MODEL", "claude-opus-5-5").strip() or "claude-opus-5-5",
+        tutor_max_requests=int(env.get("TUTOR_MAX_REQUESTS", "30")),
     )

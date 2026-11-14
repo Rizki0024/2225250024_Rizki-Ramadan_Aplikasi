@@ -9,14 +9,15 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
-from app.api.routes import attempts, auth, evaluations, materials, practice
+from app.api.routes import attempts, auth, evaluations, lessons, materials, practice, tutor
 from app.core.config import Settings, load_settings
 from app.core.security import LoginLimiter
 from app.services.repository import RepositoryUnavailable, build_repository
+from app.services.tutor import TutorLimiter
 
 log = logging.getLogger("kubus-balok")
 
-_FIELD_NAMES = {"code": "Kode siswa", "pin": "PIN", "answers": "Jawaban", "level": "Level"}
+_FIELD_NAMES = {"code": "Kode siswa", "pin": "PIN", "answers": "Jawaban", "level": "Level", "question": "Pertanyaan"}
 
 
 def _validation_message(exc: RequestValidationError) -> str:
@@ -41,6 +42,12 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     app.state.settings = settings
     app.state.repo = build_repository(settings)
     app.state.login_limiter = LoginLimiter(settings.login_max_failures, settings.login_lock_seconds)
+    app.state.tutor_limiter = TutorLimiter(settings.tutor_max_requests, 600)
+    app.state.claude_tutor = None
+    if settings.anthropic_api_key:
+        from app.services.tutor.claude_provider import ClaudeTutor
+
+        app.state.claude_tutor = ClaudeTutor(settings.anthropic_api_key, settings.tutor_model)
 
     app.add_middleware(
         CORSMiddleware,
@@ -69,13 +76,14 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     @app.get("/api/health", tags=["health"])
     def health():
         return {"status": "ok", "storage": settings.storage_mode,
+                "tutor": "claude" if app.state.claude_tutor else "curated",
                 "time": datetime.now(timezone.utc).isoformat()}
 
     @app.get("/", include_in_schema=False)
     def root():
         return {"app": "Belajar Kubus dan Balok API", "docs": "/docs"}
 
-    for r in (auth.router, materials.router, evaluations.router, practice.router, attempts.router):
+    for r in (auth.router, materials.router, lessons.router, tutor.router, evaluations.router, practice.router, attempts.router):
         app.include_router(r)
 
     log.info("Mode penyimpanan: %s", settings.storage_mode)

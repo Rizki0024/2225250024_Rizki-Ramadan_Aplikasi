@@ -38,3 +38,19 @@ def load_questions() -> list[dict]:
 def load_demo_students() -> list[dict]:
     with open(DATA_DIR / "demo_students.json", encoding="utf-8") as f:
         return json.load(f)
+
+
+@lru_cache
+def load_lessons() -> list[dict]:
+    """Naskah kelas guru virtual (konten statis, dibaca dari JSON di semua mode penyimpanan)."""
+    with open(DATA_DIR / "lessons.json", encoding="utf-8") as f:
+        return sorted(json.load(f), key=lambda x: x["order_no"])
+
+
+def find_segment(lesson_slug: str, segment_id: str) -> tuple[dict, dict] | None:
+    for lesson in load_lessons():
+        if lesson["slug"] == lesson_slug:
+            for seg in lesson["segments"]:
+                if seg["id"] == segment_id:
+                    return lesson, seg
+    return None
