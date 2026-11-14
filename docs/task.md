@@ -51,3 +51,12 @@ Pembaruan terakhir: 13 November 2026
 - Halaman guru (rekap nilai di aplikasi)
 - PWA / mode offline materi
 - Bank soal evaluasi lebih besar (paket A/B)
+
+## Versi 2 — Rombak & guru virtual (branch `redesign-guru-virtual`)
+- ✅ Fase A: audit + rencana ([redesign-audit.md](redesign-audit.md)); cadangan MVP: tag `v1.0-mvp`, branch `mvp-backup`
+- ✅ Fase B: desain v2 + animasi Motion (diuji E2E)
+- ✅ Fase C: karakter Bu Sari (SVG, 6 ekspresi, 7 pose)
+- ✅ Fase D: kelas bersegmen + papan tulis + kontrol (vitest + E2E)
+- 🟡 Fase E: suara Web Speech API — diuji dengan mikrofon tiruan; ⬜ uji di HP fisik
+- ✅ Fase F: tutor curated + Claude opsional (pytest; Claude hanya dengan client tiruan)
+- 🟡 Fase G: integrasi & dokumentasi selesai; ⬜ push branch + deploy pratinjau; ⬜ gabung ke `main` setelah disetujui

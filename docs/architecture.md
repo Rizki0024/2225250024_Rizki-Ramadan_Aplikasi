@@ -132,3 +132,13 @@ Lihat [.env.example](../.env.example). Ringkas: frontend hanya butuh `VITE_API_U
 | Soal latihan dibangkitkan di frontend | Soal acak tak terbatas, umpan balik instan meski koneksi lambat | Semua soal dari server (lebih lambat, perlu bank soal besar) |
 | Konten di JSON → di-*seed* ke DB | Satu sumber kebenaran, mudah direvisi | Konten ditulis langsung di komponen React |
 | Mode lokal | Dapat diuji sebelum akun layanan siap | Wajib Supabase sejak awal |
+
+## 9. Tambahan v2: guru virtual
+
+- **Frontend**: `features/teacher/` (karakter SVG), `features/classroom/` (pemutar `player.js`, `Whiteboard`, `AskPanel`), `features/voice/speech.js` (Web Speech API), `features/progress/`, `components/motion.jsx` dan `TabBar.jsx`, halaman `pages/Classroom.jsx` (`/kelas`, `/kelas/:slug`).
+- **Backend**: `api/routes/lessons.py`, `api/routes/tutor.py`, `services/tutor/` (`curated.py`, `claude_provider.py`, pemilih mesin & pembatas), data `lessons.json` dan `tutor_kb.json`.
+- **Database**: tidak ada perubahan skema. Naskah pelajaran adalah konten statis dari JSON; progres kelas disimpan di perangkat (localStorage). Tabel tambahan hanya dibuat jika disetujui.
+- **Keamanan**: `ANTHROPIC_API_KEY` hanya di backend; endpoint tutor wajib login dan dibatasi per siswa; audio tidak pernah dikirim ke server aplikasi.
+- **Deployment**: arsitektur tidak memerlukan WebSocket, sehingga cocok dengan Vercel serverless.
+
+Detail: [virtual-teacher.md](virtual-teacher.md), [realtime-voice.md](realtime-voice.md), [animation-guide.md](animation-guide.md), [redesign-audit.md](redesign-audit.md).

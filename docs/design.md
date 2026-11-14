@@ -123,3 +123,12 @@ Warna sisi **selalu disertai teks** ("alas & tutup: p × l") sehingga tetap dapa
 ## 6. Ikon
 
 SVG garis sederhana (stroke 2 px) dibuat sendiri: buku (materi), kubus (3D), pensil (latihan), clipboard (evaluasi), grafik batang (hasil), tanda tanya (petunjuk).
+
+## 7. Desain v2
+
+Token baru di `global.css`: `--pastel-blue #dce8ff`, `--pastel-lilac #ebe5ff`, `--pastel-mint #d7f5e8`, `--pastel-peach #ffe6d5`, `--pastel-yellow #fff1bf`, `--pastel-pink #ffe0ef`; radius 26/18/12 px; tombol berbentuk pil.
+
+- **Navigasi**: tab bar mengambang (Beranda, Materi, Guru, Latihan, Hasil). Disembunyikan pada halaman fokus (latihan, evaluasi, kelas) untuk menekan beban kognitif.
+- **Beranda**: sapaan + avatar inisial → kartu hero "Belajar Bersama Guru" → progres belajar → kartu aktivitas berwarna → menu lainnya.
+- **Kelas**: papan tulis (kiri) + Bu Sari dan gelembung subtitle (kanan) di laptop; di HP papan di atas dan Bu Sari di sampingnya dengan subtitle. Kontrol berupa bilah pil gelap; tombol **Tanya** berwarna merah muda agar mudah ditemukan.
+- Animasi: lihat [animation-guide.md](animation-guide.md).

@@ -72,3 +72,16 @@ Halaman admin/guru, PWA/mode offline penuh, materi volume, papan peringkat, mult
 2. Alur Materi → Contoh → Latihan → Evaluasi → Hasil berjalan tanpa galat.
 3. Nilai evaluasi muncul di tabel `quiz_attempts` Supabase.
 4. Semua skenario di [testing.md](testing.md) tercatat hasilnya.
+
+## 9. Versi 2 — Rombak desain & guru virtual (14 November 2026)
+
+| ID | Fitur | Kriteria penerimaan |
+|---|---|---|
+| V1 | Desain v2 | Palet biru + pastel, kartu membulat, tab bar bawah, beranda dasbor (sapaan, hero, progres, aktivitas) |
+| V2 | Animasi | Transisi halaman, hover/tap kartu, umpan balik benar/salah, bintang, progres, loader; menghormati "kurangi gerakan" |
+| V3 | Karakter guru 2D | 6 ekspresi, 7 pose, ringan (SVG) |
+| V4 | Kelas bersegmen | 4 pelajaran sesuai materi; papan tulis bertahap; kontrol mulai/jeda/lanjut/ulang/kembali/tanya |
+| V5 | Suara | Guru berbicara (id-ID, cadangan teks); siswa bertanya dengan mikrofon; transkrip dapat dikoreksi; cadangan ketik |
+| V6 | Interupsi & kelanjutan | Menyela menghentikan suara dan menyimpan posisi; setelah "sudah paham" lanjut dari baris terakhir; "belum" → penjelasan alternatif |
+| V7 | Tutor pedagogis | Jawaban sesuai materi, terpandu, menolak topik lain; Claude opsional |
+| V8 | Kompatibilitas | Semua fitur v1 tetap berjalan dan semua tes lama tetap lulus |

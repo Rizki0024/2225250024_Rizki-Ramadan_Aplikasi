@@ -137,3 +137,29 @@ Riwayat milik siswa yang login (yang sudah selesai), terbaru dahulu:
 
 ### `GET /api/attempts/{attempt_id}` 🔒
 Ringkasan + `review` (format sama dengan respons submit). Hanya attempt milik sendiri yang berstatus `submitted`; selain itu 404.
+
+## Kelas guru virtual (v2)
+
+### `GET /api/lessons`
+Daftar pelajaran: `[{ "slug", "title", "order_no", "summary", "material_slug", "segment_count" }]`.
+
+### `GET /api/lessons/{slug}`
+Naskah lengkap: `segments[]` berisi `id`, `title`, `goal`, `concept`, `board[]`, `script[]` (`say`, `show`, `pose`, `expression`), dan `check` (opsional). Format: [virtual-teacher.md](virtual-teacher.md#3-pelajaran-bersegmen-fase-d). 404 jika tidak ada.
+
+### `POST /api/tutor/ask` 🔒
+```json
+{ "lesson_slug": "kubus", "segment_id": "kub-3", "question": "kenapa dikali enam?",
+  "history": [{ "role": "student", "text": "…" }, { "role": "teacher", "text": "…" }],
+  "simpler": false, "intent": null }
+```
+Validasi: `question` 1–300 huruf (spasi dirapikan), `history` maks. 6 giliran × 600 huruf, segmen harus ada (404). Untuk meminta penjelasan alternatif, kirim `simpler: true` dan `intent` dari jawaban sebelumnya.
+
+Response 200:
+```json
+{ "answer": "Pertanyaan bagus! Kubus punya 6 sisi …", "follow_up": "Apakah sekarang sudah lebih jelas?",
+  "intent": "kenapa-kali-6", "source": "curated", "in_scope": true, "can_simplify": true }
+```
+`source` = `curated` atau `claude`. Galat: 401 (belum login), 422 (validasi), 404 (segmen), 429 (lebih dari `TUTOR_MAX_REQUESTS` pertanyaan per 10 menit).
+
+### `GET /api/tutor/status` 🔒
+`{ "provider": "curated" | "claude" }`. `GET /api/health` juga memuat field `tutor`.

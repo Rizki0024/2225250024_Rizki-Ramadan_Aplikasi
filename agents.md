@@ -36,3 +36,10 @@ npm run build
 - Python: type hints, Pydantic v2 untuk validasi, pesan galat Bahasa Indonesia di `HTTPException.detail`.
 - React: komponen fungsi + hooks, satu halaman per file di `src/pages/`, CSS biasa di `src/styles/` dengan variabel dari `design.md`.
 - Nama variabel/kode dalam bahasa Inggris; teks yang dilihat pengguna dalam Bahasa Indonesia.
+
+## Tambahan v2 (guru virtual)
+9. Naskah kelas (`backend/app/data/lessons.json`) dan bank tanya-jawab (`tutor_kb.json`) tidak boleh memuat angka soal evaluasi (diuji `test_lessons_do_not_leak_evaluation_items`).
+10. `ANTHROPIC_API_KEY` hanya di backend. Mode bawaan tanpa kunci (curated) harus selalu berfungsi; kegagalan AI harus kembali ke curated.
+11. Guru virtual wajib memberi tahu bahwa ia program komputer, menolak topik di luar materi, dan tidak menyimpan audio.
+12. Animasi hanya `transform`/`opacity` dan harus menghormati `prefers-reduced-motion`.
+13. Logika pemutar ada di `features/classroom/player.js` (fungsi murni). Ubah beserta `player.test.js`.

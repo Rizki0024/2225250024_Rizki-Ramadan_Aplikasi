@@ -71,3 +71,44 @@ Lihat bagian **Laporan** di bawah. Bagian ini diperbarui setiap kali pengujian d
 **Uji ujung-ke-ujung produksi (13 Nov 2026)** — frontend https://belajar-kubus-balok.vercel.app + backend https://kubus-balok-api.vercel.app + Supabase, emulasi Pixel 7 & laptop 1366 px, dua akun uji sementara (dihapus setelahnya): **36/36 lulus** (M21), termasuk penyimpanan online, muat ulang evaluasi, mode offline + kirim ulang, dan isolasi data antarsiswa. CORS diperiksa: hanya domain frontend yang diizinkan.
 
 **Belum diuji (jujur):** HP Android fisik (M15). Uji 3D dilakukan dengan renderer perangkat lunak, bukan GPU HP. Uji 3D dilakukan dengan renderer perangkat lunak (SwiftShader), bukan GPU HP.
+
+## 4. Pengujian versi 2 (guru virtual) — 14 November 2026
+
+Lingkungan: branch `redesign-guru-virtual`, backend mode lokal (data bersih), Chromium headless (Playwright), emulasi Pixel 7 & laptop 1366 px.
+
+### Ringkasan
+| Lapisan | Hasil | Catatan |
+|---|---|---|
+| Backend pytest | **71/71 lulus** | 42 lama + 29 baru (lessons, tutor curated, keamanan endpoint, validasi, batas permintaan, provider Claude dengan client tiruan, fallback) |
+| Frontend Vitest | **42/42 lulus** | 25 lama + 17 baru (pemutar pelajaran, interupsi & lanjut, klasifikasi "sudah paham?") |
+| Build produksi | **Berhasil** | bundel awal 153 KB gzip (sebelumnya 102 KB; tambahan Motion + kelas guru) |
+| E2E fitur lama | **36/36 lulus** | tanpa perubahan pada skrip uji |
+| E2E fitur baru | **33/33 lulus** | `e2e/v2.e2e.mjs` |
+
+### Cakupan E2E v2
+| Kode | Skenario | Hasil |
+|---|---|---|
+| B1–B4 | Beranda v2, tab bar, progres bertambah, *reduced motion* dihormati | ✅ |
+| C1 | Karakter guru tampil & berganti ekspresi (mendengarkan, berpikir, apresiasi) | ✅ |
+| D1–D12 | Daftar pelajaran, mode fokus, papan bertahap + sorotan, jeda, cek pemahaman, lanjut bagian, selesai, status "Selesai" | ✅ |
+| E1–E5 | Mikrofon aktif + indikator, konfirmasi transkrip, izin mikrofon ditolak → ketik, jawaban suara "sudah paham" | ✅ (mikrofon tiruan) |
+| F1–F6 | Jawaban sesuai konteks, "sudah paham?", penjelasan alternatif, **lanjut dari baris yang disela**, tolak di luar topik, perhitungan terpandu | ✅ |
+| G1–G3 | Layanan tutor 503, offline saat bertanya, muat ulang tanpa kehilangan progres | ✅ |
+| M16 | Laptop: papan & guru berdampingan | ✅ |
+
+### Bug yang ditemukan & diperbaiki selama pengujian v2
+| Bug | Perbaikan |
+|---|---|
+| Pertanyaan tak relevan ("kubus bisa menggelinding?") dijawab rumus kubus karena satu kata umum + bonus konteks | Aturan pencocokan sebagian diperketat + tes regresi |
+| "54 bagi 12" tidak dihitung (tanpa kata "berapa") | Urutan pemeriksaan aritmetika diperbaiki |
+| Tombol "Sudah/Belum paham" baru muncul setelah jawaban panjang selesai dibacakan (±18 dtk) | Tombol tampil begitu jawaban datang; menekannya menghentikan suara |
+| Jawaban suara "sudah" bisa terkirim sebagai pertanyaan (closure basi) | Memakai `ref` |
+
+### Belum dapat diuji (jujur)
+| Skenario | Alasan |
+|---|---|
+| Mikrofon & suara sungguhan di HP Android (Chrome) | Butuh perangkat fisik — **lakukan manual**: izinkan mikrofon, tanya "kenapa dikali enam", periksa suara id-ID |
+| Kualitas suara Bahasa Indonesia | Tergantung mesin TTS perangkat (headless tidak punya suara id-ID → mode teks diuji) |
+| Mesin Claude dengan kunci asli | Tidak ada API key (berbayar); diuji dengan client tiruan termasuk kegagalan & penolakan |
+| Koneksi lambat sungguhan | Hanya offline & layanan gagal yang disimulasikan |
+| Versi v2 di produksi (Vercel + Supabase) | Branch belum di-push/deploy; menunggu persetujuan |

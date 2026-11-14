@@ -1,0 +1,12 @@
+{
+  "name": "belajar-kubus-balok-e2e",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "legacy": "node legacy.e2e.mjs shots",
+    "v2": "node v2.e2e.mjs shots"
+  },
+  "devDependencies": {
+    "playwright": "^1.56.0"
+  }
+}
