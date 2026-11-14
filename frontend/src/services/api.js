@@ -71,6 +71,9 @@ export const api = {
   submitEvaluation: (attemptId, answers) =>
     request(`/api/evaluations/${encodeURIComponent(attemptId)}/submit`, { method: 'POST', body: { answers } }),
   savePractice: (payload) => request('/api/practice/attempts', { method: 'POST', body: payload }),
+  lessons: () => request('/api/lessons', { auth: false }),
+  lesson: (slug) => request(`/api/lessons/${encodeURIComponent(slug)}`, { auth: false }),
+  tutorAsk: (payload) => request('/api/tutor/ask', { method: 'POST', body: payload, timeout: 30000 }),
   attempts: () => request('/api/attempts'),
   attempt: (id) => request(`/api/attempts/${encodeURIComponent(id)}`),
 };
