@@ -3,7 +3,7 @@ import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth.jsx';
 import Icon from '../components/Icon.jsx';
 import { PageMotion } from '../components/motion.jsx';
-import Teacher from '../features/characters/Teacher.jsx';
+import Teacher from '../features/characters/BuSari.jsx';
 
 const CODE_RE = /^[A-Z0-9-]{3,20}$/;
 const PIN_RE = /^\d{4,6}$/;

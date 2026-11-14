@@ -5,7 +5,7 @@ import Icon from '../../components/Icon.jsx';
 import { api } from '../../services/api.js';
 import { listen, speak, stopSpeaking, sttSupported } from '../voice/speech.js';
 import { classifyUnderstanding } from './player.js';
-import Teacher from '../characters/Teacher.jsx';
+import Teacher from '../characters/BuSari.jsx';
 
 function Face({ role }) {
   if (role === 'student') return <span className="bubble-face me" aria-hidden="true"><Icon name="user" size={22} /></span>;

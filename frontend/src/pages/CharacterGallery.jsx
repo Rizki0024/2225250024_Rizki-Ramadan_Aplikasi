@@ -1,12 +1,25 @@
 // Galeri aset karakter v3: semua pose & ekspresi guru, serta pose siswa (untuk pemeriksaan visual & presentasi).
 import Page from '../components/Layout.jsx';
-import Teacher, { EXPRESSIONS, POSES } from '../features/characters/Teacher.jsx';
+import { Link } from 'react-router-dom';
+import { EXPRESSIONS, POSES } from '../features/characters/Teacher.jsx';
+import Teacher, { useRigManifest } from '../features/characters/BuSari.jsx';
 import Student from '../features/characters/Student.jsx';
+
+function GalleryStatus() {
+  const manifest = useRigManifest();
+  return (
+    <div className="card row between">
+      <span>Sumber karakter guru: <strong>{manifest ? 'ilustrasi raster berlapis (rig)' : 'SVG cadangan — aset raster belum dipasang'}</strong></span>
+      <Link className="btn small" to="/karakter/rig">Penyetel Rig</Link>
+    </div>
+  );
+}
 
 export default function CharacterGallery() {
   return (
     <Page title="Galeri Karakter" back="/">
       <h1>Karakter Bu Sari & siswa</h1>
+      <GalleryStatus />
       <div className="card"><strong>Pose guru</strong>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))', gap: 8 }}>
           {POSES.map((p) => <figure key={p} className="figure center"><Teacher size={140} pose={p} expression="happy" /><figcaption>{p}</figcaption></figure>)}

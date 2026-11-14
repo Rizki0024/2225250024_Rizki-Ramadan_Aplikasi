@@ -1,0 +1,50 @@
+{
+  "name": "Bu Sari",
+  "version": 1,
+  "width": 1024,
+  "height": 1536,
+  "poseMap": { "idle": "explain", "talk": "explain", "point": "point", "wave": "wave", "listen": "listen", "think": "think", "cheer": "appreciate" },
+  "expressions": {
+    "neutral": {},
+    "happy": { "mouth": "smile" },
+    "explaining": { "mouth": "open" },
+    "thinking": { "eyes": "up" },
+    "listening": {},
+    "proud": { "eyes": "happy", "mouth": "smile" }
+  },
+  "poses": {
+    "explain": {
+      "base": "explain/base.png",
+      "regions": { "eyes": { "x": 380, "y": 330, "w": 260, "h": 110, "feather": 14 }, "mouth": { "x": 455, "y": 450, "w": 110, "h": 70, "feather": 12 } },
+      "variants": {
+        "eyes": { "closed": "explain/eyes-closed.png", "happy": "explain/eyes-happy.png" },
+        "mouth": { "open": "explain/mouth-open.png", "wide": "explain/mouth-wide.png", "o": "explain/mouth-o.png", "smile": "explain/mouth-smile.png" }
+      }
+    },
+    "point": {
+      "base": "point/base.png",
+      "regions": { "eyes": { "x": 380, "y": 330, "w": 260, "h": 110 }, "mouth": { "x": 455, "y": 450, "w": 110, "h": 70 } },
+      "variants": { "eyes": { "closed": "point/eyes-closed.png" }, "mouth": { "open": "point/mouth-open.png" } }
+    },
+    "wave": {
+      "base": "wave/base.png",
+      "regions": { "eyes": { "x": 380, "y": 330, "w": 260, "h": 110 }, "mouth": { "x": 455, "y": 450, "w": 110, "h": 70 } },
+      "variants": { "eyes": { "closed": "wave/eyes-closed.png" }, "mouth": { "open": "wave/mouth-open.png", "smile": "wave/mouth-smile.png" } }
+    },
+    "listen": {
+      "base": "listen/base.png",
+      "regions": { "eyes": { "x": 380, "y": 330, "w": 260, "h": 110 } },
+      "variants": { "eyes": { "closed": "listen/eyes-closed.png" } }
+    },
+    "think": {
+      "base": "think/base.png",
+      "regions": { "eyes": { "x": 380, "y": 330, "w": 260, "h": 110 } },
+      "variants": { "eyes": { "closed": "think/eyes-closed.png", "up": "think/eyes-up.png" } }
+    },
+    "appreciate": {
+      "base": "appreciate/base.png",
+      "regions": { "eyes": { "x": 380, "y": 330, "w": 260, "h": 110 }, "mouth": { "x": 455, "y": 450, "w": 110, "h": 70 } },
+      "variants": { "eyes": { "happy": "appreciate/eyes-happy.png" }, "mouth": { "open": "appreciate/mouth-open.png", "smile": "appreciate/mouth-smile.png" } }
+    }
+  }
+}

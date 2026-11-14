@@ -29,7 +29,7 @@ export default function MenuDrawer({ open, onClose }) {
         <>
           <motion.div key="bd" className="drawer-backdrop" onClick={onClose} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} />
           <motion.aside key="dr" className="drawer" role="dialog" aria-modal="true" aria-label="Menu utama"
-            initial={{ x: '-100%' }} animate={{ x: 0 }} exit={{ x: '-100%' }} transition={{ type: 'spring', stiffness: 360, damping: 36 }}>
+            initial={{ x: '-100%' }} animate={{ x: 0 }} exit={{ x: '-100%' }} transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}>
             <div className="row between">
               <button type="button" className="icon-btn" onClick={onClose} aria-label="Tutup menu"><Icon name="cross" /></button>
               <Link to="/pengaturan" className="icon-btn" onClick={onClose} aria-label="Pengaturan"><Icon name="gear" /></Link>

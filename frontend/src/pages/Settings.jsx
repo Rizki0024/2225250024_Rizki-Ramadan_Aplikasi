@@ -4,7 +4,7 @@ import Icon from '../components/Icon.jsx';
 import { Stagger, StaggerItem } from '../components/motion.jsx';
 import { useAuth } from '../hooks/useAuth.jsx';
 import { useSettings } from '../hooks/useSettings.jsx';
-import Teacher from '../features/characters/Teacher.jsx';
+import Teacher from '../features/characters/BuSari.jsx';
 import { speak } from '../features/voice/speech.js';
 
 function Switch({ checked, onChange, label }) {

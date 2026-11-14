@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
-import Teacher from '../features/characters/Teacher.jsx';
+import Teacher from '../features/characters/BuSari.jsx';
 import { speak } from '../features/voice/speech.js';
 import { useSettings } from '../hooks/useSettings.jsx';
 import { Link, useParams } from 'react-router-dom';

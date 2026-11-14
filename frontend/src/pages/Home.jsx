@@ -8,7 +8,7 @@ import { CardLink, Stagger, StaggerItem } from '../components/motion.jsx';
 import { useAuth } from '../hooks/useAuth.jsx';
 import { api } from '../services/api.js';
 import { points, summarize } from '../features/progress/progress.js';
-import Teacher from '../features/characters/Teacher.jsx';
+import Teacher from '../features/characters/BuSari.jsx';
 import { BookArt, ChartArt, ClipboardArt, CubeArt, GamepadArt, TrophyArt } from '../features/illustrations/Illustrations.jsx';
 
 function TeacherIcon() {

@@ -75,3 +75,10 @@ Pembaruan terakhir: 13 November 2026
 - ✅ Hapus total aset karakter lama; guru & siswa digambar ulang dari nol (`features/characters/`)
 - ✅ Galeri karakter `/karakter`; semua halaman memakai aset baru
 - ⬜ Uji HP Android fisik · ⬜ gabung ke `main` & deploy setelah disetujui
+
+## Versi 3.2 — Karakter raster berlapis (rig)
+- ✅ Rencana & spesifikasi aset ([character-assets.md](character-assets.md))
+- ✅ Mesin rig + sinkron bibir + Penyetel Rig + pemeriksa aset (diuji dengan gambar uji)
+- 👤 Pengembang membuat 23 PNG (AI, inpainting) sesuai spesifikasi
+- ⬜ Atur kotak area di `/karakter/rig`, simpan `manifest.json`, jalankan semua tes, uji di HP
+- ⬜ Setelah lulus: hapus `features/characters/Teacher.jsx` (SVG) dari halaman

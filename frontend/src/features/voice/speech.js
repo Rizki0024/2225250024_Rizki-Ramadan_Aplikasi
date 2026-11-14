@@ -39,6 +39,11 @@ export function readingMs(text, rate = 1) {
   return Math.max(1800, (words * 400) / rate);
 }
 
+/** Sinyal untuk sinkron bibir karakter: {type: 'start'|'word'|'end', word}. */
+function emit(type, word = '') {
+  if (typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('kb:speech', { detail: { type, word } }));
+}
+
 /**
  * Mengucapkan teks. Mengembalikan { done: Promise<'end'|'cancel'>, cancel() }.
  * mode 'voice' memakai suara id-ID; mode 'text' (bisu / tidak ada suara Indonesia) memakai timer baca.
@@ -47,12 +52,18 @@ export function speak(text, { muted = false, rate = 1, onStart } = {}) {
   let cancelFn = () => {};
   const done = new Promise((resolve) => {
     let settled = false;
-    const finish = (why) => { if (!settled) { settled = true; resolve(why); } };
+    const finish = (why) => { if (!settled) { settled = true; emit('end'); resolve(why); } };
     const voice = muted ? null : pickVoice();
     if (!voice || load('kb_tts_fast', false) === true) {
       onStart?.('text');
-      const t = setTimeout(() => finish('end'), readingMs(text, rate));
-      cancelFn = () => { clearTimeout(t); finish('cancel'); };
+      emit('start');
+      // Mode teks: kirim sinyal kata dengan ritme baca agar mulut tetap bergerak sesuai kalimat.
+      const words = String(text).split(/\s+/).filter(Boolean);
+      const total = readingMs(text, rate);
+      const step = total / Math.max(1, words.length);
+      const timers = words.map((w, i) => setTimeout(() => emit('word', w), i * step));
+      const t = setTimeout(() => finish('end'), total);
+      cancelFn = () => { clearTimeout(t); timers.forEach(clearTimeout); finish('cancel'); };
       return;
     }
     const u = new window.SpeechSynthesisUtterance(text);
@@ -61,7 +72,12 @@ export function speak(text, { muted = false, rate = 1, onStart } = {}) {
     u.rate = rate;
     u.pitch = 1.05;
     let cancelled = false;
-    u.onstart = () => onStart?.('voice');
+    u.onstart = () => { emit('start'); onStart?.('voice'); };
+    u.onboundary = (e) => {
+      if (e.name && e.name !== 'word') return;
+      const rest = text.slice(e.charIndex);
+      emit('word', rest.slice(0, e.charLength || rest.search(/\s|$/)));
+    };
     u.onend = () => finish(cancelled ? 'cancel' : 'end');
     u.onerror = () => finish(cancelled ? 'cancel' : 'end');
     // Pengaman: beberapa perangkat tidak pernah memanggil onend.

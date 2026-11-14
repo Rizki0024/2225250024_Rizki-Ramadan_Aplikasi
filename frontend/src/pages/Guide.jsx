@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import Page from '../components/Layout.jsx';
 import Icon from '../components/Icon.jsx';
-import Teacher from '../features/characters/Teacher.jsx';
+import Teacher from '../features/characters/BuSari.jsx';
 import { BulbArt } from '../features/illustrations/Illustrations.jsx';
 
 const QUICK = [

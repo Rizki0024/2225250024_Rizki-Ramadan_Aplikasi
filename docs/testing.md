@@ -147,3 +147,17 @@ pytest **71/71**, vitest **49/49**, build berhasil, E2E fitur lama **36/36** (da
 Perubahan uji: v2 B4 kini memeriksa kelas animasi `.c-body` milik aset baru; v3 S1 (ganti tampilan guru "berkerudung") **dihapus karena fiturnya dihapus atas permintaan**, diganti S1 (7 pose guru + 3 pose siswa di galeri) dan S1b (tidak ada sisa pilihan lama).
 Pemeriksaan visual galeri `/karakter` menemukan & memperbaiki: rambut kaku → bergelombang; tangan kecil & menggantung → lebih besar, tubuh dipotong di pinggang; leher terlalu panjang (guru & siswa); tangan pose berpikir/mendengar tertutup tubuh/rambut → dipindah ke lapisan depan; lengan kemeja siswa tak terlihat di latar putih → diberi garis tepi.
 
+## 7. Pengujian v3.2 — mesin rig karakter raster (15 November 2026)
+| Lapisan | Hasil |
+|---|---|
+| Vitest | **54/54** (+5 logika rig: validasi manifest, pemetaan pose, bentuk mulut per vokal, kedip/ekspresi/bicara, mask area) |
+| Build | berhasil |
+| E2E rig (`e2e/rig.e2e.mjs`) | **9/9** — gambar uji dibangkitkan kanvas & disajikan via intersepsi jaringan: cadangan SVG tanpa aset, rig raster dengan aset, cadangan pose, berkedip, sinkron bibir (sinyal kata), Penyetel Rig, manifest rusak ditolak. Hasil tempel varian diperiksa visual: mulut/mata hanya berubah di kotak area |
+| E2E guru virtual (v2) | **33/33** |
+| E2E v3 | **33/33** |
+
+Catatan:
+- H8 (laci tertutup dengan Escape) sempat gagal: fungsi benar (5/5 tertutup), tetapi animasi tutup 0,5–0,9 dtk melebihi jeda tetap 0,5 dtk di tes. Perbaikan: animasi laci dipercepat (±0,37 dtk) dan tes menunggu laci tertutup (maks. 3 dtk), bukan jeda tetap.
+- Satu run v3 berhenti karena `/karakter` *timeout* saat dimuat, tepat setelah file diubah (server dev sedang memproses ulang). Diukur ulang: halaman dimuat ±0,5 dtk (3×), run ulang lulus 33/33. Dicatat sebagai potensi uji *flaky*.
+- Belum diuji: aset karakter asli (belum tersedia) dan sinkron bibir dengan suara id-ID sungguhan di HP.
+

@@ -6,7 +6,7 @@ import Page from '../components/Layout.jsx';
 import Icon from '../components/Icon.jsx';
 import { ErrorBox, Loading } from '../components/common.jsx';
 import { AnimatedBar, CardLink, FeedbackMotion, Stagger } from '../components/motion.jsx';
-import Teacher from '../features/characters/Teacher.jsx';
+import Teacher from '../features/characters/BuSari.jsx';
 import Whiteboard from '../features/classroom/Whiteboard.jsx';
 import AskPanel from '../features/classroom/AskPanel.jsx';
 import { boardState, progressPercent, reducer as playerReducer, restore, teacherLook } from '../features/classroom/player.js';

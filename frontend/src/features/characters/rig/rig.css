@@ -1,0 +1,10 @@
+.rig { position: relative; display: block; max-width: 100%; }
+.rig-body { position: absolute; inset: 0; animation: rig-breathe 3.6s ease-in-out infinite; transform-origin: 50% 100%; }
+.rig-fade, .rig-pose { position: absolute; inset: 0; }
+.rig-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; user-select: none; pointer-events: none; }
+@keyframes rig-breathe {
+  0%, 100% { transform: scaleY(1) translateY(0) rotate(0deg); }
+  50% { transform: scaleY(1.008) translateY(-0.4%) rotate(0.3deg); }
+}
+@media (prefers-reduced-motion: reduce) { .rig-body { animation: none; } }
+.reduce-motion .rig-body { animation: none; }

@@ -3,7 +3,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import Page from '../components/Layout.jsx';
 import { ErrorBox, ProgressBar, Stars } from '../components/common.jsx';
 import { AnimatedStars, CardLink, FeedbackMotion, Stagger } from '../components/motion.jsx';
-import Teacher from '../features/characters/Teacher.jsx';
+import Teacher from '../features/characters/BuSari.jsx';
 import pickArt from '../features/illustrations/pickArt.jsx';
 import { StarMascot } from '../features/illustrations/Illustrations.jsx';
 import SolutionSteps from '../components/SolutionSteps.jsx';
