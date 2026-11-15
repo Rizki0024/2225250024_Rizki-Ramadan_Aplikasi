@@ -194,3 +194,14 @@ Atas permintaan pengembang hanya Bu Sari yang ditampilkan: `features/characters/
 
 Ditemukan saat regresi & diperbaiki: penyimpanan lokal JSON (hanya mode pengembangan/E2E, bukan Supabase) sesekali gagal `PermissionError: Access is denied` saat mengganti `db.json` di Windows → evaluasi gagal dikirim (500). Perbaikan: kunci penulisan, file sementara unik, coba ulang. Tes baru gagal pada kode lama dan lulus pada kode baru.
 Catatan: satu run legacy sempat berhenti saat Playwright mengambil *screenshot* halaman penuh (timeout alat uji, bukan fungsi aplikasi); run ulang dengan data bersih lulus 36/36.
+
+## 10. Deploy v3 ke produksi (15 November 2026)
+`redesign-v3` digabung (*fast-forward*) ke `main` dan di-push; Vercel membangun ulang frontend & backend otomatis. Tidak ada perubahan skema Supabase; mode tutor produksi `curated` (tanpa biaya).
+
+Uji asap produksi **tanpa menulis data** (emulasi Pixel 7): **12/12** setelah koreksi P9.
+- Halaman awal menampilkan Bu Sari (rig raster), tanpa karakter siswa; galeri 13 rig, 0 gambar rusak; Bu Sari berkedip; halaman masuk tampil; halaman siswa tanpa login diarahkan ke Masuk; tidak ada galat JavaScript.
+- API sehat (`storage: supabase`, `tutor: curated`); rute guru virtual tersedia; CORS hanya mengizinkan domain frontend.
+- Endpoint data siswa tanpa token → **401** (`/api/attempts`, `/api/auth/me`, `/api/evaluations/start`, `/api/tutor/ask`). `/api/lessons` & `/api/materials` sengaja publik (konten ajar); respons tidak memuat `answer_key`/`explanation`. (P9 awalnya mengharapkan 401 untuk `/api/lessons` — ekspektasi tes yang salah, bukan bug.)
+- Bundel JS frontend dipindai: tidak ada kunci rahasia.
+
+Belum diuji di produksi: alur login → kelas → evaluasi dengan akun sungguhan (perlu akun uji sementara di Supabase atau akun siswa nyata), suara id-ID & mikrofon di HP Android fisik.
