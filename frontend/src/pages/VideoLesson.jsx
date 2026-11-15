@@ -10,7 +10,7 @@ import Whiteboard from '../features/classroom/Whiteboard.jsx';
 import AskPanel from '../features/classroom/AskPanel.jsx';
 import { boardState, reducer as playerReducer, restore, teacherLook } from '../features/classroom/player.js';
 import { buildTimeline, formatTime, positionAt, segmentStarts, timeOf } from '../features/classroom/timeline.js';
-import { speak, stopSpeaking, sttSupported } from '../features/voice/speech.js';
+import { hasIndonesianVoice, speak, stopSpeaking, sttSupported, ttsSupported, unlockSpeech, voicesReady } from '../features/voice/speech.js';
 import { useAuth } from '../hooks/useAuth.jsx';
 import { useSettings } from '../hooks/useSettings.jsx';
 import { api } from '../services/api.js';
@@ -30,6 +30,7 @@ export default function VideoLesson() {
   const [cc, setCc] = useState(true);
   const [qaPhase, setQaPhase] = useState(null);
   const [qaKey, setQaKey] = useState(0);
+  const [voiceNote, setVoiceNote] = useState('');
   const frame = useRef(null);
   const restored = useRef(false);
 
@@ -71,7 +72,13 @@ export default function VideoLesson() {
     return () => { clearInterval(tick); s.cancel(); setSpeaking(false); };
   }, [lesson, state?.status, state?.seg, state?.line, line, settings.muted, settings.rate]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  useEffect(() => () => stopSpeaking(), []);
+  useEffect(() => {
+    voicesReady().then(() => {
+      if (!ttsSupported()) setVoiceNote('Perangkat ini tidak mendukung suara. Bu Sari menjelaskan lewat teks.');
+      else if (!hasIndonesianVoice()) setVoiceNote('Suara Bahasa Indonesia belum terpasang di perangkat ini. Bu Sari menjelaskan lewat teks. Coba "Tes suara" di Pengaturan.');
+    });
+    return () => stopSpeaking();
+  }, []);
 
   if (error && !lesson) return <Page title="Video Pembelajaran" back="/kelas"><ErrorBox error={error} onRetry={fetchLesson} /></Page>;
   if (!lesson || !state || !timeline) return <Page title="Video Pembelajaran" back="/kelas"><Loading text="Menyiapkan video…" /></Page>;
@@ -99,21 +106,22 @@ export default function VideoLesson() {
   return (
     <Page title="Video Pembelajaran" back="/kelas">
       <h1 style={{ marginBottom: 0 }}>{lesson.title}</h1>
+      {voiceNote && !settings.muted ? <div className="alert warn small">{voiceNote}</div> : null}
       <div className="video-frame" ref={frame}>
-        <div className="video-scene" onClick={() => state.status !== 'qa' && act(playing ? 'PAUSE' : 'PLAY')} role="presentation">
+        <div className="video-scene" onClick={() => { if (state.status === 'qa') return; unlockSpeech(); act(playing ? 'PAUSE' : 'PLAY'); }} role="presentation">
           <div className="window" /><div className="shelf" />
           <div className="chalk"><Whiteboard board={segment.board} revealed={revealed} active={active} segmentKey={segment.id} autoScroll={false} maxItems={3} /></div>
           <div className="teacher-pos"><Teacher size={220} expression={look.expression} pose={look.pose} speaking={speaking && playing} /></div>
           {!playing && state.status !== 'qa' ? (
             <button type="button" className="video-bigplay" aria-label={state.status === 'finished' ? 'Putar ulang video' : 'Putar video'}
-              onClick={(e) => { e.stopPropagation(); act('PLAY'); }}>
+              onClick={(e) => { e.stopPropagation(); unlockSpeech(); act('PLAY'); }}>
               <Icon name={state.status === 'finished' ? 'replay' : 'play'} size={34} />
             </button>
           ) : null}
           {cc && line && (playing || state.status === 'paused') ? <div className="video-cc" aria-live="polite">{line.say}</div> : null}
         </div>
         <div className="video-bar" role="toolbar" aria-label="Kontrol video">
-          <button type="button" onClick={() => act(playing ? 'PAUSE' : 'PLAY')} aria-label={playing ? 'Jeda' : 'Putar'} disabled={state.status === 'qa'}>
+          <button type="button" onClick={() => { unlockSpeech(); act(playing ? 'PAUSE' : 'PLAY'); }} aria-label={playing ? 'Jeda' : 'Putar'} disabled={state.status === 'qa'}>
             <Icon name={playing ? 'pause' : 'play'} size={20} />
           </button>
           <span aria-label="Waktu video">{formatTime(now)} / {formatTime(timeline.total)}</span>

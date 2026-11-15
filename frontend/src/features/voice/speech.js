@@ -8,27 +8,71 @@ export function ttsSupported() {
 }
 
 let cachedVoice;
+/** Status suara terakhir untuk diagnosis: { mode, voice, error }. */
+export const voiceStatus = { mode: null, voice: null, error: null };
+
+/** Kode bahasa Indonesia: "id-ID", "id_ID", serta kode Java lama "in-ID"/"in_ID" yang dipakai sebagian HP Android. */
+export function isIndonesianLang(lang = '') {
+  const l = String(lang).toLowerCase().replace('_', '-');
+  return l === 'id' || l === 'in' || l.startsWith('id-') || l.startsWith('in-');
+}
+
+export function isAndroid() {
+  return typeof navigator !== 'undefined' && /android/i.test(navigator.userAgent || '');
+}
+
+/** Memilih suara Indonesia dari daftar suara (utamakan suara lokal/offline). */
+export function chooseVoice(voices = []) {
+  const indo = voices.filter((v) => isIndonesianLang(v.lang) || /indonesia/i.test(v.name || ''));
+  return indo.find((v) => v.localService) || indo[0] || null;
+}
+
 function pickVoice() {
   if (!ttsSupported()) return null;
   const voices = window.speechSynthesis.getVoices();
   if (!voices.length) return cachedVoice ?? null;
-  cachedVoice = voices.find((v) => v.lang === 'id-ID') || voices.find((v) => v.lang?.toLowerCase().startsWith('id')) || null;
+  cachedVoice = chooseVoice(voices);
   return cachedVoice;
 }
 
-/** Menunggu daftar suara dimuat (Chrome memuatnya secara asinkron). */
-export function voicesReady(timeout = 1500) {
+/** Menunggu daftar suara dimuat (Chrome/Android memuatnya secara asinkron). */
+export function voicesReady(timeout = 2000) {
   if (!ttsSupported()) return Promise.resolve(null);
   if (window.speechSynthesis.getVoices().length) return Promise.resolve(pickVoice());
   return new Promise((resolve) => {
-    const done = () => { window.speechSynthesis.removeEventListener?.('voiceschanged', done); resolve(pickVoice()); };
+    let finished = false;
+    const done = () => {
+      if (finished) return;
+      finished = true;
+      window.speechSynthesis.removeEventListener?.('voiceschanged', done);
+      resolve(pickVoice());
+    };
     window.speechSynthesis.addEventListener?.('voiceschanged', done);
     setTimeout(done, timeout);
   });
 }
 
+/** Ada suara Indonesia, atau HP Android (mesin TTS bawaan dapat berbahasa Indonesia lewat kode bahasa saja). */
 export function hasIndonesianVoice() {
-  return !!pickVoice();
+  return !!pickVoice() || (ttsSupported() && isAndroid());
+}
+
+/**
+ * Membuka kunci suara di dalam ketukan pengguna (wajib di sebagian HP sebelum suara pertama).
+ * Panggil langsung dari handler klik tombol Putar/Mulai.
+ */
+export function unlockSpeech() {
+  if (!ttsSupported()) return;
+  try {
+    window.speechSynthesis.resume();
+    if (!unlockSpeech.done) {
+      const u = new window.SpeechSynthesisUtterance(' ');
+      u.volume = 0;
+      u.lang = 'id-ID';
+      window.speechSynthesis.speak(u);
+      unlockSpeech.done = true;
+    }
+  } catch { /* abaikan */ }
 }
 
 /** Perkiraan durasi baca (untuk mode tanpa suara: subtitle tetap tampil). */
@@ -50,42 +94,66 @@ function emit(type, word = '') {
  */
 export function speak(text, { muted = false, rate = 1, onStart } = {}) {
   let cancelFn = () => {};
+  let cancelledEarly = false;
+  cancelFn = () => { cancelledEarly = true; };
   const done = new Promise((resolve) => {
     let settled = false;
     const finish = (why) => { if (!settled) { settled = true; emit('end'); resolve(why); } };
-    const voice = muted ? null : pickVoice();
-    if (!voice || load('kb_tts_fast', false) === true) {
+
+    // Mode teks: tanpa bunyi, tetapi sinyal kata dikirim dengan ritme baca agar mulut tetap bergerak.
+    const textMode = (ms = readingMs(text, rate)) => {
+      voiceStatus.mode = 'text';
       onStart?.('text');
       emit('start');
-      // Mode teks: kirim sinyal kata dengan ritme baca agar mulut tetap bergerak sesuai kalimat.
       const words = String(text).split(/\s+/).filter(Boolean);
-      const total = readingMs(text, rate);
-      const step = total / Math.max(1, words.length);
+      const step = ms / Math.max(1, words.length);
       const timers = words.map((w, i) => setTimeout(() => emit('word', w), i * step));
-      const t = setTimeout(() => finish('end'), total);
+      const t = setTimeout(() => finish('end'), ms);
       cancelFn = () => { clearTimeout(t); timers.forEach(clearTimeout); finish('cancel'); };
-      return;
-    }
-    const u = new window.SpeechSynthesisUtterance(text);
-    u.voice = voice;
-    u.lang = 'id-ID';
-    u.rate = rate;
-    u.pitch = 1.05;
-    let cancelled = false;
-    u.onstart = () => { emit('start'); onStart?.('voice'); };
-    u.onboundary = (e) => {
-      if (e.name && e.name !== 'word') return;
-      const rest = text.slice(e.charIndex);
-      emit('word', rest.slice(0, e.charLength || rest.search(/\s|$/)));
     };
-    u.onend = () => finish(cancelled ? 'cancel' : 'end');
-    u.onerror = () => finish(cancelled ? 'cancel' : 'end');
-    // Pengaman: beberapa perangkat tidak pernah memanggil onend.
-    const guard = setTimeout(() => finish('end'), readingMs(text, rate) * 2.5 + 4000);
-    u.addEventListener('end', () => clearTimeout(guard));
-    cancelFn = () => { cancelled = true; clearTimeout(guard); window.speechSynthesis.cancel(); finish('cancel'); };
-    window.speechSynthesis.cancel();
-    window.speechSynthesis.speak(u);
+
+    if (muted || !ttsSupported() || load('kb_tts_fast', false) === true) { textMode(); return; }
+
+    voicesReady().then((voice) => {
+      if (cancelledEarly) { finish('cancel'); return; }
+      const androidLangOnly = !voice && isAndroid();
+      if (!voice && !androidLangOnly) { voiceStatus.voice = null; textMode(); return; }
+      const synth = window.speechSynthesis;
+      const u = new window.SpeechSynthesisUtterance(text);
+      if (voice) u.voice = voice;
+      u.lang = voice?.lang || 'id-ID';
+      u.rate = rate;
+      u.pitch = 1.05;
+      voiceStatus.voice = voice ? `${voice.name} (${voice.lang})` : 'bawaan Android (id-ID)';
+      let cancelled = false;
+      let started = false;
+      const startedAt = Date.now();
+      u.onstart = () => { started = true; voiceStatus.mode = 'voice'; voiceStatus.error = null; emit('start'); onStart?.('voice'); };
+      u.onboundary = (e) => {
+        if (e.name && e.name !== 'word') return;
+        const rest = text.slice(e.charIndex);
+        emit('word', rest.slice(0, e.charLength || rest.search(/\s|$/)));
+      };
+      const guard = setTimeout(() => finish('end'), readingMs(text, rate) * 2.5 + 4000);
+      u.onend = () => { clearTimeout(guard); finish(cancelled ? 'cancel' : 'end'); };
+      u.onerror = (e) => {
+        clearTimeout(guard);
+        if (cancelled || e?.error === 'interrupted' || e?.error === 'canceled') { finish('cancel'); return; }
+        // Suara gagal (mis. "not-allowed", "synthesis-failed"): catat & lanjutkan dalam mode teks.
+        voiceStatus.error = e?.error || 'gagal';
+        if (!started) textMode(Math.max(800, readingMs(text, rate) - (Date.now() - startedAt)));
+        else finish('end');
+      };
+      cancelFn = () => { cancelled = true; clearTimeout(guard); synth.cancel(); finish('cancel'); };
+      // Bug Chrome Android: speak() tepat setelah cancel() kadang diabaikan → beri jeda singkat.
+      if (synth.speaking || synth.pending) {
+        synth.cancel();
+        setTimeout(() => { if (!cancelled) { synth.resume(); synth.speak(u); } }, 80);
+      } else {
+        synth.resume();
+        synth.speak(u);
+      }
+    });
   });
   return { done, cancel: () => cancelFn() };
 }

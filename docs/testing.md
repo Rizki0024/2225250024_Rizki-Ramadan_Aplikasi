@@ -205,3 +205,21 @@ Uji asap produksi **tanpa menulis data** (emulasi Pixel 7): **12/12** setelah ko
 - Bundel JS frontend dipindai: tidak ada kunci rahasia.
 
 Belum diuji di produksi: alur login → kelas → evaluasi dengan akun sungguhan (perlu akun uji sementara di Supabase atau akun siswa nyata), suara id-ID & mikrofon di HP Android fisik.
+
+## 11. Perbaikan suara Bu Sari di HP Android (15 November 2026)
+Laporan pengembang: di HP, video pembelajaran tidak bersuara. Penyebab yang ditemukan di `features/voice/speech.js` & `pages/VideoLesson.jsx`:
+1. Sebagian HP Android menamai suara Indonesia dengan kode Java lama `in-ID`/`in_ID`; aplikasi hanya mencari `id…` → suara tidak ditemukan → mode teks (bisu). Kini `isIndonesianLang` menerima `id`/`in` dengan `-` atau `_`; di Android tanpa suara terdaftar, ucapan tetap dikirim dengan `lang = id-ID` ke mesin TTS bawaan.
+2. Halaman Video tidak menunggu daftar suara dimuat (di HP dimuat terlambat) → kini `speak()` menunggu `voicesReady()`.
+3. Bug Chrome Android: `speak()` tepat setelah `cancel()` kadang diabaikan → jeda 80 ms bila masih berbicara; `resume()` sebelum `speak()`.
+4. Galat suara dianggap "selesai" sehingga video berjalan diam-diam → kini dicatat (`voiceStatus.error`) dan dilanjutkan dengan mode teks.
+5. `unlockSpeech()` dipanggil langsung di ketukan tombol Putar/Mulai (Video & Kelas).
+Tambahan: peringatan suara di halaman Video (sama seperti Kelas) dan **Tes suara** + diagnosis di Pengaturan (suara dipakai, daftar suara Indonesia, galat).
+
+| Lapisan | Hasil |
+|---|---|
+| Vitest | **60/60** (+4 `speech.test.js`: kode `in-ID`/`in_ID`, pilihan suara lokal, suara Android dipakai, galat → mode teks) |
+| Build | berhasil |
+| E2E legacy / v2 / v3 / rig | **36/36**, **33/33**, **33/33**, **10/10** (rig: R2/R9 kini menunggu semua rig dirender — sempat gagal karena menghitung terlalu cepat; 3× berturut-turut lulus) |
+| Tes suara di emulasi Pixel 7 | jalur "bawaan Android (id-ID)" berjalan, laporan diagnosis tampil, tanpa galat JS |
+
+Belum terbukti: bunyi sungguhan di HP Android fisik — menunggu uji ulang pengembang memakai tombol **Tes suara**.

@@ -10,7 +10,7 @@ import Teacher from '../features/characters/BuSari.jsx';
 import Whiteboard from '../features/classroom/Whiteboard.jsx';
 import AskPanel from '../features/classroom/AskPanel.jsx';
 import { boardState, progressPercent, reducer as playerReducer, restore, teacherLook } from '../features/classroom/player.js';
-import { hasIndonesianVoice, speak, stopSpeaking, sttSupported, ttsSupported, voicesReady } from '../features/voice/speech.js';
+import { hasIndonesianVoice, speak, stopSpeaking, sttSupported, ttsSupported, unlockSpeech, voicesReady } from '../features/voice/speech.js';
 import { doneLessons, markLessonDone } from '../features/progress/progress.js';
 import { useAuth } from '../hooks/useAuth.jsx';
 import { useSettings } from '../hooks/useSettings.jsx';
@@ -249,7 +249,7 @@ function Classroom({ slug }) {
           <div className="btn-row">
             <Link className="btn" to="/latihan">Latihan soal</Link>
             <Link className="btn secondary" to="/kelas">Pelajaran lain</Link>
-            <button type="button" className="btn ghost" onClick={() => act('PLAY')}>Ulangi dari awal</button>
+            <button type="button" className="btn ghost" onClick={() => { unlockSpeech(); act('PLAY'); }}>Ulangi dari awal</button>
           </div>
         </div>
       ) : null}
@@ -258,7 +258,7 @@ function Classroom({ slug }) {
         <div className="player-bar" role="toolbar" aria-label="Kontrol pelajaran">
           <button type="button" className="ctrl" onClick={() => act('PREV_SEGMENT')} aria-label="Bagian sebelumnya" disabled={state.seg === 0}><Icon name="prev" /></button>
           <button type="button" className="ctrl" onClick={() => act('REPLAY_SEGMENT')} aria-label="Ulangi bagian ini"><Icon name="replay" /></button>
-          <button type="button" className="ctrl main" onClick={() => act(playing ? 'PAUSE' : 'PLAY')}
+          <button type="button" className="ctrl main" onClick={() => { unlockSpeech(); act(playing ? 'PAUSE' : 'PLAY'); }}
             aria-label={playing ? 'Jeda' : state.status === 'idle' ? 'Mulai' : 'Lanjutkan'} disabled={state.status === 'check'}>
             <Icon name={playing ? 'pause' : 'play'} size={28} />
           </button>
