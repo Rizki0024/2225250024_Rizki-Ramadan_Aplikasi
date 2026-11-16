@@ -38,9 +38,14 @@ npm run build
 - Nama variabel/kode dalam bahasa Inggris; teks yang dilihat pengguna dalam Bahasa Indonesia.
 
 ## Tambahan v2 (guru virtual)
-9. Naskah kelas (`backend/app/data/lessons.json`) dan bank tanya-jawab (`tutor_kb.json`) tidak boleh memuat angka soal evaluasi (diuji `test_lessons_do_not_leak_evaluation_items`).
+9. Naskah kelas (`backend/app/data/lessons.json`), bank tanya-jawab (`tutor_kb.json`), materi, dan latihan tidak boleh memuat ukuran/jawaban soal evaluasi (diuji `test_lessons_do_not_leak_evaluation_items`, `test_content_does_not_leak_staged_evaluation`, `generators.test.js`).
 10. `ANTHROPIC_API_KEY` hanya di backend. Mode bawaan tanpa kunci (curated) harus selalu berfungsi; kegagalan AI harus kembali ke curated.
 11. Guru virtual wajib memberi tahu bahwa ia program komputer, menolak topik di luar materi, dan tidak menyimpan audio.
 12. Animasi hanya `transform`/`opacity` dan harus menghormati `prefers-reduced-motion`.
 13. Logika pemutar ada di `features/classroom/player.js` (fungsi murni). Ubah beserta `player.test.js`.
 14. Aset karakter hanya di `frontend/src/features/characters/` (BuSari → rig raster + cadangan Teacher SVG, parts). Satu-satunya karakter yang ditampilkan adalah Bu Sari; karakter siswa sudah dihapus (avatar profil memakai huruf awal nama). Aset lama `features/teacher` & `features/student` tidak boleh dipakai lagi.
+
+## Tambahan v3.4 (kisi-kisi & RMT)
+15. Evaluasi = 4 soal bertahap ML-1..ML-4 dari kisi-kisi pengembang (`docs/question-blueprint.md`). Teks & skor per tahap jangan diubah tanpa persetujuan. Penilaian di `backend/app/services/staged.py` (skor parsial + carry-forward); kunci (`key`, `carry`, `explanation` per tahap) hanya dikirim setelah dikumpulkan.
+16. Metode pembelajaran mengikuti RMT (`docs/rmt.md`). Setiap segmen kelas wajib punya `rmt: {phase, focus}`; konten baru mengikuti pola tujuan & manfaat → pertanyaan termediasi → penjelasan → refleksi.
+17. Bila AI aktif, semua pertanyaan dijawab AI (kecuali "ulangi"); perubahan aturan di `claude_provider.RULES` harus tetap lulus `test_rmt_pedagogy_in_system_prompt`.
