@@ -239,3 +239,7 @@ Perubahan: (1) tutor AI-first bila `ANTHROPIC_API_KEY` diisi + *system prompt* R
 Tes anti-kebocoran dibuktikan bisa gagal: menyisipkan "Kotak 50 cm, 30 cm, dan 20 cm" ke naskah kelas → gagal sesuai harapan. Saat menulis tes ditemukan & diperbaiki: contoh "pekerjaan Rina" semula memakai urutan 60 + 50 + 30 yang mirip ML-3 → diganti balok 9 × 6 × 4 cm. Nilai 2.400 cm² (contoh kotak sepatu 30 × 20 × 12) sama dengan luas Kotak A ML-1 secara kebetulan → dicatat sebagai pengecualian beralasan di tes.
 
 **Belum diuji (jujur):** jawaban AI sungguhan (belum ada kunci API; diuji dengan klien tiruan), migrasi & seed di Supabase produksi (menunggu pengembang menjalankan SQL), suara di HP Android fisik.
+
+### Deploy revisi ke produksi (16 November 2026)
+Pengembang menjalankan migrasi `2026-11-16_soal_bertahap.sql` di Supabase → `seed_supabase.py`: 14 soal (ML-1..ML-4 aktif, EV-01..EV-10 nonaktif, tidak dihapus). Pemeriksaan baca-saja kode baru terhadap Supabase produksi: 4 soal tersusun mudah → sulit, tidak ada kunci/pembahasan di data untuk siswa, kunci setiap soal bernilai 6/6, riwayat lama tetap terbaca. `main` di-push → Vercel; uji asap produksi **12/12** (P9 diperbarui: daftar kelas memang publik, tanpa kunci jawaban); `/api/health` → `tutor: curated` (AI belum aktif). Endpoint evaluasi/riwayat tanpa token → 401.
+Belum diuji di produksi: mengerjakan evaluasi dengan akun siswa sungguhan.
