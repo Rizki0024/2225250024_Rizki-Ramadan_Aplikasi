@@ -47,7 +47,7 @@ describe('generateLevel', () => {
         expect(qs).toHaveLength(QUESTIONS_PER_LEVEL);
         for (const q of qs) {
           expect(q.prompt.length).toBeGreaterThan(10);
-          expect(['formulate', 'employ', 'interpret']).toContain(q.process);
+          expect(['formulate', 'employ', 'interpret', 'reasoning']).toContain(q.process);
           for (const key of ['diketahui', 'ditanyakan', 'rumus', 'substitusi', 'perhitungan', 'jawaban']) {
             expect(q.solution[key], `${q.id} ${key}`).toBeTruthy();
           }
@@ -92,5 +92,44 @@ describe('generateLevel', () => {
     const [, p, l, t] = q.prompt.match(/panjang (\d+) cm, lebar (\d+) cm, dan tinggi (\d+) cm/).map(Number);
     expect(q.answer).toBe(2 * (p * l + p * t + l * t));
     expect(feedbackFor(q, '', p * l + p * t + l * t)).toMatch(/dikali 2/);
+  });
+});
+
+describe('level literasi & bank soal', () => {
+  // Ukuran & jawaban soal evaluasi kisi-kisi (ML-1..ML-4) tidak boleh muncul di latihan.
+  const FORBIDDEN = [/18 cm × 13 cm × 8 cm/, /20 cm × 15 cm × 10 cm/, /22 cm × 14 cm × 9 cm/, /(?<!\d)40 cm(?!²)/, /(?<!\d)50 cm(?!²)/, /(?<![\d.])1\.264/, /(?<![\d.])3\.950/, /(?<![\d.])6\.200/, /(?<![\d.])5\.200/];
+
+  it('literasi mencakup keempat indikator dan tidak memakai angka soal evaluasi', () => {
+    for (let seed = 1; seed <= 200; seed += 1) {
+      const qs = generateLevel('literasi', seeded(seed));
+      expect(qs).toHaveLength(QUESTIONS_PER_LEVEL);
+      expect(new Set(qs.map((q) => q.process))).toEqual(new Set(['formulate', 'employ', 'interpret', 'reasoning']));
+      for (const q of qs) {
+        for (const bad of FORBIDDEN) expect(q.prompt).not.toMatch(bad);
+        if (q.type === 'mc') {
+          const labels = q.options.map((o) => o.label);
+          expect(new Set(labels).size).toBe(labels.length);
+          expect(q.options.some((o) => o.id === q.answer)).toBe(true);
+        }
+      }
+    }
+  });
+
+  it('bank soal memberi 5 soal berbeda dari 10 soal lama dengan kunci yang benar', () => {
+    const qs = generateLevel('bank', seeded(7));
+    expect(qs).toHaveLength(QUESTIONS_PER_LEVEL);
+    expect(new Set(qs.map((q) => q.prompt)).size).toBe(QUESTIONS_PER_LEVEL);
+    for (const q of qs) expect(q.correctLabel).toBeTruthy();
+    expect(LEVELS.map((l) => l.id)).toEqual(['prasyarat', 'kubus', 'balok', 'soal-cerita', 'literasi', 'bank']);
+  });
+
+  it('pemeriksaan pekerjaan teman: jawaban benar = hasil Andi + pasangan sisi yang terlupa', () => {
+    for (let seed = 1; seed <= 50; seed += 1) {
+      const q = generateLevel('literasi', seeded(seed)).find((x) => x.id.startsWith('check'));
+      const label = q.options.find((o) => o.id === q.answer).label;
+      const [, missing, right] = label.match(/kurang ([\d.]+) cm², seharusnya ([\d.]+) cm²/);
+      const wrong = Number(q.prompt.match(/= ([\d.]+) cm² dan/)[1].replace('.', ''));
+      expect(wrong + Number(missing.replace('.', ''))).toBe(Number(right.replace('.', '')));
+    }
   });
 });

@@ -1,8 +1,9 @@
 // Ringkasan progres belajar siswa (per perangkat + riwayat online).
 import { load, save } from '../../utils/storage.js';
+import { LEVELS } from '../practice/generators.js';
 
 export const MATERIAL_COUNT = 4;
-export const LEVEL_COUNT = 4;
+export const LEVEL_COUNT = LEVELS.length; // 6 level latihan (termasuk Literasi & Bank Soal)
 export const LESSON_COUNT = 4;
 
 const readKey = (code) => `kb_read_${code}`;

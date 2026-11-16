@@ -215,6 +215,7 @@ function Classroom({ slug }) {
           ))}
         </div>
         <p className="small muted" style={{ margin: 0 }}>🎯 {segment.goal}</p>
+        {segment.rmt ? <p className="rmt-chip" title="Tahap berpikir menurut metode Rigorous Mathematical Thinking"><strong>Fase {segment.rmt.phase}</strong> · {segment.rmt.focus}</p> : null}
       </div>
 
       {voiceNote ? <div className="alert warn small">{voiceNote}</div> : null}

@@ -45,7 +45,8 @@ export default function AskPanel({ lessonSlug, segment, muted, startListening, o
     clearTimeout(autoSend.current);
     setError('');
     setPhase('thinking');
-    const history = log.slice(-6);
+    // Ingatan percakapan untuk AI: 10 giliran terakhir (batas server 12, maks. 600 karakter per giliran).
+    const history = log.slice(-10).map((m) => ({ role: m.role, text: String(m.text).slice(0, 600) }));
     if (!simpler) setLog((l) => [...l, { role: 'student', text: question }]);
     try {
       const res = await api.tutorAsk({

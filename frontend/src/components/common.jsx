@@ -51,7 +51,7 @@ export function Stars({ count = 0, max = 3 }) {
   );
 }
 
-export const PROCESS_LABEL = { formulate: 'Formulate', employ: 'Employ', interpret: 'Interpret' };
+export const PROCESS_LABEL = { reasoning: 'Reasoning', formulate: 'Formulate', employ: 'Employ', interpret: 'Interpret' };
 
 export function ProcessBadge({ process }) {
   if (!process) return null;

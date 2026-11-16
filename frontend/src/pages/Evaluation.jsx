@@ -4,6 +4,7 @@ import Page from '../components/Layout.jsx';
 import Icon from '../components/Icon.jsx';
 import { ErrorBox, Loading, Modal, ProgressBar } from '../components/common.jsx';
 import QuestionBody from '../features/quiz/QuestionBody.jsx';
+import StagedQuestion, { stagedFilled, stagedInputs, stagedInvalid } from '../features/quiz/StagedQuestion.jsx';
 import { formatClock, useCountdown } from '../hooks/useCountdown.js';
 import { api } from '../services/api.js';
 import { parseNumber } from '../utils/number.js';
@@ -23,7 +24,9 @@ export function EvaluationIntro() {
       <div className="card stack">
         <div className="row" style={{ flexWrap: 'nowrap' }}><ClipboardArt size={64} /><h1 style={{ margin: 0 }}>Evaluasi Luas Permukaan</h1></div>
         <ul style={{ margin: 0, paddingLeft: 22 }}>
-          <li><strong>10 soal</strong>, dari mudah ke sulit.</li>
+          <li><strong>4 soal cerita</strong> literasi matematika: Formulate, Employ, Interpret, dan Reasoning.</li>
+          <li>Setiap soal dikerjakan <strong>tahap demi tahap</strong>. Setiap tahap punya skor; skor maksimum 6 per soal, total <strong>24</strong>.</li>
+          <li>Salah hitung di satu tahap tidak menghapus skor tahap berikutnya selama langkahmu konsisten.</li>
           <li>Waktu <strong>30 menit</strong>. Saat waktu habis, jawaban otomatis dikumpulkan.</li>
           <li>Jawaban <strong>tidak diperiksa</strong> sampai kamu menekan <em>Kumpulkan</em>.</li>
           <li>Kamu boleh pindah-pindah soal sebelum mengumpulkan.</li>
@@ -58,7 +61,10 @@ export function EvaluationSession() {
     setConfirm(false);
     try {
       const payload = Object.entries(ans).map(([question_id, answer]) => ({
-        question_id, answer: answer === '' || answer === undefined ? null : String(answer),
+        question_id,
+        answer: answer && typeof answer === 'object'
+          ? (Object.keys(answer).length ? JSON.stringify(answer) : null)
+          : (answer === '' || answer === undefined ? null : String(answer)),
       }));
       const result = await api.submitEvaluation(attemptId, payload);
       remove(CURRENT_KEY);
@@ -128,9 +134,13 @@ export function EvaluationSession() {
 
   const { questions } = state;
   const q = questions[idx];
-  const isAnswered = (qq) => answers[qq.id] !== undefined && String(answers[qq.id]).trim() !== '';
+  const isAnswered = (qq) => (qq.type === 'staged'
+    ? stagedFilled(qq, answers[qq.id]) === stagedInputs(qq).length
+    : answers[qq.id] !== undefined && String(answers[qq.id]).trim() !== '');
   const answeredCount = questions.filter(isAnswered).length;
-  const invalidCount = questions.filter((qq) => qq.type === 'numeric' && isAnswered(qq) && parseNumber(answers[qq.id]) === null).length;
+  const invalidCount = questions.filter((qq) => qq.type === 'numeric' && isAnswered(qq) && parseNumber(answers[qq.id]) === null).length
+    + questions.filter((qq) => qq.type === 'staged').reduce((n, qq) => n + stagedInvalid(qq, answers[qq.id]), 0);
+  const emptyFields = questions.filter((qq) => qq.type === 'staged').reduce((n, qq) => n + stagedInputs(qq).length - stagedFilled(qq, answers[qq.id]), 0);
   const numError = q.type === 'numeric' && isAnswered(q) && parseNumber(answers[q.id]) === null
     ? 'Format angka belum benar. Tulis angka saja, contoh: 216 atau 4,5.' : null;
   const low = remaining !== null && remaining < 5 * 60 * 1000;
@@ -150,8 +160,10 @@ export function EvaluationSession() {
       <span className="deco float-y slow" style={{ right: -6, bottom: 64 }} aria-hidden="true"><HourglassArt size={64} /></span>
       <div className="q-card stack" key={q.id}>
         <strong style={{ color: 'var(--blue-700)' }}>Soal {idx + 1} dari {questions.length}</strong>
-        <QuestionBody question={q} value={answers[q.id] ?? ''} onChange={(v) => setAnswer(q.id, v)} error={numError}
-          inputId={`ev-${q.id}`} onEnter={() => idx < questions.length - 1 && setIdx(idx + 1)} />
+        {q.type === 'staged'
+          ? <StagedQuestion question={q} value={answers[q.id]} onChange={(v) => setAnswer(q.id, v)} idPrefix="ev" />
+          : <QuestionBody question={q} value={answers[q.id] ?? ''} onChange={(v) => setAnswer(q.id, v)} error={numError}
+              inputId={`ev-${q.id}`} onEnter={() => idx < questions.length - 1 && setIdx(idx + 1)} />}
         <div className="btn-row">
           <button type="button" className="btn secondary" disabled={idx === 0} onClick={() => setIdx(idx - 1)}>Sebelumnya</button>
           {idx < questions.length - 1
@@ -188,7 +200,7 @@ export function EvaluationSession() {
           <button key="k" type="button" className="btn" onClick={() => submit(state.attemptId, answers)}>Kumpulkan</button>,
         ]}>
           {answeredCount < questions.length
-            ? <p className="alert warn">Masih ada {questions.length - answeredCount} soal yang belum dijawab. Soal kosong dihitung salah.</p>
+            ? <p className="alert warn">Masih ada {questions.length - answeredCount} soal yang belum lengkap{emptyFields ? ` (${emptyFields} isian tahap kosong)` : ''}. Isian kosong mendapat skor 0.</p>
             : <p>Semua soal sudah dijawab.</p>}
           {invalidCount ? <p className="alert warn">{invalidCount} jawaban angka formatnya belum benar dan akan dihitung salah.</p> : null}
           <p className="small muted" style={{ margin: 0 }}>Setelah dikumpulkan, jawaban tidak bisa diubah.</p>

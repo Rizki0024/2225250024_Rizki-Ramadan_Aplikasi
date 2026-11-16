@@ -16,7 +16,7 @@ const STEPS = [
   ['Materi', 'Materi tampil per slide. Tekan Lanjut untuk konsep berikutnya, tombol ▶ untuk dibacakan, atau "Lihat semua" untuk membaca seluruhnya.'],
   ['Visualisasi 3D', 'Geser untuk memutar, tekan Putar untuk rotasi otomatis, dan Jaring-jaring untuk membuka bangun. Jika HP berat, pilih Mode 2D.'],
   ['Latihan', 'Jawab soal, tekan Periksa Jawaban, lalu baca pembahasan. Dapatkan ★★★ dengan menjawab 5 soal benar.'],
-  ['Evaluasi', '10 soal dalam 30 menit. Jawaban baru dinilai setelah dikumpulkan dan tersimpan otomatis di perangkat.'],
+  ['Evaluasi', '4 soal cerita bertahap (Formulate, Employ, Interpret, Reasoning) dalam 30 menit. Setiap tahap punya skor, total 24. Jawaban baru dinilai setelah dikumpulkan dan tersimpan otomatis di perangkat.'],
   ['Profil & Pengaturan', 'Lihat progres dan lencana di Profil. Atur suara, kecepatan bicara, tampilan guru, dan animasi di Pengaturan.'],
 ];
 

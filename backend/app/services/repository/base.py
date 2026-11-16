@@ -31,6 +31,10 @@ class Repository(ABC):
     @abstractmethod
     def list_evaluation_questions(self) -> list[dict]: ...
 
+    @abstractmethod
+    def list_all_questions(self) -> list[dict]:
+        """Semua soal termasuk nonaktif (untuk membuka riwayat lama)."""
+
     # --- attempt ---
     @abstractmethod
     def create_attempt(self, data: dict) -> dict: ...

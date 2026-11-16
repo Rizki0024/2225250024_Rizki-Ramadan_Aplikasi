@@ -5,7 +5,7 @@ Mode = Literal["latihan", "evaluasi"]
 AttemptStatus = Literal["in_progress", "submitted", "expired"]
 QuestionType = Literal["mc", "numeric"]
 Process = Literal["formulate", "employ", "interpret"]
-PracticeLevel = Literal["prasyarat", "kubus", "balok", "soal-cerita"]
+PracticeLevel = Literal["prasyarat", "kubus", "balok", "soal-cerita", "literasi", "bank"]
 
 PRACTICE_LEVELS: tuple[str, ...] = ("prasyarat", "kubus", "balok", "soal-cerita")
 

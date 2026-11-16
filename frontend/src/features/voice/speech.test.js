@@ -60,3 +60,27 @@ describe('speak()', () => {
     expect(voiceStatus.mode).toBe('text');
   });
 });
+
+describe('voicesReady', () => {
+  afterEach(() => { vi.unstubAllGlobals(); vi.useRealTimers(); vi.resetModules(); });
+
+  it('perangkat tanpa suara hanya ditunggu sekali, kalimat berikutnya tidak tertunda', async () => {
+    vi.resetModules();
+    vi.useFakeTimers();
+    vi.stubGlobal('window', {
+      speechSynthesis: { getVoices: () => [], addEventListener() {}, removeEventListener() {} },
+      SpeechSynthesisUtterance: function U() {}, dispatchEvent() {},
+    });
+    const mod = await import('./speech.js');
+    let first = false;
+    mod.voicesReady().then(() => { first = true; });
+    await vi.advanceTimersByTimeAsync(1999);
+    expect(first).toBe(false);
+    await vi.advanceTimersByTimeAsync(1);
+    expect(first).toBe(true);
+    let second = false;
+    mod.voicesReady().then(() => { second = true; });
+    await Promise.resolve();
+    expect(second).toBe(true);
+  });
+});

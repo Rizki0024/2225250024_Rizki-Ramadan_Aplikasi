@@ -223,3 +223,19 @@ Tambahan: peringatan suara di halaman Video (sama seperti Kelas) dan **Tes suara
 | Tes suara di emulasi Pixel 7 | jalur "bawaan Android (id-ID)" berjalan, laporan diagnosis tampil, tanpa galat JS |
 
 Belum terbukti: bunyi sungguhan di HP Android fisik — menunggu uji ulang pengembang memakai tombol **Tes suara**.
+
+## 12. Revisi: AI Bu Sari, evaluasi kisi-kisi bertahap, metode RMT (16 November 2026)
+Perubahan: (1) tutor AI-first bila `ANTHROPIC_API_KEY` diisi + *system prompt* RMT, tanpa AI tidak mengulang jawaban sama; (2) evaluasi = 4 soal kisi-kisi ML-1..ML-4 bertahap, skor per tahap, carry-forward, total 24; (3) naskah kelas & materi direvisi mengikuti RMT (tujuan & manfaat, pertanyaan termediasi, fase Input/Elaborasi/Output/Refleksi, segmen baru cer-5 Reasoning & cer-6 memeriksa pekerjaan); (4) latihan level Literasi & Bank Soal; (5) suara: daftar suara cukup ditunggu sekali.
+
+| Lapisan | Hasil |
+|---|---|
+| pytest | **77/77** (baru: penskoran parsial & carry-forward sesuai kisi-kisi, kunci dicek ulang dengan hitungan langsung, kunci/pembahasan tidak bocor saat mengerjakan, AI menjawab semua kecuali "ulangi", mode tanpa AI tidak mengulang jawaban, unsur RMT di *system prompt*, anti-kebocoran ukuran & jawaban ke konten, fase RMT di setiap segmen) |
+| Vitest | **66/66** (baru: level Literasi 4 indikator tanpa angka evaluasi, Bank Soal, pemeriksaan pekerjaan teman, daftar suara ditunggu sekali) |
+| Build | berhasil |
+| E2E fitur lama | **38/38** (evaluasi kini: tahap & poin tampil, muat ulang menyimpan isian tahap, kirim offline → ulang, skor x/24, pembahasan per tahap 21 tahap, riwayat dibuka ulang; M16b slide pembuka "Tujuan & manfaat") |
+| E2E guru virtual | **33/33** (D6 batas waktu 20 → 45 dtk karena kalimat pembuka tujuan; E2 kini menunggu ekspresi maks. 3 dtk — sempat gagal 1× karena waktu, 3 run berikutnya lulus) |
+| E2E v3 / rig | **33/33**, **10/10** |
+
+Tes anti-kebocoran dibuktikan bisa gagal: menyisipkan "Kotak 50 cm, 30 cm, dan 20 cm" ke naskah kelas → gagal sesuai harapan. Saat menulis tes ditemukan & diperbaiki: contoh "pekerjaan Rina" semula memakai urutan 60 + 50 + 30 yang mirip ML-3 → diganti balok 9 × 6 × 4 cm. Nilai 2.400 cm² (contoh kotak sepatu 30 × 20 × 12) sama dengan luas Kotak A ML-1 secara kebetulan → dicatat sebagai pengecualian beralasan di tes.
+
+**Belum diuji (jujur):** jawaban AI sungguhan (belum ada kunci API; diuji dengan klien tiruan), migrasi & seed di Supabase produksi (menunggu pengembang menjalankan SQL), suara di HP Android fisik.

@@ -4,6 +4,7 @@ import pytest
 
 from app.models.constants import stars_for
 from app.services.content import load_materials, load_questions
+from app.services.staged import grade as staged_grade
 from app.services.grading import correct_label, is_correct
 from app.services.numbers import format_number, parse_number
 
@@ -28,23 +29,38 @@ def test_stars_rule():
 
 def test_question_bank_integrity():
     qs = load_questions()
-    assert len(qs) >= 10
     assert len({q["code"] for q in qs}) == len(qs)
-    procs = {q["process"] for q in qs}
-    assert procs == {"formulate", "employ", "interpret"}
-    for q in qs:
-        exp = q["explanation"]
-        for key in ("diketahui", "ditanyakan", "rumus", "substitusi", "perhitungan", "jawaban"):
-            assert exp.get(key), f"{q['code']} tanpa {key}"
-        if q["type"] == "mc":
-            ids = [o["id"] for o in q["options"]]
-            assert q["answer_key"] in ids and len(ids) == len(set(ids)) >= 3
-            labels = [o["label"] for o in q["options"]]
-            assert len(labels) == len(set(labels))
-        else:
-            assert parse_number(q["answer_key"]) is not None and q["unit"]
-        assert is_correct(q, q["answer_key"])
-        assert correct_label(q)
+    active = [q for q in qs if q["is_active"]]
+    # Evaluasi = 4 soal kisi-kisi Mathematical Literacy, skor maksimum 6 per indikator, total 24.
+    assert {q["process"] for q in active} == {"reasoning", "formulate", "employ", "interpret"}
+    assert len(active) == 4 and sum(q["max_points"] for q in active) == 24
+    expected_split = {"ML-1": [1, 2, 1, 1, 1], "ML-2": [1] * 6, "ML-3": [1, 2, 2, 1], "ML-4": [1] * 6}
+    for q in active:
+        assert q["type"] == "staged" and q["indicator"] and q["title"]
+        assert [st["points"] for st in q["stages"]] == expected_split[q["code"]]
+        for st in q["stages"]:
+            assert st["explanation"] and set(st["key"]) == {i["id"] for i in st["inputs"]}
+            for inp in st["inputs"]:
+                if inp["kind"] == "choice":
+                    ids = [o["id"] for o in inp["options"]]
+                    assert st["key"][inp["id"]] in ids and len(ids) == len(set(ids)) >= 3
+        assert staged_grade(q, {k: str(v) for st in q["stages"] for k, v in st["key"].items()})["points"] == 6
+    for q in qs:  # soal lama (nonaktif) tetap utuh untuk riwayat
+        if q["type"] in ("mc", "numeric"):
+            assert is_correct(q, q["answer_key"]) and correct_label(q)
+
+
+def test_staged_keys_match_direct_calculation():
+    """Kunci soal kisi-kisi diperiksa ulang dengan perhitungan langsung."""
+    by = {q["code"]: q for q in load_questions()}
+    lp = lambda p, l, t: 2 * (p * l + p * t + l * t)  # noqa: E731
+    k = lambda code: {kk: v for st in by[code]["stages"] for kk, v in st["key"].items()}  # noqa: E731
+    k1 = k("ML-1")
+    assert (k1["t2a"], k1["t2b"], k1["t2c"]) == (6 * 20 * 20, lp(20, 15, 10), lp(22, 14, 9))
+    assert k("ML-2")["t6"] == lp(40, 25, 15)
+    assert k("ML-3")["t3L"] == lp(50, 30, 20) and k("ML-3")["t3sum"] == lp(50, 30, 20) / 2
+    k4 = k("ML-4")
+    assert k4["t5"] == lp(40, 30, 20) and k4["t2"] == 2 * 30 * 20 and lp(40, 30, 20) - 4000 == 1200
 
 
 def test_question_bank_math():

@@ -58,7 +58,9 @@ export function MaterialList() {
 /** Membagi blok materi menjadi slide per subjudul (satu konsep per layar). */
 export function toSlides(title, blocks) {
   const slides = [];
-  let cur = { title, blocks: [] };
+  // Slide pembuka berisi tujuan & manfaat (RMT: intensionalitas dan makna) sebelum subjudul pertama.
+  const intro = blocks[0]?.type === 'tip' && String(blocks[0].text).startsWith('Tujuan:');
+  let cur = { title: intro ? 'Tujuan & manfaat' : title, blocks: [] };
   for (const b of blocks) {
     if (b.type === 'heading') {
       if (cur.blocks.length) slides.push(cur);

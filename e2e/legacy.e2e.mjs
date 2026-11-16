@@ -140,14 +140,15 @@ await page.screenshot({ path: `${OUT}/hp-10-latihan-skor.png`, fullPage: true })
 // Evaluasi
 await page.goto(`${BASE}/evaluasi`);
 await page.getByRole('link', { name: 'Mulai evaluasi' }).click();
-await page.getByText('Soal 1 dari 10').waitFor();
+await page.getByText('Soal 1 dari 4').waitFor();
 const bodyText = await page.content();
-ok('M11 Tidak ada kunci/pembahasan saat mengerjakan', !/Pembahasan|Jawaban benar/.test(await page.locator('main').innerText()) && !bodyText.includes('answer_key'));
+ok('M11 Tidak ada kunci/pembahasan saat mengerjakan', !/Pembahasan|Jawaban benar|Kunci:/.test(await page.locator('main').innerText()) && !bodyText.includes('answer_key'));
 ok('F9b Timer tampil', /\d\d:\d\d/.test(await page.locator('.timer').innerText()));
-// jawab soal 1 dan 2
+ok('M11b Soal bertahap: tahap & skor per tahap tampil', (await page.locator('.stage-card').count()) >= 4 && /poin/.test(await page.locator('.stage-card').first().innerText()));
+// isi semua tahap soal 1 dan 2 (angka 100, pilihan A)
 for (let i = 0; i < 2; i += 1) {
-  if (await page.locator('input[inputmode="decimal"]').count()) await page.locator('input[inputmode="decimal"]').fill('158');
-  else await page.locator('.option').nth(1).click();
+  for (const input of await page.locator('.stage-card input').all()) await input.fill('100');
+  for (const group of await page.locator('.stage-card [role="radiogroup"]').all()) await group.locator('.option').first().click();
   await page.getByRole('button', { name: 'Selanjutnya' }).click();
 }
 await page.screenshot({ path: `${OUT}/hp-11-evaluasi.png`, fullPage: true });
@@ -158,7 +159,7 @@ const answeredAfterReload = await page.locator('.qnav button.answered').count();
 ok('M12 Muat ulang: jawaban tetap ada & sesi dilanjutkan', answeredAfterReload === 2, `(terjawab=${answeredAfterReload}, timer sebelum=${t1})`);
 // Offline saat mengerjakan → kirim gagal → online → kirim ulang
 await page.getByRole('button', { name: 'Kumpulkan sekarang' }).click();
-ok('Konfirmasi kumpulkan menyebut soal kosong', await page.getByText(/Masih ada 8 soal/).isVisible());
+ok('Konfirmasi kumpulkan menyebut soal belum lengkap', await page.getByText(/Masih ada 2 soal yang belum lengkap/).isVisible());
 await ctx.setOffline(true);
 await page.locator('.modal').getByRole('button', { name: 'Kumpulkan' }).click();
 await page.getByText('Jawaban belum terkirim').waitFor();
@@ -168,8 +169,8 @@ await ctx.setOffline(false);
 await page.getByRole('button', { name: 'Kirim ulang' }).click();
 await page.getByText('Nilai Akhir').waitFor({ timeout: 15000 });
 ok('M17 Kirim ulang berhasil setelah online', true);
-ok('M11 Benar/salah tampil', await page.locator('.result-stats').innerText().then((t) => /Benar/.test(t) && /Salah/.test(t)));
-ok('M11 Pembahasan tersedia', (await page.locator('.review-item').count()) === 10);
+ok('M11 Skor tahap tampil (x / 24)', await page.locator('.result-stats').innerText().then((t) => /Skor tahap/.test(t) && /\/ 24/.test(t)));
+ok('M11 Pembahasan per tahap tersedia', (await page.locator('.review-item').count()) === 4 && (await page.locator('.stage-expl').count()) >= 20);
 await page.screenshot({ path: `${OUT}/hp-13-hasil-evaluasi.png`, fullPage: true });
 
 // Riwayat
@@ -179,7 +180,7 @@ const rows = await page.locator('.list-link').count();
 ok('M14 Riwayat memuat latihan & evaluasi', rows === 2, `(baris=${rows})`);
 await page.locator('.list-link', { hasText: 'Evaluasi' }).click();
 await page.getByText('Nilai Akhir').waitFor();
-ok('M14 Pembahasan evaluasi dapat dibuka ulang', (await page.locator('.review-item').count()) === 10);
+ok('M14 Pembahasan evaluasi dapat dibuka ulang', (await page.locator('.review-item').count()) === 4 && (await page.locator('.stage-card').count()) === 21);
 await page.screenshot({ path: `${OUT}/hp-14-riwayat-detail.png` });
 
 // Keluar → rute terlindungi
@@ -206,6 +207,9 @@ const histOther = await p2.evaluate(async () => {
 });
 ok('M20 Siswa lain tidak melihat riwayat Elang', histOther === 0);
 await p2.goto(`${BASE}/materi/balok`);
+await p2.getByRole('heading', { name: 'Tujuan & manfaat' }).waitFor();
+ok('M16b Materi dibuka dengan tujuan & manfaat (RMT)', true);
+await p2.getByRole('button', { name: 'Lanjut' }).click();
 await p2.locator('canvas').waitFor({ timeout: 20000 });
 await p2.waitForTimeout(800);
 const twoCol = await p2.evaluate(() => {

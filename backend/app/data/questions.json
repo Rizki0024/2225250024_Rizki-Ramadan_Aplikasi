@@ -1,160 +1,1242 @@
 [
-  {
-    "code": "EV-01", "process": "employ", "shape": "kubus", "difficulty": 1, "type": "mc",
-    "prompt": "Sebuah kubus memiliki panjang rusuk 6 cm. Berapa luas permukaan kubus tersebut?",
-    "options": [
-      { "id": "A", "label": "36 cm²" },
-      { "id": "B", "label": "216 cm²" },
-      { "id": "C", "label": "144 cm²" },
-      { "id": "D", "label": "72 cm²" }
+ {
+  "code": "EV-01",
+  "process": "employ",
+  "shape": "kubus",
+  "difficulty": 1,
+  "type": "mc",
+  "prompt": "Sebuah kubus memiliki panjang rusuk 6 cm. Berapa luas permukaan kubus tersebut?",
+  "options": [
+   {
+    "id": "A",
+    "label": "36 cm²"
+   },
+   {
+    "id": "B",
+    "label": "216 cm²"
+   },
+   {
+    "id": "C",
+    "label": "144 cm²"
+   },
+   {
+    "id": "D",
+    "label": "72 cm²"
+   }
+  ],
+  "answer_key": "B",
+  "unit": null,
+  "tolerance": 0,
+  "explanation": {
+   "diketahui": [
+    "s = 6 cm"
+   ],
+   "ditanyakan": "Luas permukaan kubus",
+   "rumus": "L = 6 × s × s",
+   "substitusi": "L = 6 × 6 × 6",
+   "perhitungan": [
+    "6 × 6 = 36 (luas satu sisi)",
+    "6 × 36 = 216"
+   ],
+   "jawaban": "216 cm²",
+   "interpretasi": null
+  },
+  "is_active": false
+ },
+ {
+  "code": "EV-02",
+  "process": "employ",
+  "shape": "balok",
+  "difficulty": 1,
+  "type": "numeric",
+  "prompt": "Sebuah balok berukuran panjang 8 cm, lebar 5 cm, dan tinggi 3 cm. Hitunglah luas permukaan balok tersebut.",
+  "options": null,
+  "answer_key": "158",
+  "unit": "cm²",
+  "tolerance": 0,
+  "explanation": {
+   "diketahui": [
+    "p = 8 cm",
+    "l = 5 cm",
+    "t = 3 cm"
+   ],
+   "ditanyakan": "Luas permukaan balok",
+   "rumus": "L = 2 × (p × l + p × t + l × t)",
+   "substitusi": "L = 2 × (8 × 5 + 8 × 3 + 5 × 3)",
+   "perhitungan": [
+    "8 × 5 = 40",
+    "8 × 3 = 24",
+    "5 × 3 = 15",
+    "40 + 24 + 15 = 79",
+    "2 × 79 = 158"
+   ],
+   "jawaban": "158 cm²",
+   "interpretasi": null
+  },
+  "is_active": false
+ },
+ {
+  "code": "EV-03",
+  "process": "formulate",
+  "shape": "balok",
+  "difficulty": 1,
+  "type": "mc",
+  "prompt": "Rina akan membuat kotak pensil tertutup berbentuk balok dari karton. Panjang kotak p, lebarnya l, dan tingginya t. Rumus mana yang tepat untuk menghitung luas karton yang dibutuhkan?",
+  "options": [
+   {
+    "id": "A",
+    "label": "p × l × t"
+   },
+   {
+    "id": "B",
+    "label": "2 × (p × l + p × t + l × t)"
+   },
+   {
+    "id": "C",
+    "label": "p × l + p × t + l × t"
+   },
+   {
+    "id": "D",
+    "label": "6 × p × l"
+   }
+  ],
+  "answer_key": "B",
+  "unit": null,
+  "tolerance": 0,
+  "explanation": {
+   "diketahui": [
+    "Kotak tertutup berbentuk balok",
+    "Ukuran p, l, dan t"
+   ],
+   "ditanyakan": "Rumus luas karton = luas permukaan balok",
+   "rumus": "L = 2 × (p × l + p × t + l × t)",
+   "substitusi": "—",
+   "perhitungan": [
+    "Kotak tertutup punya 6 sisi = 3 pasang sisi.",
+    "Tiap pasang dikali 2.",
+    "p × l × t adalah rumus volume, bukan luas."
+   ],
+   "jawaban": "2 × (p × l + p × t + l × t)",
+   "interpretasi": "Karton menutupi seluruh permukaan kotak, jadi dipakai rumus luas permukaan."
+  },
+  "is_active": false
+ },
+ {
+  "code": "EV-04",
+  "process": "formulate",
+  "shape": "kubus",
+  "difficulty": 2,
+  "type": "mc",
+  "prompt": "Sebuah kotak hadiah berbentuk kubus dengan panjang rusuk 15 cm akan dibungkus seluruhnya dengan kertas kado. Model matematika yang tepat untuk menghitung luas kertas kado minimal adalah…",
+  "options": [
+   {
+    "id": "A",
+    "label": "6 × 15 × 15"
+   },
+   {
+    "id": "B",
+    "label": "15 × 15 × 15"
+   },
+   {
+    "id": "C",
+    "label": "4 × 15 × 15"
+   },
+   {
+    "id": "D",
+    "label": "12 × 15"
+   }
+  ],
+  "answer_key": "A",
+  "unit": null,
+  "tolerance": 0,
+  "explanation": {
+   "diketahui": [
+    "Kotak berbentuk kubus",
+    "s = 15 cm",
+    "Dibungkus seluruhnya → 6 sisi"
+   ],
+   "ditanyakan": "Model luas kertas kado minimal",
+   "rumus": "L = 6 × s × s",
+   "substitusi": "L = 6 × 15 × 15",
+   "perhitungan": [
+    "15 × 15 × 15 adalah volume.",
+    "4 × 15 × 15 hanya 4 sisi (lupa alas dan tutup).",
+    "12 × 15 adalah panjang semua rusuk."
+   ],
+   "jawaban": "6 × 15 × 15",
+   "interpretasi": "Kata \"seluruhnya\" berarti keenam sisi kubus ikut dibungkus."
+  },
+  "is_active": false
+ },
+ {
+  "code": "EV-05",
+  "process": "employ",
+  "shape": "kubus",
+  "difficulty": 2,
+  "type": "numeric",
+  "prompt": "Luas permukaan sebuah kubus adalah 150 cm². Berapa panjang rusuk kubus tersebut?",
+  "options": null,
+  "answer_key": "5",
+  "unit": "cm",
+  "tolerance": 0,
+  "explanation": {
+   "diketahui": [
+    "L = 150 cm²"
+   ],
+   "ditanyakan": "Panjang rusuk (s)",
+   "rumus": "L = 6 × s × s",
+   "substitusi": "150 = 6 × s × s",
+   "perhitungan": [
+    "s × s = 150 : 6",
+    "150 : 6 = 25",
+    "s × s = 25, maka s = 5 (karena 5 × 5 = 25)"
+   ],
+   "jawaban": "5 cm",
+   "interpretasi": null
+  },
+  "is_active": false
+ },
+ {
+  "code": "EV-06",
+  "process": "formulate",
+  "shape": "balok",
+  "difficulty": 2,
+  "type": "mc",
+  "prompt": "Pak Ahmad ingin mengecat seluruh permukaan luar lemari berbentuk balok, kecuali bagian alas yang menempel di lantai. Sisi mana saja yang perlu dihitung luasnya?",
+  "options": [
+   {
+    "id": "A",
+    "label": "Keenam sisi lemari"
+   },
+   {
+    "id": "B",
+    "label": "Tutup, depan, belakang, kiri, dan kanan (5 sisi)"
+   },
+   {
+    "id": "C",
+    "label": "Depan, belakang, kiri, dan kanan saja (4 sisi)"
+   },
+   {
+    "id": "D",
+    "label": "Alas dan tutup saja"
+   }
+  ],
+  "answer_key": "B",
+  "unit": null,
+  "tolerance": 0,
+  "explanation": {
+   "diketahui": [
+    "Lemari berbentuk balok",
+    "Alas menempel di lantai → tidak dicat"
+   ],
+   "ditanyakan": "Sisi yang dihitung",
+   "rumus": "L = (p × l) + 2 × (p × t) + 2 × (l × t)",
+   "substitusi": "—",
+   "perhitungan": [
+    "Balok punya 6 sisi.",
+    "Alas tidak dicat, jadi 6 − 1 = 5 sisi.",
+    "Tutup tetap dicat karena bagian luar."
+   ],
+   "jawaban": "Tutup, depan, belakang, kiri, dan kanan (5 sisi)",
+   "interpretasi": "Hanya bagian yang terlihat dan bisa dicat yang dihitung."
+  },
+  "is_active": false
+ },
+ {
+  "code": "EV-07",
+  "process": "interpret",
+  "shape": "balok",
+  "difficulty": 3,
+  "type": "mc",
+  "prompt": "Sebuah akuarium berbentuk balok tanpa tutup berukuran panjang 60 cm, lebar 30 cm, dan tinggi 40 cm. Berapa luas kaca yang dibutuhkan untuk membuat akuarium tersebut?",
+  "options": [
+   {
+    "id": "A",
+    "label": "9.000 cm²"
+   },
+   {
+    "id": "B",
+    "label": "10.800 cm²"
+   },
+   {
+    "id": "C",
+    "label": "72.000 cm²"
+   },
+   {
+    "id": "D",
+    "label": "7.200 cm²"
+   }
+  ],
+  "answer_key": "A",
+  "unit": null,
+  "tolerance": 0,
+  "explanation": {
+   "diketahui": [
+    "p = 60 cm",
+    "l = 30 cm",
+    "t = 40 cm",
+    "Tanpa tutup → sisi atas tidak dihitung"
+   ],
+   "ditanyakan": "Luas kaca = alas + 4 sisi tegak",
+   "rumus": "L = (p × l) + 2 × (p × t) + 2 × (l × t)",
+   "substitusi": "L = (60 × 30) + 2 × (60 × 40) + 2 × (30 × 40)",
+   "perhitungan": [
+    "60 × 30 = 1.800",
+    "2 × (60 × 40) = 2 × 2.400 = 4.800",
+    "2 × (30 × 40) = 2 × 1.200 = 2.400",
+    "1.800 + 4.800 + 2.400 = 9.000"
+   ],
+   "jawaban": "9.000 cm²",
+   "interpretasi": "10.800 cm² adalah luas jika akuarium bertutup. Karena tanpa tutup, kaca yang dibutuhkan 9.000 cm²."
+  },
+  "is_active": false
+ },
+ {
+  "code": "EV-08",
+  "process": "interpret",
+  "shape": "balok",
+  "difficulty": 3,
+  "type": "numeric",
+  "prompt": "Dinding sebuah kamar berbentuk balok dengan panjang 4 m, lebar 3 m, dan tinggi 3 m akan dicat (lantai dan langit-langit tidak dicat). Satu kaleng cat cukup untuk 10 m². Berapa kaleng cat minimal yang harus dibeli?",
+  "options": null,
+  "answer_key": "5",
+  "unit": "kaleng",
+  "tolerance": 0,
+  "explanation": {
+   "diketahui": [
+    "p = 4 m",
+    "l = 3 m",
+    "t = 3 m",
+    "Hanya 4 dinding",
+    "1 kaleng = 10 m²"
+   ],
+   "ditanyakan": "Banyak kaleng cat minimal",
+   "rumus": "Luas dinding = 2 × (p × t) + 2 × (l × t)",
+   "substitusi": "Luas dinding = 2 × (4 × 3) + 2 × (3 × 3)",
+   "perhitungan": [
+    "2 × 12 = 24",
+    "2 × 9 = 18",
+    "24 + 18 = 42 m²",
+    "42 : 10 = 4,2 kaleng"
+   ],
+   "jawaban": "5 kaleng",
+   "interpretasi": "Cat tidak dijual per 0,2 kaleng. 4 kaleng hanya cukup untuk 40 m², jadi harus membeli 5 kaleng."
+  },
+  "is_active": false
+ },
+ {
+  "code": "EV-09",
+  "process": "employ",
+  "shape": "balok",
+  "difficulty": 3,
+  "type": "numeric",
+  "prompt": "Sebuah balok memiliki panjang 10 cm, lebar 6 cm, dan luas permukaan 376 cm². Berapa tinggi balok tersebut?",
+  "options": null,
+  "answer_key": "8",
+  "unit": "cm",
+  "tolerance": 0,
+  "explanation": {
+   "diketahui": [
+    "p = 10 cm",
+    "l = 6 cm",
+    "L = 376 cm²"
+   ],
+   "ditanyakan": "Tinggi balok (t)",
+   "rumus": "L = 2 × (p × l + p × t + l × t)",
+   "substitusi": "376 = 2 × (10 × 6 + 10 × t + 6 × t)",
+   "perhitungan": [
+    "376 : 2 = 188",
+    "188 = 60 + 10 × t + 6 × t",
+    "188 − 60 = 128",
+    "128 = 16 × t",
+    "t = 128 : 16 = 8"
+   ],
+   "jawaban": "8 cm",
+   "interpretasi": null
+  },
+  "is_active": false
+ },
+ {
+  "code": "EV-10",
+  "process": "interpret",
+  "shape": "campuran",
+  "difficulty": 3,
+  "type": "mc",
+  "prompt": "Toko kue menyediakan dua pilihan kotak tertutup: kotak kubus dengan rusuk 10 cm atau kotak balok berukuran 12 cm × 10 cm × 8 cm. Kotak mana yang membutuhkan karton lebih sedikit, dan berapa selisihnya?",
+  "options": [
+   {
+    "id": "A",
+    "label": "Kotak kubus, lebih hemat 8 cm²"
+   },
+   {
+    "id": "B",
+    "label": "Kotak balok, lebih hemat 8 cm²"
+   },
+   {
+    "id": "C",
+    "label": "Keduanya membutuhkan karton yang sama"
+   },
+   {
+    "id": "D",
+    "label": "Kotak balok, lebih hemat 40 cm²"
+   }
+  ],
+  "answer_key": "B",
+  "unit": null,
+  "tolerance": 0,
+  "explanation": {
+   "diketahui": [
+    "Kubus: s = 10 cm",
+    "Balok: p = 12 cm, l = 10 cm, t = 8 cm"
+   ],
+   "ditanyakan": "Kotak yang lebih hemat karton dan selisihnya",
+   "rumus": "Kubus: 6 × s × s; Balok: 2 × (p × l + p × t + l × t)",
+   "substitusi": "Kubus: 6 × 10 × 10; Balok: 2 × (12 × 10 + 12 × 8 + 10 × 8)",
+   "perhitungan": [
+    "Kubus: 6 × 100 = 600 cm²",
+    "Balok: 120 + 96 + 80 = 296",
+    "Balok: 2 × 296 = 592 cm²",
+    "Selisih: 600 − 592 = 8 cm²"
+   ],
+   "jawaban": "Kotak balok, lebih hemat 8 cm²",
+   "interpretasi": "Kotak balok memakai karton 8 cm² lebih sedikit sehingga sedikit lebih hemat bahan."
+  },
+  "is_active": false
+ },
+ {
+  "id": "6d0e5b8a-1f0e-4c3e-9a51-0c1d2e3f4a01",
+  "code": "ML-1",
+  "process": "reasoning",
+  "shape": "campuran",
+  "difficulty": 3,
+  "indicator": "Mathematical Reasoning. Siswa mampu mengidentifikasi hubungan matematis, membandingkan alternatif, memberikan alasan, dan menentukan keputusan yang dapat dipertanggungjawabkan.",
+  "title": "Memilih Kotak Pengiriman",
+  "prompt": "Sebuah toko akan mengirimkan barang berbentuk balok dengan ukuran panjang 18 cm, lebar 13 cm, dan tinggi 8 cm. Toko memiliki tiga pilihan kotak tertutup dengan ukuran sebagai berikut:\n• Kotak A berbentuk kubus dengan panjang rusuk 20 cm.\n• Kotak B berbentuk balok dengan ukuran 20 cm × 15 cm × 10 cm.\n• Kotak C berbentuk balok dengan ukuran 22 cm × 14 cm × 9 cm.\nKetiga kotak dapat memuat barang tersebut. Toko ingin memilih kotak yang membutuhkan bahan karton paling sedikit. Jika seluruh sisi kotak akan dibuat dari karton, kotak manakah yang sebaiknya dipilih? Jelaskan alasan matematis Anda dengan membandingkan luas permukaan ketiga kotak.",
+  "stages": [
+   {
+    "id": "t1",
+    "title": "Tahap 1 · Mengidentifikasi informasi dan tujuan",
+    "points": 1,
+    "inputs": [
+     {
+      "id": "t1",
+      "kind": "choice",
+      "label": "Agar karton paling sedikit, besaran apa yang harus dibandingkan dari ketiga kotak?",
+      "options": [
+       {
+        "id": "A",
+        "label": "Luas permukaan kotak, dipilih yang paling kecil"
+       },
+       {
+        "id": "B",
+        "label": "Volume kotak, dipilih yang paling besar"
+       },
+       {
+        "id": "C",
+        "label": "Panjang rusuk terpanjang, dipilih yang paling pendek"
+       },
+       {
+        "id": "D",
+        "label": "Banyak sisi kotak, dipilih yang paling sedikit"
+       }
+      ]
+     }
     ],
-    "answer_key": "B", "unit": null, "tolerance": 0,
-    "explanation": {
-      "diketahui": ["s = 6 cm"], "ditanyakan": "Luas permukaan kubus",
-      "rumus": "L = 6 × s × s", "substitusi": "L = 6 × 6 × 6",
-      "perhitungan": ["6 × 6 = 36 (luas satu sisi)", "6 × 36 = 216"],
-      "jawaban": "216 cm²", "interpretasi": null
-    }
-  },
-  {
-    "code": "EV-02", "process": "employ", "shape": "balok", "difficulty": 1, "type": "numeric",
-    "prompt": "Sebuah balok berukuran panjang 8 cm, lebar 5 cm, dan tinggi 3 cm. Hitunglah luas permukaan balok tersebut.",
-    "options": null, "answer_key": "158", "unit": "cm²", "tolerance": 0,
-    "explanation": {
-      "diketahui": ["p = 8 cm", "l = 5 cm", "t = 3 cm"], "ditanyakan": "Luas permukaan balok",
-      "rumus": "L = 2 × (p × l + p × t + l × t)", "substitusi": "L = 2 × (8 × 5 + 8 × 3 + 5 × 3)",
-      "perhitungan": ["8 × 5 = 40", "8 × 3 = 24", "5 × 3 = 15", "40 + 24 + 15 = 79", "2 × 79 = 158"],
-      "jawaban": "158 cm²", "interpretasi": null
-    }
-  },
-  {
-    "code": "EV-03", "process": "formulate", "shape": "balok", "difficulty": 1, "type": "mc",
-    "prompt": "Rina akan membuat kotak pensil tertutup berbentuk balok dari karton. Panjang kotak p, lebarnya l, dan tingginya t. Rumus mana yang tepat untuk menghitung luas karton yang dibutuhkan?",
-    "options": [
-      { "id": "A", "label": "p × l × t" },
-      { "id": "B", "label": "2 × (p × l + p × t + l × t)" },
-      { "id": "C", "label": "p × l + p × t + l × t" },
-      { "id": "D", "label": "6 × p × l" }
+    "key": {
+     "t1": "A"
+    },
+    "explanation": "Barang berukuran 18 cm × 13 cm × 8 cm. Ketiga kotak dapat memuat barang. Tujuannya memilih kotak dengan luas permukaan paling kecil karena seluruh sisi kotak dibuat dari karton."
+   },
+   {
+    "id": "t2",
+    "title": "Tahap 2 · Menghitung luas permukaan setiap kotak",
+    "points": 2,
+    "inputs": [
+     {
+      "id": "t2a",
+      "kind": "number",
+      "label": "Luas permukaan Kotak A",
+      "unit": "cm²"
+     },
+     {
+      "id": "t2b",
+      "kind": "number",
+      "label": "Luas permukaan Kotak B",
+      "unit": "cm²"
+     },
+     {
+      "id": "t2c",
+      "kind": "number",
+      "label": "Luas permukaan Kotak C",
+      "unit": "cm²"
+     }
     ],
-    "answer_key": "B", "unit": null, "tolerance": 0,
-    "explanation": {
-      "diketahui": ["Kotak tertutup berbentuk balok", "Ukuran p, l, dan t"],
-      "ditanyakan": "Rumus luas karton = luas permukaan balok",
-      "rumus": "L = 2 × (p × l + p × t + l × t)", "substitusi": "—",
-      "perhitungan": ["Kotak tertutup punya 6 sisi = 3 pasang sisi.", "Tiap pasang dikali 2.", "p × l × t adalah rumus volume, bukan luas."],
-      "jawaban": "2 × (p × l + p × t + l × t)",
-      "interpretasi": "Karton menutupi seluruh permukaan kotak, jadi dipakai rumus luas permukaan."
-    }
-  },
-  {
-    "code": "EV-04", "process": "formulate", "shape": "kubus", "difficulty": 2, "type": "mc",
-    "prompt": "Sebuah kotak hadiah berbentuk kubus dengan panjang rusuk 15 cm akan dibungkus seluruhnya dengan kertas kado. Model matematika yang tepat untuk menghitung luas kertas kado minimal adalah…",
-    "options": [
-      { "id": "A", "label": "6 × 15 × 15" },
-      { "id": "B", "label": "15 × 15 × 15" },
-      { "id": "C", "label": "4 × 15 × 15" },
-      { "id": "D", "label": "12 × 15" }
+    "key": {
+     "t2a": 2400,
+     "t2b": 1300,
+     "t2c": 1264
+    },
+    "partial": {
+     "3": 2,
+     "2": 1,
+     "1": 1
+    },
+    "explanation": "Kotak A (kubus): L = 6 × 20² = 2.400 cm². Kotak B (balok): L = 2[(20×15) + (20×10) + (15×10)] = 2(300 + 200 + 150) = 1.300 cm². Kotak C (balok): L = 2[(22×14) + (22×9) + (14×9)] = 2(308 + 198 + 126) = 1.264 cm²."
+   },
+   {
+    "id": "t3",
+    "title": "Tahap 3 · Membandingkan hasil",
+    "points": 1,
+    "inputs": [
+     {
+      "id": "t3",
+      "kind": "choice",
+      "label": "Urutkan luas permukaan dari yang paling kecil.",
+      "options": [
+       {
+        "id": "A",
+        "label": "Kotak C < Kotak B < Kotak A"
+       },
+       {
+        "id": "B",
+        "label": "Kotak B < Kotak C < Kotak A"
+       },
+       {
+        "id": "C",
+        "label": "Kotak A < Kotak B < Kotak C"
+       },
+       {
+        "id": "D",
+        "label": "Kotak C < Kotak A < Kotak B"
+       }
+      ]
+     }
     ],
-    "answer_key": "A", "unit": null, "tolerance": 0,
-    "explanation": {
-      "diketahui": ["Kotak berbentuk kubus", "s = 15 cm", "Dibungkus seluruhnya → 6 sisi"],
-      "ditanyakan": "Model luas kertas kado minimal",
-      "rumus": "L = 6 × s × s", "substitusi": "L = 6 × 15 × 15",
-      "perhitungan": ["15 × 15 × 15 adalah volume.", "4 × 15 × 15 hanya 4 sisi (lupa alas dan tutup).", "12 × 15 adalah panjang semua rusuk."],
-      "jawaban": "6 × 15 × 15", "interpretasi": "Kata \"seluruhnya\" berarti keenam sisi kubus ikut dibungkus."
-    }
-  },
-  {
-    "code": "EV-05", "process": "employ", "shape": "kubus", "difficulty": 2, "type": "numeric",
-    "prompt": "Luas permukaan sebuah kubus adalah 150 cm². Berapa panjang rusuk kubus tersebut?",
-    "options": null, "answer_key": "5", "unit": "cm", "tolerance": 0,
-    "explanation": {
-      "diketahui": ["L = 150 cm²"], "ditanyakan": "Panjang rusuk (s)",
-      "rumus": "L = 6 × s × s", "substitusi": "150 = 6 × s × s",
-      "perhitungan": ["s × s = 150 : 6", "150 : 6 = 25", "s × s = 25, maka s = 5 (karena 5 × 5 = 25)"],
-      "jawaban": "5 cm", "interpretasi": null
-    }
-  },
-  {
-    "code": "EV-06", "process": "formulate", "shape": "balok", "difficulty": 2, "type": "mc",
-    "prompt": "Pak Ahmad ingin mengecat seluruh permukaan luar lemari berbentuk balok, kecuali bagian alas yang menempel di lantai. Sisi mana saja yang perlu dihitung luasnya?",
-    "options": [
-      { "id": "A", "label": "Keenam sisi lemari" },
-      { "id": "B", "label": "Tutup, depan, belakang, kiri, dan kanan (5 sisi)" },
-      { "id": "C", "label": "Depan, belakang, kiri, dan kanan saja (4 sisi)" },
-      { "id": "D", "label": "Alas dan tutup saja" }
+    "key": {
+     "t3": "A"
+    },
+    "carry": {
+     "t3": {
+      "op": "order",
+      "map": {
+       "A": [
+        "t2c",
+        "t2b",
+        "t2a"
+       ],
+       "B": [
+        "t2b",
+        "t2c",
+        "t2a"
+       ],
+       "C": [
+        "t2a",
+        "t2b",
+        "t2c"
+       ],
+       "D": [
+        "t2c",
+        "t2a",
+        "t2b"
+       ]
+      }
+     }
+    },
+    "explanation": "1.264 cm² < 1.300 cm² < 2.400 cm², jadi urutannya Kotak C < Kotak B < Kotak A."
+   },
+   {
+    "id": "t4",
+    "title": "Tahap 4 · Menentukan pilihan",
+    "points": 1,
+    "inputs": [
+     {
+      "id": "t4",
+      "kind": "choice",
+      "label": "Kotak mana yang dipilih?",
+      "options": [
+       {
+        "id": "A",
+        "label": "Kotak A"
+       },
+       {
+        "id": "B",
+        "label": "Kotak B"
+       },
+       {
+        "id": "C",
+        "label": "Kotak C"
+       }
+      ]
+     }
     ],
-    "answer_key": "B", "unit": null, "tolerance": 0,
-    "explanation": {
-      "diketahui": ["Lemari berbentuk balok", "Alas menempel di lantai → tidak dicat"],
-      "ditanyakan": "Sisi yang dihitung",
-      "rumus": "L = (p × l) + 2 × (p × t) + 2 × (l × t)", "substitusi": "—",
-      "perhitungan": ["Balok punya 6 sisi.", "Alas tidak dicat, jadi 6 − 1 = 5 sisi.", "Tutup tetap dicat karena bagian luar."],
-      "jawaban": "Tutup, depan, belakang, kiri, dan kanan (5 sisi)",
-      "interpretasi": "Hanya bagian yang terlihat dan bisa dicat yang dihitung."
-    }
-  },
-  {
-    "code": "EV-07", "process": "interpret", "shape": "balok", "difficulty": 3, "type": "mc",
-    "prompt": "Sebuah akuarium berbentuk balok tanpa tutup berukuran panjang 60 cm, lebar 30 cm, dan tinggi 40 cm. Berapa luas kaca yang dibutuhkan untuk membuat akuarium tersebut?",
-    "options": [
-      { "id": "A", "label": "9.000 cm²" },
-      { "id": "B", "label": "10.800 cm²" },
-      { "id": "C", "label": "72.000 cm²" },
-      { "id": "D", "label": "7.200 cm²" }
+    "key": {
+     "t4": "C"
+    },
+    "carry": {
+     "t4": {
+      "op": "argmin",
+      "map": {
+       "A": "t2a",
+       "B": "t2b",
+       "C": "t2c"
+      }
+     }
+    },
+    "explanation": "Kotak C memiliki luas permukaan paling kecil."
+   },
+   {
+    "id": "t5",
+    "title": "Tahap 5 · Memberikan alasan sesuai konteks",
+    "points": 1,
+    "inputs": [
+     {
+      "id": "t5",
+      "kind": "choice",
+      "label": "Alasan mana yang paling tepat?",
+      "options": [
+       {
+        "id": "A",
+        "label": "Kotak C dapat memuat barang dan luas permukaannya paling kecil, sehingga karton yang dibutuhkan paling sedikit."
+       },
+       {
+        "id": "B",
+        "label": "Kotak C dipilih karena volumenya paling kecil."
+       },
+       {
+        "id": "C",
+        "label": "Kotak A dipilih karena kubus selalu membutuhkan karton paling sedikit."
+       },
+       {
+        "id": "D",
+        "label": "Kotak B dipilih karena ukurannya berada di tengah-tengah."
+       }
+      ]
+     }
     ],
-    "answer_key": "A", "unit": null, "tolerance": 0,
-    "explanation": {
-      "diketahui": ["p = 60 cm", "l = 30 cm", "t = 40 cm", "Tanpa tutup → sisi atas tidak dihitung"],
-      "ditanyakan": "Luas kaca = alas + 4 sisi tegak",
-      "rumus": "L = (p × l) + 2 × (p × t) + 2 × (l × t)", "substitusi": "L = (60 × 30) + 2 × (60 × 40) + 2 × (30 × 40)",
-      "perhitungan": ["60 × 30 = 1.800", "2 × (60 × 40) = 2 × 2.400 = 4.800", "2 × (30 × 40) = 2 × 1.200 = 2.400", "1.800 + 4.800 + 2.400 = 9.000"],
-      "jawaban": "9.000 cm²",
-      "interpretasi": "10.800 cm² adalah luas jika akuarium bertutup. Karena tanpa tutup, kaca yang dibutuhkan 9.000 cm²."
-    }
+    "key": {
+     "t5": "A"
+    },
+    "explanation": "Toko sebaiknya memilih Kotak C karena kotak tersebut dapat memuat barang dan membutuhkan karton paling sedikit, yaitu 1.264 cm²."
+   }
+  ],
+  "usage": "evaluasi",
+  "type": "staged",
+  "max_points": 6,
+  "options": null,
+  "answer_key": "staged",
+  "unit": "cm²",
+  "tolerance": 0,
+  "explanation": {
+   "ringkasan": "Toko sebaiknya memilih Kotak C karena kotak tersebut dapat memuat barang dan membutuhkan karton paling sedikit, yaitu 1.264 cm²."
   },
-  {
-    "code": "EV-08", "process": "interpret", "shape": "balok", "difficulty": 3, "type": "numeric",
-    "prompt": "Dinding sebuah kamar berbentuk balok dengan panjang 4 m, lebar 3 m, dan tinggi 3 m akan dicat (lantai dan langit-langit tidak dicat). Satu kaleng cat cukup untuk 10 m². Berapa kaleng cat minimal yang harus dibeli?",
-    "options": null, "answer_key": "5", "unit": "kaleng", "tolerance": 0,
-    "explanation": {
-      "diketahui": ["p = 4 m", "l = 3 m", "t = 3 m", "Hanya 4 dinding", "1 kaleng = 10 m²"],
-      "ditanyakan": "Banyak kaleng cat minimal",
-      "rumus": "Luas dinding = 2 × (p × t) + 2 × (l × t)", "substitusi": "Luas dinding = 2 × (4 × 3) + 2 × (3 × 3)",
-      "perhitungan": ["2 × 12 = 24", "2 × 9 = 18", "24 + 18 = 42 m²", "42 : 10 = 4,2 kaleng"],
-      "jawaban": "5 kaleng",
-      "interpretasi": "Cat tidak dijual per 0,2 kaleng. 4 kaleng hanya cukup untuk 40 m², jadi harus membeli 5 kaleng."
-    }
-  },
-  {
-    "code": "EV-09", "process": "employ", "shape": "balok", "difficulty": 3, "type": "numeric",
-    "prompt": "Sebuah balok memiliki panjang 10 cm, lebar 6 cm, dan luas permukaan 376 cm². Berapa tinggi balok tersebut?",
-    "options": null, "answer_key": "8", "unit": "cm", "tolerance": 0,
-    "explanation": {
-      "diketahui": ["p = 10 cm", "l = 6 cm", "L = 376 cm²"], "ditanyakan": "Tinggi balok (t)",
-      "rumus": "L = 2 × (p × l + p × t + l × t)", "substitusi": "376 = 2 × (10 × 6 + 10 × t + 6 × t)",
-      "perhitungan": ["376 : 2 = 188", "188 = 60 + 10 × t + 6 × t", "188 − 60 = 128", "128 = 16 × t", "t = 128 : 16 = 8"],
-      "jawaban": "8 cm", "interpretasi": null
-    }
-  },
-  {
-    "code": "EV-10", "process": "interpret", "shape": "campuran", "difficulty": 3, "type": "mc",
-    "prompt": "Toko kue menyediakan dua pilihan kotak tertutup: kotak kubus dengan rusuk 10 cm atau kotak balok berukuran 12 cm × 10 cm × 8 cm. Kotak mana yang membutuhkan karton lebih sedikit, dan berapa selisihnya?",
-    "options": [
-      { "id": "A", "label": "Kotak kubus, lebih hemat 8 cm²" },
-      { "id": "B", "label": "Kotak balok, lebih hemat 8 cm²" },
-      { "id": "C", "label": "Keduanya membutuhkan karton yang sama" },
-      { "id": "D", "label": "Kotak balok, lebih hemat 40 cm²" }
+  "is_active": true
+ },
+ {
+  "id": "6d0e5b8a-1f0e-4c3e-9a51-0c1d2e3f4a02",
+  "code": "ML-2",
+  "process": "formulate",
+  "shape": "balok",
+  "difficulty": 1,
+  "indicator": "Formulating Situations Mathematically. Siswa mampu mengidentifikasi informasi relevan, menentukan besaran, dan menerjemahkan situasi nyata menjadi model matematika.",
+  "title": "Membungkus Kotak Hadiah",
+  "prompt": "Dina akan membungkus sebuah kotak hadiah berbentuk balok. Kotak tersebut memiliki panjang 40 cm, lebar 25 cm, dan tinggi 15 cm. Dina ingin menutupi seluruh permukaan luar kotak dengan kertas kado tanpa memperhitungkan bagian kertas yang bertumpuk atau terbuang.\nBantulah Dina menyusun model matematika untuk menentukan luas minimal kertas kado yang diperlukan, kemudian hitung luas kertas kado tersebut. Tuliskan informasi yang diketahui, besaran yang dicari, dan model matematika yang digunakan.",
+  "stages": [
+   {
+    "id": "t1",
+    "title": "Tahap 1 · Mengidentifikasi informasi yang diketahui",
+    "points": 1,
+    "inputs": [
+     {
+      "id": "t1p",
+      "kind": "number",
+      "label": "Panjang (p)",
+      "unit": "cm"
+     },
+     {
+      "id": "t1l",
+      "kind": "number",
+      "label": "Lebar (l)",
+      "unit": "cm"
+     },
+     {
+      "id": "t1t",
+      "kind": "number",
+      "label": "Tinggi (t)",
+      "unit": "cm"
+     }
     ],
-    "answer_key": "B", "unit": null, "tolerance": 0,
-    "explanation": {
-      "diketahui": ["Kubus: s = 10 cm", "Balok: p = 12 cm, l = 10 cm, t = 8 cm"],
-      "ditanyakan": "Kotak yang lebih hemat karton dan selisihnya",
-      "rumus": "Kubus: 6 × s × s; Balok: 2 × (p × l + p × t + l × t)",
-      "substitusi": "Kubus: 6 × 10 × 10; Balok: 2 × (12 × 10 + 12 × 8 + 10 × 8)",
-      "perhitungan": ["Kubus: 6 × 100 = 600 cm²", "Balok: 120 + 96 + 80 = 296", "Balok: 2 × 296 = 592 cm²", "Selisih: 600 − 592 = 8 cm²"],
-      "jawaban": "Kotak balok, lebih hemat 8 cm²",
-      "interpretasi": "Kotak balok memakai karton 8 cm² lebih sedikit sehingga sedikit lebih hemat bahan."
-    }
-  }
+    "key": {
+     "t1p": 40,
+     "t1l": 25,
+     "t1t": 15
+    },
+    "explanation": "Diketahui panjang (p) = 40 cm, lebar (l) = 25 cm, dan tinggi (t) = 15 cm."
+   },
+   {
+    "id": "t2",
+    "title": "Tahap 2 · Menentukan besaran yang ditanyakan",
+    "points": 1,
+    "inputs": [
+     {
+      "id": "t2",
+      "kind": "choice",
+      "label": "Besaran apa yang dicari?",
+      "options": [
+       {
+        "id": "A",
+        "label": "Luas seluruh permukaan luar balok (luas minimal kertas kado)"
+       },
+       {
+        "id": "B",
+        "label": "Volume kotak"
+       },
+       {
+        "id": "C",
+        "label": "Keliling alas kotak"
+       },
+       {
+        "id": "D",
+        "label": "Luas satu sisi kotak"
+       }
+      ]
+     }
+    ],
+    "key": {
+     "t2": "A"
+    },
+    "explanation": "Yang ditanyakan adalah luas seluruh permukaan luar balok, yaitu luas minimal kertas kado."
+   },
+   {
+    "id": "t3",
+    "title": "Tahap 3 · Mengidentifikasi sisi-sisi balok",
+    "points": 1,
+    "inputs": [
+     {
+      "id": "t3",
+      "kind": "choice",
+      "label": "Pernyataan mana yang benar tentang kotak hadiah (balok tertutup)?",
+      "options": [
+       {
+        "id": "A",
+        "label": "Memiliki 6 sisi, yaitu tiga pasang sisi yang berukuran sama"
+       },
+       {
+        "id": "B",
+        "label": "Memiliki 6 sisi yang semuanya berbeda ukuran"
+       },
+       {
+        "id": "C",
+        "label": "Memiliki 4 sisi karena alas dan tutup tidak dibungkus"
+       },
+       {
+        "id": "D",
+        "label": "Memiliki 12 sisi yang sama besar"
+       }
+      ]
+     }
+    ],
+    "key": {
+     "t3": "A"
+    },
+    "explanation": "Kotak berbentuk balok tertutup memiliki 6 sisi, yaitu tiga pasang sisi yang berukuran sama."
+   },
+   {
+    "id": "t4",
+    "title": "Tahap 4 · Membentuk model matematika",
+    "points": 1,
+    "inputs": [
+     {
+      "id": "t4",
+      "kind": "choice",
+      "label": "Model matematika luas permukaan balok yang tepat adalah …",
+      "options": [
+       {
+        "id": "A",
+        "label": "L = 2(pl + pt + lt)"
+       },
+       {
+        "id": "B",
+        "label": "L = p × l × t"
+       },
+       {
+        "id": "C",
+        "label": "L = 6 × s × s"
+       },
+       {
+        "id": "D",
+        "label": "L = 2(pl + pt)"
+       }
+      ]
+     }
+    ],
+    "key": {
+     "t4": "A"
+    },
+    "explanation": "Model matematika luas permukaan balok: L = 2(pl + pt + lt)."
+   },
+   {
+    "id": "t5",
+    "title": "Tahap 5 · Memasukkan ukuran ke dalam model",
+    "points": 1,
+    "inputs": [
+     {
+      "id": "t5pl",
+      "kind": "number",
+      "label": "p × l",
+      "unit": "cm²"
+     },
+     {
+      "id": "t5pt",
+      "kind": "number",
+      "label": "p × t",
+      "unit": "cm²"
+     },
+     {
+      "id": "t5lt",
+      "kind": "number",
+      "label": "l × t",
+      "unit": "cm²"
+     }
+    ],
+    "key": {
+     "t5pl": 1000,
+     "t5pt": 600,
+     "t5lt": 375
+    },
+    "carry": {
+     "t5pl": {
+      "op": "mul",
+      "of": [
+       "t1p",
+       "t1l"
+      ]
+     },
+     "t5pt": {
+      "op": "mul",
+      "of": [
+       "t1p",
+       "t1t"
+      ]
+     },
+     "t5lt": {
+      "op": "mul",
+      "of": [
+       "t1l",
+       "t1t"
+      ]
+     }
+    },
+    "explanation": "L = 2[(40×25) + (40×15) + (25×15)] = 2(1.000 + 600 + 375)."
+   },
+   {
+    "id": "t6",
+    "title": "Tahap 6 · Menghitung dan menafsirkan hasil",
+    "points": 1,
+    "inputs": [
+     {
+      "id": "t6",
+      "kind": "number",
+      "label": "Luas minimal kertas kado",
+      "unit": "cm²"
+     }
+    ],
+    "key": {
+     "t6": 3950
+    },
+    "carry": {
+     "t6": {
+      "op": "twice_sum",
+      "of": [
+       "t5pl",
+       "t5pt",
+       "t5lt"
+      ]
+     }
+    },
+    "explanation": "L = 2 × 1.975 = 3.950 cm². Jadi, luas minimal kertas kado yang diperlukan adalah 3.950 cm²."
+   }
+  ],
+  "usage": "evaluasi",
+  "type": "staged",
+  "max_points": 6,
+  "options": null,
+  "answer_key": "staged",
+  "unit": "cm²",
+  "tolerance": 0,
+  "explanation": {
+   "ringkasan": "L = 2 × 1.975 = 3.950 cm². Jadi, luas minimal kertas kado yang diperlukan adalah 3.950 cm²."
+  },
+  "is_active": true
+ },
+ {
+  "id": "6d0e5b8a-1f0e-4c3e-9a51-0c1d2e3f4a03",
+  "code": "ML-3",
+  "process": "employ",
+  "shape": "balok",
+  "difficulty": 1,
+  "indicator": "Employing Mathematical Concepts, Facts, and Procedures. Siswa mampu memilih serta menggunakan konsep, operasi, prosedur, dan strategi matematika untuk memperoleh solusi.",
+  "title": "Mengecat Kotak Penyimpanan",
+  "prompt": "Sebuah kotak penyimpanan berbentuk balok memiliki panjang 50 cm, lebar 30 cm, dan tinggi 20 cm. Seluruh bagian luar kotak, termasuk bagian bawahnya, akan dicat.\nBerapa luas seluruh permukaan luar kotak yang akan dicat? Tunjukkan rumus dan langkah perhitungan Anda.",
+  "stages": [
+   {
+    "id": "t1",
+    "title": "Tahap 1 · Menuliskan rumus luas permukaan balok",
+    "points": 1,
+    "inputs": [
+     {
+      "id": "t1",
+      "kind": "choice",
+      "label": "Rumus yang digunakan adalah …",
+      "options": [
+       {
+        "id": "A",
+        "label": "L = 2(pl + pt + lt)"
+       },
+       {
+        "id": "B",
+        "label": "L = p × l × t"
+       },
+       {
+        "id": "C",
+        "label": "L = 6 × s × s"
+       },
+       {
+        "id": "D",
+        "label": "L = 2(pl + pt)"
+       }
+      ]
+     }
+    ],
+    "key": {
+     "t1": "A"
+    },
+    "explanation": "Rumus luas permukaan balok: L = 2(pl + pt + lt)."
+   },
+   {
+    "id": "t2",
+    "title": "Tahap 2 · Memasukkan ukuran yang diketahui ke dalam rumus",
+    "points": 2,
+    "inputs": [
+     {
+      "id": "t2pl",
+      "kind": "number",
+      "label": "p × l = 50 × 30",
+      "unit": "cm²"
+     },
+     {
+      "id": "t2pt",
+      "kind": "number",
+      "label": "p × t = 50 × 20",
+      "unit": "cm²"
+     },
+     {
+      "id": "t2lt",
+      "kind": "number",
+      "label": "l × t = 30 × 20",
+      "unit": "cm²"
+     }
+    ],
+    "key": {
+     "t2pl": 1500,
+     "t2pt": 1000,
+     "t2lt": 600
+    },
+    "partial": {
+     "3": 2,
+     "2": 1,
+     "1": 1
+    },
+    "explanation": "L = 2[(50×30) + (50×20) + (30×20)] = 2(1.500 + 1.000 + 600)."
+   },
+   {
+    "id": "t3",
+    "title": "Tahap 3 · Melakukan perhitungan",
+    "points": 2,
+    "inputs": [
+     {
+      "id": "t3sum",
+      "kind": "number",
+      "label": "Jumlah di dalam kurung (pl + pt + lt)",
+      "unit": "cm²"
+     },
+     {
+      "id": "t3L",
+      "kind": "number",
+      "label": "Luas permukaan L",
+      "unit": "cm²"
+     }
+    ],
+    "key": {
+     "t3sum": 3100,
+     "t3L": 6200
+    },
+    "partial": {
+     "2": 2,
+     "1": 1
+    },
+    "carry": {
+     "t3sum": {
+      "op": "sum",
+      "of": [
+       "t2pl",
+       "t2pt",
+       "t2lt"
+      ]
+     },
+     "t3L": {
+      "op": "twice",
+      "of": [
+       "t3sum"
+      ]
+     }
+    },
+    "explanation": "L = 2(1.500 + 1.000 + 600) = 2 × 3.100 = 6.200 cm²."
+   },
+   {
+    "id": "t4",
+    "title": "Tahap 4 · Menyatakan jawaban sesuai konteks",
+    "points": 1,
+    "inputs": [
+     {
+      "id": "t4",
+      "kind": "choice",
+      "label": "Kesimpulan yang tepat adalah …",
+      "options": [
+       {
+        "id": "A",
+        "label": "Luas seluruh permukaan luar kotak yang dicat (termasuk bagian bawah) dinyatakan dalam cm²."
+       },
+       {
+        "id": "B",
+        "label": "Yang dicat hanya setengahnya karena bagian bawah tidak terlihat."
+       },
+       {
+        "id": "C",
+        "label": "Yang dicat dinyatakan dalam cm³ karena kotak memiliki isi."
+       },
+       {
+        "id": "D",
+        "label": "Yang dicat dinyatakan dalam cm karena dihitung dari panjang rusuk."
+       }
+      ]
+     }
+    ],
+    "key": {
+     "t4": "A"
+    },
+    "explanation": "Jadi, luas seluruh permukaan luar kotak yang akan dicat adalah 6.200 cm² (satuan luas, termasuk bagian bawah)."
+   }
+  ],
+  "usage": "evaluasi",
+  "type": "staged",
+  "max_points": 6,
+  "options": null,
+  "answer_key": "staged",
+  "unit": "cm²",
+  "tolerance": 0,
+  "explanation": {
+   "ringkasan": "Jadi, luas seluruh permukaan luar kotak yang akan dicat adalah 6.200 cm² (satuan luas, termasuk bagian bawah)."
+  },
+  "is_active": true
+ },
+ {
+  "id": "6d0e5b8a-1f0e-4c3e-9a51-0c1d2e3f4a04",
+  "code": "ML-4",
+  "process": "interpret",
+  "shape": "balok",
+  "difficulty": 2,
+  "indicator": "Interpreting, Applying, and Evaluating Mathematical Outcomes. Siswa mampu menafsirkan hasil matematika dalam konteks, menilai kewajaran hasil, dan mengambil keputusan berdasarkan hasil perhitungan.",
+  "title": "Memeriksa Perhitungan Kertas Pelapis",
+  "prompt": "Sebuah kotak penyimpanan berbentuk balok memiliki panjang 40 cm, lebar 30 cm, dan tinggi 20 cm. Seluruh permukaan luar kotak akan dilapisi kertas.\nBudi menghitung luas permukaan kotak sebagai berikut:\nL = 2(pl + pt) = 2[(40×30) + (40×20)] = 2(1.200 + 800) = 4.000 cm².\nBudi menyimpulkan bahwa kertas seluas 4.000 cm² sudah cukup untuk melapisi seluruh permukaan kotak. Apakah Anda setuju dengan perhitungan dan kesimpulan Budi? Periksa pekerjaannya, tunjukkan bagian yang keliru jika ada, lalu tentukan luas permukaan yang benar dan jelaskan kesimpulan Anda.",
+  "stages": [
+   {
+    "id": "t1",
+    "title": "Tahap 1 · Menafsirkan pekerjaan Budi",
+    "points": 1,
+    "inputs": [
+     {
+      "id": "t1",
+      "kind": "choice",
+      "label": "Apa yang keliru dari pekerjaan Budi?",
+      "options": [
+       {
+        "id": "A",
+        "label": "Rumusnya belum lengkap karena hanya menghitung dua pasang sisi balok"
+       },
+       {
+        "id": "B",
+        "label": "Budi salah mengalikan 40 × 30"
+       },
+       {
+        "id": "C",
+        "label": "Budi seharusnya memakai rumus luas permukaan kubus"
+       },
+       {
+        "id": "D",
+        "label": "Tidak ada yang keliru"
+       }
+      ]
+     }
+    ],
+    "key": {
+     "t1": "A"
+    },
+    "explanation": "Budi menggunakan rumus yang belum lengkap karena hanya menghitung dua pasang sisi balok."
+   },
+   {
+    "id": "t2",
+    "title": "Tahap 2 · Mengidentifikasi bagian yang belum dihitung",
+    "points": 1,
+    "inputs": [
+     {
+      "id": "t2",
+      "kind": "number",
+      "label": "Luas dua sisi berukuran lebar × tinggi yang belum dihitung",
+      "unit": "cm²"
+     }
+    ],
+    "key": {
+     "t2": 1200
+    },
+    "explanation": "Bagian yang belum dihitung adalah dua sisi berukuran lebar × tinggi: 2 × (30 × 20) = 1.200 cm²."
+   },
+   {
+    "id": "t3",
+    "title": "Tahap 3 · Menuliskan rumus yang benar",
+    "points": 1,
+    "inputs": [
+     {
+      "id": "t3",
+      "kind": "choice",
+      "label": "Rumus luas permukaan balok yang benar adalah …",
+      "options": [
+       {
+        "id": "A",
+        "label": "L = 2(pl + pt + lt)"
+       },
+       {
+        "id": "B",
+        "label": "L = p × l × t"
+       },
+       {
+        "id": "C",
+        "label": "L = 6 × s × s"
+       },
+       {
+        "id": "D",
+        "label": "L = 2(pl + pt)"
+       }
+      ]
+     }
+    ],
+    "key": {
+     "t3": "A"
+    },
+    "explanation": "Rumus luas permukaan balok yang benar: L = 2(pl + pt + lt)."
+   },
+   {
+    "id": "t4",
+    "title": "Tahap 4 · Memasukkan ukuran",
+    "points": 1,
+    "inputs": [
+     {
+      "id": "t4pl",
+      "kind": "number",
+      "label": "p × l = 40 × 30",
+      "unit": "cm²"
+     },
+     {
+      "id": "t4pt",
+      "kind": "number",
+      "label": "p × t = 40 × 20",
+      "unit": "cm²"
+     },
+     {
+      "id": "t4lt",
+      "kind": "number",
+      "label": "l × t = 30 × 20",
+      "unit": "cm²"
+     }
+    ],
+    "key": {
+     "t4pl": 1200,
+     "t4pt": 800,
+     "t4lt": 600
+    },
+    "explanation": "L = 2[(40×30) + (40×20) + (30×20)]."
+   },
+   {
+    "id": "t5",
+    "title": "Tahap 5 · Menghitung hasil yang benar",
+    "points": 1,
+    "inputs": [
+     {
+      "id": "t5",
+      "kind": "number",
+      "label": "Luas permukaan yang benar",
+      "unit": "cm²"
+     }
+    ],
+    "key": {
+     "t5": 5200
+    },
+    "carry": {
+     "t5": {
+      "op": "twice_sum",
+      "of": [
+       "t4pl",
+       "t4pt",
+       "t4lt"
+      ]
+     }
+    },
+    "explanation": "L = 2(1.200 + 800 + 600) = 2 × 2.600 = 5.200 cm²."
+   },
+   {
+    "id": "t6",
+    "title": "Tahap 6 · Mengevaluasi kesimpulan dalam konteks",
+    "points": 1,
+    "inputs": [
+     {
+      "id": "t6",
+      "kind": "choice",
+      "label": "Kesimpulan yang tepat adalah …",
+      "options": [
+       {
+        "id": "A",
+        "label": "Tidak setuju. Hasil Budi kurang 1.200 cm²; kertas minimal yang diperlukan adalah luas permukaan yang benar."
+       },
+       {
+        "id": "B",
+        "label": "Setuju. Kertas 4.000 cm² sudah cukup."
+       },
+       {
+        "id": "C",
+        "label": "Tidak setuju, karena hasil Budi masih harus dikali 2 lagi."
+       },
+       {
+        "id": "D",
+        "label": "Setuju, karena dua pasang sisi sudah mewakili seluruh kotak."
+       }
+      ]
+     }
+    ],
+    "key": {
+     "t6": "A"
+    },
+    "explanation": "Saya tidak setuju dengan Budi. Luas 4.000 cm² kurang 1.200 cm² dari kebutuhan sebenarnya. Jadi, kertas minimal yang diperlukan untuk menutupi seluruh permukaan kotak adalah 5.200 cm²."
+   }
+  ],
+  "usage": "evaluasi",
+  "type": "staged",
+  "max_points": 6,
+  "options": null,
+  "answer_key": "staged",
+  "unit": "cm²",
+  "tolerance": 0,
+  "explanation": {
+   "ringkasan": "Saya tidak setuju dengan Budi. Luas 4.000 cm² kurang 1.200 cm² dari kebutuhan sebenarnya. Jadi, kertas minimal yang diperlukan untuk menutupi seluruh permukaan kotak adalah 5.200 cm²."
+  },
+  "is_active": true
+ }
 ]

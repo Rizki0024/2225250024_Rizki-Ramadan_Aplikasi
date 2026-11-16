@@ -77,6 +77,10 @@ class SupabaseRepository(Repository):
         return self._cached("questions", lambda: self._request("GET", "/questions", params={
             "select": "*", "is_active": "is.true", "usage": "eq.evaluasi", "order": "code.asc"}))
 
+    def list_all_questions(self):
+        return self._cached("questions_all", lambda: self._request("GET", "/questions", params={
+            "select": "*", "order": "code.asc"}))
+
     # --- attempt ---
     def create_attempt(self, data):
         return self._first(self._request("POST", "/quiz_attempts", json=data, prefer="return=representation"))

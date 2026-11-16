@@ -1,3 +1,4 @@
+import json
 from datetime import datetime, timedelta, timezone
 
 from app.services.content import load_questions
@@ -7,10 +8,14 @@ KEYS = {q["id"]: q for q in load_questions()}
 
 
 def _all_correct(questions):
+    """Jawaban kunci untuk setiap tahap soal bertahap."""
     out = []
     for q in questions:
-        key = KEYS[q["id"]]["answer_key"]
-        out.append({"question_id": q["id"], "answer": key})
+        full = KEYS[q["id"]]
+        parts = {}
+        for stage in full["stages"]:
+            parts.update({k: str(v) for k, v in stage["key"].items()})
+        out.append({"question_id": q["id"], "answer": json.dumps(parts)})
     return out
 
 
@@ -26,9 +31,14 @@ def test_start_hides_answer_keys_and_orders_by_difficulty(client, auth):
     r = client.post("/api/evaluations/start", headers=auth)
     assert r.status_code == 200
     body = r.json()
-    assert len(body["questions"]) == 10
+    assert len(body["questions"]) == 4
+    assert {q["process"] for q in body["questions"]} == {"reasoning", "formulate", "employ", "interpret"}
     text = r.text
-    assert "answer_key" not in text and "explanation" not in text and "perhitungan" not in text
+    for secret in ("answer_key", "explanation", "ringkasan", '"key"', "carry", "1.264", "3.950", "6.200", "5.200"):
+        assert secret not in text, secret
+    for q in body["questions"]:
+        assert q["type"] == "staged" and q["max_points"] == 6 and q["stages"]
+        assert sum(st["points"] for st in q["stages"]) == 6
     diffs = [KEYS[q["id"]]["difficulty"] for q in body["questions"]]
     assert diffs == sorted(diffs)
 
@@ -53,28 +63,40 @@ def test_submit_all_correct(client, auth):
                     json={"answers": _all_correct(s["questions"])})
     assert r.status_code == 200, r.text
     body = r.json()
-    assert body["score"] == 100 and body["correct_count"] == 10 and body["wrong_count"] == 0
-    assert all(item["explanation"]["jawaban"] for item in body["review"])
-    # kirim ulang ditolak
+    assert body["score"] == 100 and body["points_earned"] == 24 and body["points_max"] == 24
+    assert body["correct_count"] == 4 and body["wrong_count"] == 0
+    for item in body["review"]:
+        assert item["points"] == item["max_points"] == 6
+        assert all(st["explanation"] and st["points"] == st["max_points"] for st in item["stages"])
+    # riwayat menampilkan pembahasan per tahap yang sama
+    detail = client.get(f"/api/attempts/{s['attempt_id']}", headers=auth).json()
+    assert sum(i["points"] for i in detail["review"]) == 24
     r2 = client.post(f"/api/evaluations/{s['attempt_id']}/submit", headers=auth, json={"answers": []})
     assert r2.status_code == 400
 
 
-def test_submit_partial_and_indonesian_numbers(client, auth):
+def test_submit_partial_scoring_follows_kisi_kisi(client, auth):
     s = client.post("/api/evaluations/start", headers=auth).json()
     by_code = {KEYS[q["id"]]["code"]: q["id"] for q in s["questions"]}
     answers = [
-        {"question_id": by_code["EV-02"], "answer": "158"},
-        {"question_id": by_code["EV-05"], "answer": "5,0"},
-        {"question_id": by_code["EV-08"], "answer": "4,2"},   # tidak dibulatkan → salah
-        {"question_id": by_code["EV-09"], "answer": "abc"},   # format salah → salah
-        {"question_id": by_code["EV-01"], "answer": "A"},     # pengecoh
+        # ML-1: salah hitung Kotak C (1.300) → tahap 2 dapat 1 dari 2; tahap 3–5 tetap dinilai.
+        {"question_id": by_code["ML-1"], "answer": json.dumps(
+            {"t1": "A", "t2a": "2.400", "t2b": "1300", "t2c": "1.364", "t3": "A", "t4": "C", "t5": "A"})},
+        # ML-2: salah kali p×l (900) → tahap 5 salah; tahap 6 konsisten dgn angka sendiri (2×1.875=3.750) → tetap 1.
+        {"question_id": by_code["ML-2"], "answer": json.dumps(
+            {"t1p": "40", "t1l": "25", "t1t": "15", "t2": "A", "t3": "A", "t4": "A",
+             "t5pl": "900", "t5pt": "600", "t5lt": "375", "t6": "3750"})},
+        # ML-3: hanya rumus benar + tahap 2 dua dari tiga benar → 1 + 1; sisanya kosong.
+        {"question_id": by_code["ML-3"], "answer": json.dumps({"t1": "A", "t2pl": "1500", "t2pt": "1000", "t2lt": "60"})},
+        # ML-4: format angka Indonesia "5.200" dan "1,2 ribu" (tidak valid) → t2 salah.
+        {"question_id": by_code["ML-4"], "answer": json.dumps(
+            {"t1": "A", "t2": "1,2 ribu", "t3": "A", "t4pl": "1200", "t4pt": "800", "t4lt": "600", "t5": "5.200", "t6": "B"})},
     ]
-    body = client.post(f"/api/evaluations/{s['attempt_id']}/submit", headers=auth,
-                       json={"answers": answers}).json()
-    assert body["correct_count"] == 2 and body["wrong_count"] == 8 and body["score"] == 20
-    ev08 = next(i for i in body["review"] if i["question_id"] == by_code["EV-08"])
-    assert ev08["correct_label"] == "5 kaleng" and ev08["is_correct"] is False
+    body = client.post(f"/api/evaluations/{s['attempt_id']}/submit", headers=auth, json={"answers": answers}).json()
+    pts = {KEYS[i["question_id"]]["code"]: i["points"] for i in body["review"]}
+    assert pts == {"ML-1": 5, "ML-2": 5, "ML-3": 2, "ML-4": 4}, pts
+    assert body["points_earned"] == 16 and body["score"] == round(16 / 24 * 100, 2)
+    assert body["correct_count"] == 0
 
 
 def test_submit_rejects_foreign_question_and_duplicates(client, auth):

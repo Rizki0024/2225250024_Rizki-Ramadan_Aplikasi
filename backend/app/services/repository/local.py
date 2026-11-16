@@ -81,6 +81,9 @@ class LocalRepository(Repository):
     def list_evaluation_questions(self):
         return [copy.deepcopy(q) for q in load_questions() if q["is_active"] and q["usage"] == "evaluasi"]
 
+    def list_all_questions(self):
+        return [copy.deepcopy(q) for q in load_questions()]
+
     # --- attempt ---
     def create_attempt(self, data):
         row = {

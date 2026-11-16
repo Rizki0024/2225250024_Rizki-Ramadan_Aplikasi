@@ -19,7 +19,7 @@ class AskIn(BaseModel):
     lesson_slug: str = Field(min_length=1, max_length=40)
     segment_id: str = Field(min_length=1, max_length=40)
     question: str = Field(max_length=300)
-    history: list[Turn] = Field(default_factory=list, max_length=6)
+    history: list[Turn] = Field(default_factory=list, max_length=12)
     simpler: bool = False
     intent: str | None = Field(default=None, max_length=60)
 

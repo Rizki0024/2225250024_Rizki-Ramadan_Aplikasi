@@ -36,14 +36,20 @@ function pickVoice() {
 }
 
 /** Menunggu daftar suara dimuat (Chrome/Android memuatnya secara asinkron). */
+let voicesSettled = false; // daftar suara cukup ditunggu sekali; perangkat tanpa suara tidak ditunda tiap kalimat
+
 export function voicesReady(timeout = 2000) {
   if (!ttsSupported()) return Promise.resolve(null);
-  if (window.speechSynthesis.getVoices().length) return Promise.resolve(pickVoice());
+  if (voicesSettled || window.speechSynthesis.getVoices().length) {
+    voicesSettled = true;
+    return Promise.resolve(pickVoice());
+  }
   return new Promise((resolve) => {
     let finished = false;
     const done = () => {
       if (finished) return;
       finished = true;
+      voicesSettled = true;
       window.speechSynthesis.removeEventListener?.('voiceschanged', done);
       resolve(pickVoice());
     };

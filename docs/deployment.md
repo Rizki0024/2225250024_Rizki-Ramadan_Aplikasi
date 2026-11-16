@@ -17,6 +17,12 @@ Catatan teknis Vercel (serverless):
 
 > Jangan pernah menempelkan secret key ke chat, kode, atau GitHub. Isi hanya di dashboard layanan atau di file `.env` lokal (sudah diabaikan oleh `.gitignore`).
 
+## 3C. Pembaruan 16 Nov 2026: soal bertahap & AI Bu Sari
+1. **Migrasi database (sekali):** Supabase → SQL Editor → tempel isi `supabase/migrations/2026-11-16_soal_bertahap.sql` → Run. Hanya menambah kolom & melonggarkan batasan; tidak menghapus data.
+2. **Isi soal baru:** dari folder `backend`: `python scripts/seed_supabase.py` (mengisi ML-1..ML-4, menonaktifkan EV-01..EV-10 tanpa menghapus).
+3. **Deploy kode:** push ke `main` → Vercel membangun frontend & backend. (Urutan aman: kode baru tetap jalan dengan soal lama sampai langkah 1–2 selesai.)
+4. **(Opsional, berbayar) AI Bu Sari:** buat kunci di console.anthropic.com (beli kredit), lalu di Vercel proyek **backend** → Settings → Environment Variables: `ANTHROPIC_API_KEY` = kunci, `TUTOR_MODEL` = `claude-haiku-5-5` (murah) atau `claude-opus-5-5` → Redeploy. Cek `GET /api/health` → `"tutor": "claude"`. Kunci **tidak boleh** ditaruh di proyek frontend.
+
 ## 0. Persiapan akun
 1. **GitHub** — https://github.com/signup
 2. **Supabase** — https://supabase.com → *Start your project* (masuk dengan GitHub)

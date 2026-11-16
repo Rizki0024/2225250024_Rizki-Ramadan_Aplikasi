@@ -23,6 +23,9 @@ class QuestionOut(BaseModel):
     prompt: str
     options: list[OptionOut] | None = None
     unit: str | None = None
+    title: str | None = None
+    max_points: int | None = None
+    stages: list[dict[str, Any]] | None = None  # soal bertahap: tanpa kunci & pembahasan
 
 
 class StartEvaluationResponse(BaseModel):
@@ -36,7 +39,8 @@ class StartEvaluationResponse(BaseModel):
 
 class AnswerIn(BaseModel):
     question_id: str
-    answer: str | None = Field(default=None, max_length=50)
+    # Soal bertahap mengirim JSON {input_id: nilai}; soal biasa cukup pendek.
+    answer: str | None = Field(default=None, max_length=2000)
 
     @field_validator("answer")
     @classmethod
@@ -71,6 +75,10 @@ class ReviewItem(BaseModel):
     correct_label: str | None = None
     is_correct: bool
     explanation: dict[str, Any] | None = None
+    title: str | None = None
+    points: float | None = None
+    max_points: float | None = None
+    stages: list[dict[str, Any]] | None = None
 
 
 class AttemptSummary(BaseModel):
@@ -100,6 +108,8 @@ class SubmitEvaluationResponse(BaseModel):
     total_questions: int
     duration_seconds: int
     timed_out: bool
+    points_earned: float | None = None
+    points_max: float | None = None
     review: list[ReviewItem]
 
 

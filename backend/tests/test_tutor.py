@@ -98,7 +98,7 @@ def test_tutor_validation(client, auth):
     assert r.status_code == 422 and r.json()["detail"] == "Pertanyaan belum diisi."
     assert client.post("/api/tutor/ask", headers=auth, json={**base, "question": "x" * 301}).status_code == 422
     assert client.post("/api/tutor/ask", headers=auth, json={**base, "segment_id": "zzz", "question": "a"}).status_code == 404
-    too_long_history = [{"role": "student", "text": "a"}] * 7
+    too_long_history = [{"role": "student", "text": "a"}] * 13
     assert client.post("/api/tutor/ask", headers=auth, json={**base, "question": "a", "history": too_long_history}).status_code == 422
 
 
@@ -130,10 +130,30 @@ def fake_claude(model="claude-opus-5-5", **kw):
     return ClaudeTutor("kunci-palsu", model, client=client), msgs
 
 
-def test_claude_not_called_when_curated_confident():
+def test_claude_answers_everything_when_active_except_repeat():
+    """Bila AI aktif, pertanyaan yang sudah ada di bank pun dijawab AI agar alami; "ulangi" tetap memutar papan."""
     claude, msgs = fake_claude()
     reply, source = tutor.ask("kenapa dikali 6", SEG_KUBUS, [], claude=claude)
-    assert source == "curated" and msgs.calls == []
+    assert source == "claude" and len(msgs.calls) == 1
+    reply, source = tutor.ask("ulangi", SEG_KUBUS, [], claude=claude)
+    assert source == "curated" and reply.intent == "repeat" and len(msgs.calls) == 1
+
+
+def test_curated_mode_does_not_repeat_same_answer():
+    first, _ = tutor.ask("kenapa dikali 6", SEG_KUBUS, [])
+    history = [{"role": "student", "text": "kenapa dikali 6"}, {"role": "teacher", "text": first.answer}]
+    second, source = tutor.ask("kenapa dikali 6", SEG_KUBUS, history)
+    assert source == "curated" and second.answer != first.answer
+    history.append({"role": "teacher", "text": second.answer})
+    third, _ = tutor.ask("kenapa dikali 6", SEG_KUBUS, history)
+    assert third.answer not in {first.answer, second.answer}
+
+
+def test_rmt_pedagogy_in_system_prompt():
+    from app.services.tutor.claude_provider import RULES
+    for phrase in ("Rigorous Mathematical Thinking", "Intensionalitas", "Transendensi", "Input", "Elaborasi", "Output",
+                   "pertanyaan pemandu", "program komputer", "Reasoning"):
+        assert phrase in RULES, phrase
 
 
 def test_claude_used_for_unknown_question_with_context_and_fallbacks():

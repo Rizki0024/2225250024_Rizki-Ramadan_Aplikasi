@@ -10,19 +10,16 @@ from .curated import FOLLOW_UP, TutorReply
 
 log = logging.getLogger("kubus-balok.tutor")
 
-# Jawaban curated dengan keyakinan setinggi ini dipakai langsung tanpa memanggil AI (hemat & konsisten).
-CURATED_CONFIDENT = 0.75
-
 
 def ask(question: str, segment: dict | None, history: list[dict], *, simpler: bool = False,
         intent: str | None = None, claude=None) -> tuple[TutorReply, str]:
-    """Mengembalikan (balasan, sumber) dengan sumber 'curated' atau 'claude'."""
+    """Mengembalikan (balasan, sumber) dengan sumber 'curated' atau 'claude'.
+
+    Bila AI aktif, semua pertanyaan dijawab AI agar alami dan mengikuti percakapan; jawaban siap pakai (curated)
+    hanya cadangan saat AI gagal. Perintah "ulangi" tetap memutar ulang penjelasan papan tulis.
+    """
     reply = curated.answer(question, segment, simpler=simpler, intent=intent)
-    deterministic = reply.intent is not None and (
-        reply.intent.startswith("calc-") or reply.intent in ("repeat", "example", "sapaan", "terima-kasih"))
-    if deterministic or (reply.intent and reply.confidence >= CURATED_CONFIDENT and intent != "ai"):
-        return reply, "curated"
-    if claude is not None:
+    if claude is not None and reply.intent != "repeat":
         try:
             result = claude.answer(question, segment, history, simpler)
         except Exception as exc:  # layanan AI gagal → tetap menjawab dengan curated
@@ -31,7 +28,20 @@ def ask(question: str, segment: dict | None, history: list[dict], *, simpler: bo
         if result:
             text, in_scope = result
             return TutorReply(text, "ai", in_scope, in_scope, FOLLOW_UP if in_scope else None), "claude"
-    return reply, "curated"
+    return _avoid_repeat(reply, question, segment, history), "curated"
+
+
+def _avoid_repeat(reply: TutorReply, question: str, segment: dict | None, history: list[dict]) -> TutorReply:
+    """Mode tanpa AI: jangan mengulang kalimat yang persis sama dengan jawaban sebelumnya."""
+    previous = {t["text"].strip() for t in history if t.get("role") == "teacher"}
+    if reply.answer.strip() not in previous:
+        return reply
+    simpler = curated.answer(question, segment, simpler=True, intent=reply.intent)
+    if simpler.answer.strip() not in previous:
+        return simpler
+    goal = f" Tujuan bagian ini: {segment['goal']}" if segment else ""
+    return TutorReply("Bu Sari sudah menjawab itu dengan cara yang sama. Coba sebutkan bagian mana yang belum jelas, "
+                      "misalnya rumusnya, cara menghitung sisi, atau satuannya." + goal, "clarify", True, False, None, 0.3)
 
 
 class TutorLimiter:

@@ -1,518 +1,571 @@
 {
-  "intents": [
-    {
-      "id": "kenapa-kali-6",
-      "terms": [
-        [
-          "kenapa",
-          "mengapa",
-          "kok",
-          "dari mana",
-          "darimana",
-          "alasan",
-          "buat apa"
-        ],
-        [
-          "6",
-          "kali 6",
-          "dikali 6"
-        ]
-      ],
-      "concepts": [
-        "rumus-kubus",
-        "luas-permukaan",
-        "unsur-kubus",
-        "contoh-kubus"
-      ],
-      "answer": "Pertanyaan bagus! Kubus punya 6 sisi: depan, belakang, kanan, kiri, atas, dan bawah. Semua sisinya sama luas, yaitu s × s. Jadi cukup hitung luas satu sisi, lalu kalikan 6.",
-      "simpler": "Coba bayangkan sebuah dadu. Dadu punya angka 1 sampai 6, satu angka di setiap sisi. Berarti ada 6 sisi. Kalau satu sisi luasnya 4 cm², maka keenam sisi luasnya 6 × 4 = 24 cm²."
-    },
-    {
-      "id": "kenapa-kali-2",
-      "terms": [
-        [
-          "kenapa",
-          "mengapa",
-          "kok",
-          "dari mana",
-          "darimana",
-          "alasan",
-          "buat apa"
-        ],
-        [
-          "2",
-          "kali 2",
-          "dikali 2"
-        ]
-      ],
-      "concepts": [
-        "rumus-balok",
-        "pasangan-sisi",
-        "contoh-balok",
-        "unsur-balok"
-      ],
-      "answer": "Karena sisi balok selalu berpasangan. Alas sama dengan tutup, depan sama dengan belakang, kiri sama dengan kanan. Setiap pasangan terdiri dari dua sisi yang sama luas, jadi luasnya dikali 2.",
-      "simpler": "Lihat kotak sepatu. Tutupnya sama besar dengan alasnya. Kalau luas tutup 600 cm², luas alas juga 600 cm². Dua sisi itu jumlahnya 2 × 600 = 1.200 cm². Begitu juga untuk pasangan yang lain."
-    },
-    {
-      "id": "luas-vs-volume",
-      "terms": [
-        [
-          "volume",
-          "isi",
-          "kubik",
-          "cm3",
-          "menampung",
-          "mengisi"
-        ]
-      ],
-      "concepts": [
-        "luas-vs-volume",
-        "luas-permukaan"
-      ],
-      "answer": "Luas permukaan adalah luas kulit luar bangun, dipakai untuk membungkus atau mengecat, satuannya cm². Volume adalah isi di dalamnya, dipakai untuk mengisi air atau pasir, satuannya cm³. Untuk kubus: luas permukaan 6 × s × s, sedangkan volume s × s × s.",
-      "simpler": "Bayangkan kotak kado. Kertas kado yang membungkus kotak itu adalah luas permukaan. Kue yang ada di dalam kotak itu adalah volume.",
-      "priority": 0.5
-    },
-    {
-      "id": "apa-luas-permukaan",
-      "terms": [
-        [
-          "apa",
-          "maksud",
-          "arti",
-          "pengertian",
-          "itu apa"
-        ],
-        [
-          "luas permukaan",
-          "permukaan"
-        ]
-      ],
-      "concepts": [
-        "luas-permukaan"
-      ],
-      "answer": "Luas permukaan adalah jumlah luas semua sisi sebuah bangun ruang. Caranya: hitung luas setiap sisi, lalu jumlahkan semuanya.",
-      "simpler": "Kalau kubus dibuka menjadi jaring-jaring dan dibentangkan di atas meja, luas seluruh kertas jaring-jaring itulah luas permukaannya."
-    },
-    {
-      "id": "apa-rusuk",
-      "terms": [
-        [
-          "rusuk"
-        ]
-      ],
-      "concepts": [
-        "unsur-kubus",
-        "unsur-balok"
-      ],
-      "answer": "Rusuk adalah garis tempat dua sisi bertemu. Kubus punya 12 rusuk yang sama panjang, dan panjangnya kita sebut s. Balok juga punya 12 rusuk.",
-      "simpler": "Rusuk itu seperti tepi kotak yang bisa kamu raba dengan jari, tempat dua sisi bertemu."
-    },
-    {
-      "id": "apa-sisi",
-      "terms": [
-        [
-          "apa",
-          "maksud",
-          "arti",
-          "pengertian",
-          "berapa"
-        ],
-        [
-          "sisi"
-        ]
-      ],
-      "concepts": [
-        "unsur-kubus",
-        "unsur-balok"
-      ],
-      "answer": "Sisi adalah bidang datar yang membatasi bangun ruang. Kubus dan balok sama-sama punya 6 sisi. Pada kubus keenam sisinya persegi yang sama besar, pada balok sisinya persegi panjang yang berpasangan.",
-      "simpler": "Sisi itu seperti dinding, lantai, dan atap sebuah kotak. Kotak punya 6: atas, bawah, depan, belakang, kiri, dan kanan."
-    },
-    {
-      "id": "titik-sudut",
-      "terms": [
-        [
-          "titik sudut",
-          "pojok",
-          "sudut"
-        ]
-      ],
-      "concepts": [
-        "unsur-kubus",
-        "unsur-balok"
-      ],
-      "answer": "Titik sudut adalah titik tempat tiga rusuk bertemu. Kubus dan balok masing-masing punya 8 titik sudut.",
-      "simpler": "Titik sudut itu pojok-pojok kotak. Hitung saja: 4 pojok di atas dan 4 pojok di bawah, jadi 8."
-    },
-    {
-      "id": "panjang-lebar-tinggi",
-      "terms": [
-        [
-          "panjang",
-          "lebar",
-          "tinggi"
-        ],
-        [
-          "apa",
-          "mana",
-          "beda",
-          "bedanya",
-          "membedakan",
-          "menentukan",
-          "tahu"
-        ]
-      ],
-      "concepts": [
-        "unsur-balok",
-        "pasangan-sisi"
-      ],
-      "answer": "Panjang (p) biasanya ukuran terpanjang pada alas, lebar (l) ukuran alas yang lebih pendek, dan tinggi (t) ukuran tegak dari alas ke tutup. Yang penting, setiap sisi balok memakai dua dari tiga ukuran itu.",
-      "simpler": "Taruh kotak sepatu di meja. Sisi panjang di meja adalah p, sisi pendek di meja adalah l, dan seberapa tinggi kotak itu dari meja adalah t."
-    },
-    {
-      "id": "pasangan-sisi",
-      "terms": [
-        [
-          "pasangan",
-          "berhadapan",
-          "pasang",
-          "warna"
-        ]
-      ],
-      "concepts": [
-        "pasangan-sisi",
-        "rumus-balok",
-        "unsur-balok"
-      ],
-      "answer": "Balok punya tiga pasang sisi yang sama besar. Alas dan tutup luasnya p × l, depan dan belakang p × t, serta kiri dan kanan l × t. Di gambar, pasangan yang sama diberi warna yang sama.",
-      "simpler": "Pegang kotak. Sisi atas dan bawah kembar, sisi depan dan belakang kembar, sisi kiri dan kanan juga kembar. Jadi ada 3 pasang kembar."
-    },
-    {
-      "id": "tanpa-tutup",
-      "terms": [
-        [
-          "tanpa tutup",
-          "terbuka",
-          "tidak bertutup",
-          "tidak ada tutup",
-          "tanpa tutupnya",
-          "tidak pakai tutup"
-        ]
-      ],
-      "concepts": [
-        "tanpa-tutup",
-        "langkah-soal-cerita"
-      ],
-      "answer": "Kalau tanpa tutup, sisi atas tidak dihitung, jadi hanya 5 sisi. Untuk balok: L = (p × l) + 2 × (p × t) + 2 × (l × t). Untuk kubus: L = 5 × s × s.",
-      "simpler": "Bayangkan akuarium. Tidak ada kaca di bagian atasnya. Jadi kaca yang dibutuhkan hanya untuk alas dan 4 dinding."
-    },
-    {
-      "id": "pembulatan",
-      "terms": [
-        [
-          "kaleng",
-          "dibulatkan",
-          "pembulatan",
-          "bulatkan",
-          "koma",
-          "setengah",
-          "sisa"
-        ]
-      ],
-      "concepts": [
-        "pembulatan",
-        "langkah-soal-cerita"
-      ],
-      "answer": "Barang seperti kaleng cat tidak bisa dibeli sebagian. Kalau hasilnya 4,5 kaleng, membeli 4 kaleng belum cukup. Jadi kita bulatkan ke atas menjadi 5 kaleng.",
-      "simpler": "Kalau kamu butuh 4 setengah botol minum dan toko hanya menjual botol utuh, kamu harus membeli 5 botol supaya cukup."
-    },
-    {
-      "id": "satuan",
-      "terms": [
-        [
-          "satuan",
-          "pangkat",
-          "kuadrat",
-          "cm2",
-          "m2",
-          "persegi nya",
-          "sentimeter persegi"
-        ]
-      ],
-      "concepts": [
-        "luas-persegi",
-        "luas-persegi-panjang",
-        "luas-vs-volume"
-      ],
-      "answer": "Luas memakai satuan berpangkat dua, misalnya cm² atau m², karena kita mengalikan dua panjang: cm × cm = cm². Volume memakai pangkat tiga, misalnya cm³.",
-      "simpler": "Satu cm² itu seperti satu kotak kecil berukuran 1 cm kali 1 cm. Luas berarti ada berapa kotak kecil seperti itu."
-    },
-    {
-      "id": "langkah-soal-cerita",
-      "terms": [
-        [
-          "soal cerita",
-          "cara mengerjakan",
-          "langkah",
-          "mulai dari mana",
-          "harus apa dulu",
-          "cara menjawab"
-        ]
-      ],
-      "concepts": [
-        "langkah-soal-cerita",
-        "tanpa-tutup",
-        "pembulatan"
-      ],
-      "answer": "Pakai tiga langkah. Pertama pahami soal: tulis yang diketahui dan ditanya, lalu tentukan sisi mana yang dihitung. Kedua hitung dengan rumus langkah demi langkah. Ketiga tafsirkan: cek satuan dan apakah jawabannya masuk akal.",
-      "simpler": "Mulai dengan menggarisbawahi angka di soal, lalu lingkari kata yang ditanyakan. Setelah itu baru pilih rumusnya."
-    },
-    {
-      "id": "diketahui-ditanya",
-      "terms": [
-        [
-          "diketahui",
-          "ditanya",
-          "ditanyakan",
-          "informasi"
-        ]
-      ],
-      "concepts": [
-        "langkah-soal-cerita",
-        "contoh-kubus",
-        "contoh-balok"
-      ],
-      "answer": "Diketahui adalah angka dan keterangan yang sudah ada di soal, misalnya ukuran rusuk. Ditanya adalah hal yang harus kamu cari, misalnya luas kertas kado. Menuliskan keduanya membantu memilih rumus yang tepat.",
-      "simpler": "Diketahui itu bahan yang sudah kamu punya. Ditanya itu masakan yang harus kamu buat."
-    },
-    {
-      "id": "rusuk-dari-luas",
-      "terms": [
-        [
-          "cari",
-          "mencari",
-          "menentukan",
-          "berapa"
-        ],
-        [
-          "rusuk",
-          "tinggi",
-          "panjang sisi"
-        ],
-        [
-          "diketahui luas",
-          "dari luas",
-          "luasnya",
-          "luas permukaannya",
-          "kalau luas",
-          "jika luas"
-        ]
-      ],
-      "concepts": [
-        "rumus-kubus",
-        "rumus-balok"
-      ],
-      "answer": "Kita balik langkahnya. Untuk kubus: bagi luas permukaan dengan 6 untuk mendapat luas satu sisi, lalu cari bilangan yang dikali dirinya sendiri sama dengan luas sisi itu. Misalnya 150 : 6 = 25, dan 5 × 5 = 25, jadi rusuknya 5.",
-      "simpler": "Ingat: 6 sisi digabung menjadi luas permukaan. Jadi kalau dipotong lagi menjadi 6 bagian, satu bagian adalah satu sisi. Dari luas satu sisi, tebak rusuknya: angka berapa dikali dirinya sendiri?"
-    },
-    {
-      "id": "rumus-kubus",
-      "terms": [
-        [
-          "rumus",
-          "cara menghitung",
-          "cara hitung",
-          "bagaimana menghitung"
-        ],
-        [
-          "kubus"
-        ]
-      ],
-      "concepts": [
-        "rumus-kubus",
-        "contoh-kubus"
-      ],
-      "answer": "Rumus luas permukaan kubus adalah L = 6 × s × s. Asalnya: kubus punya 6 sisi, dan setiap sisi luasnya s × s.",
-      "simpler": "Hitung dulu luas satu sisi dengan s × s. Setelah dapat, kalikan hasilnya dengan 6."
-    },
-    {
-      "id": "rumus-balok",
-      "terms": [
-        [
-          "rumus",
-          "cara menghitung",
-          "cara hitung",
-          "bagaimana menghitung"
-        ],
-        [
-          "balok"
-        ]
-      ],
-      "concepts": [
-        "rumus-balok",
-        "contoh-balok",
-        "pasangan-sisi"
-      ],
-      "answer": "Rumus luas permukaan balok adalah L = 2 × (p × l + p × t + l × t). Hitung tiga perkaliannya dulu, jumlahkan, lalu kalikan 2.",
-      "simpler": "Ada tiga jenis sisi: p × l, p × t, dan l × t. Hitung ketiganya, jumlahkan, lalu kalikan 2 karena setiap jenis ada dua."
-    },
-    {
-      "id": "luas-persegi-panjang",
-      "terms": [
-        [
-          "luas",
-          "rumus",
-          "menghitung"
-        ],
-        [
-          "persegi panjang"
-        ]
-      ],
-      "concepts": [
-        "luas-persegi-panjang"
-      ],
-      "answer": "Luas persegi panjang adalah panjang dikali lebar, L = p × l. Contoh: 8 cm × 5 cm = 40 cm².",
-      "simpler": "Bayangkan persegi panjang terisi kotak-kotak kecil 1 cm². Ada p kotak ke samping dan l baris ke bawah, jadi jumlah kotaknya p × l."
-    },
-    {
-      "id": "luas-persegi",
-      "terms": [
-        [
-          "luas",
-          "rumus",
-          "menghitung"
-        ],
-        [
-          "persegi"
-        ]
-      ],
-      "concepts": [
-        "luas-persegi"
-      ],
-      "answer": "Luas persegi adalah sisi dikali sisi, L = s × s. Contoh: sisi 6 cm, luasnya 6 × 6 = 36 cm².",
-      "simpler": "Persegi itu kotak yang semua sisinya sama. Jika sisinya 3, ada 3 baris yang masing-masing berisi 3 kotak kecil, jadi 3 × 3 = 9."
-    },
-    {
-      "id": "keliling",
-      "terms": [
-        [
-          "keliling"
-        ]
-      ],
-      "concepts": [
-        "luas-persegi",
-        "luas-persegi-panjang"
-      ],
-      "answer": "Keliling adalah panjang garis tepi sebuah bangun datar, dihitung dengan menjumlahkan semua sisinya. Luas adalah besar daerah di dalamnya. Luas permukaan kubus dan balok memakai luas, bukan keliling.",
-      "simpler": "Keliling itu panjang pagar di sekeliling kebun. Luas itu banyak rumput di dalam kebun."
-    },
-    {
-      "id": "jaring-jaring",
-      "terms": [
-        [
-          "jaring",
-          "dibuka",
-          "dibentangkan"
-        ]
-      ],
-      "concepts": [
-        "luas-permukaan",
-        "pasangan-sisi"
-      ],
-      "answer": "Jaring-jaring adalah bentuk bangun ruang yang dibuka dan dibentangkan menjadi bangun datar. Dari jaring-jaring kita bisa melihat semua sisinya sekaligus, sehingga mudah menghitung luas permukaannya. Coba juga menu Visualisasi untuk melihat animasinya.",
-      "simpler": "Ambil kotak kardus bekas, gunting di beberapa rusuknya, lalu bentangkan di lantai. Bentuk kardus yang terbentang itu adalah jaring-jaring."
-    },
-    {
-      "id": "terima-kasih",
-      "terms": [
-        [
-          "terima kasih",
-          "makasih",
-          "trims",
-          "thanks"
-        ]
-      ],
-      "concepts": [],
-      "answer": "Sama-sama! Senang bisa membantu. Bertanya itu tanda kamu sedang belajar dengan sungguh-sungguh.",
-      "simpler": "Sama-sama!"
-    },
-    {
-      "id": "sapaan",
-      "terms": [
-        [
-          "halo",
-          "hai",
-          "hallo",
-          "selamat pagi",
-          "selamat siang",
-          "selamat sore",
-          "assalamualaikum"
-        ]
-      ],
-      "concepts": [],
-      "answer": "Halo juga! Saya Bu Sari, guru virtual. Silakan tanyakan apa saja tentang kubus dan balok.",
-      "simpler": "Halo! Ada yang ingin kamu tanyakan tentang kubus dan balok?"
-    }
-  ],
-  "special": {
-    "repeat": [
-      [
-        "ulangi",
-        "ulang",
-        "sekali lagi",
-        "jelaskan lagi",
-        "kurang jelas",
-        "tidak dengar",
-        "nggak dengar",
-        "lebih pelan"
-      ]
+ "intents": [
+  {
+   "id": "kenapa-kali-6",
+   "terms": [
+    [
+     "kenapa",
+     "mengapa",
+     "kok",
+     "dari mana",
+     "darimana",
+     "alasan",
+     "buat apa"
     ],
-    "example": [
-      [
-        "contoh",
-        "misalnya",
-        "contohnya"
-      ]
-    ],
-    "confused": [
-      [
-        "bingung",
-        "tidak paham",
-        "nggak paham",
-        "gak paham",
-        "belum paham",
-        "tidak mengerti",
-        "nggak ngerti",
-        "gak ngerti",
-        "susah",
-        "sulit"
-      ]
+    [
+     "6",
+     "kali 6",
+     "dikali 6"
     ]
+   ],
+   "concepts": [
+    "rumus-kubus",
+    "luas-permukaan",
+    "unsur-kubus",
+    "contoh-kubus"
+   ],
+   "answer": "Pertanyaan bagus! Kubus punya 6 sisi: depan, belakang, kanan, kiri, atas, dan bawah. Semua sisinya sama luas, yaitu s × s. Jadi cukup hitung luas satu sisi, lalu kalikan 6.",
+   "simpler": "Coba bayangkan sebuah dadu. Dadu punya angka 1 sampai 6, satu angka di setiap sisi. Berarti ada 6 sisi. Kalau satu sisi luasnya 4 cm², maka keenam sisi luasnya 6 × 4 = 24 cm²."
   },
-  "math_words": [
-    "luas",
-    "volume",
-    "rumus",
-    "sisi",
-    "rusuk",
-    "kubus",
-    "balok",
-    "persegi",
-    "keliling",
-    "hitung",
-    "berapa",
-    "kali",
-    "bagi",
-    "tambah",
-    "kurang",
-    "cm",
-    "meter",
-    "jaring",
-    "panjang",
-    "lebar",
-    "tinggi",
-    "sudut"
+  {
+   "id": "kenapa-kali-2",
+   "terms": [
+    [
+     "kenapa",
+     "mengapa",
+     "kok",
+     "dari mana",
+     "darimana",
+     "alasan",
+     "buat apa"
+    ],
+    [
+     "2",
+     "kali 2",
+     "dikali 2"
+    ]
+   ],
+   "concepts": [
+    "rumus-balok",
+    "pasangan-sisi",
+    "contoh-balok",
+    "unsur-balok"
+   ],
+   "answer": "Karena sisi balok selalu berpasangan. Alas sama dengan tutup, depan sama dengan belakang, kiri sama dengan kanan. Setiap pasangan terdiri dari dua sisi yang sama luas, jadi luasnya dikali 2.",
+   "simpler": "Lihat kotak sepatu. Tutupnya sama besar dengan alasnya. Kalau luas tutup 600 cm², luas alas juga 600 cm². Dua sisi itu jumlahnya 2 × 600 = 1.200 cm². Begitu juga untuk pasangan yang lain."
+  },
+  {
+   "id": "luas-vs-volume",
+   "terms": [
+    [
+     "volume",
+     "isi",
+     "kubik",
+     "cm3",
+     "menampung",
+     "mengisi"
+    ]
+   ],
+   "concepts": [
+    "luas-vs-volume",
+    "luas-permukaan"
+   ],
+   "answer": "Luas permukaan adalah luas kulit luar bangun, dipakai untuk membungkus atau mengecat, satuannya cm². Volume adalah isi di dalamnya, dipakai untuk mengisi air atau pasir, satuannya cm³. Untuk kubus: luas permukaan 6 × s × s, sedangkan volume s × s × s.",
+   "simpler": "Bayangkan kotak kado. Kertas kado yang membungkus kotak itu adalah luas permukaan. Kue yang ada di dalam kotak itu adalah volume.",
+   "priority": 0.5
+  },
+  {
+   "id": "apa-luas-permukaan",
+   "terms": [
+    [
+     "apa",
+     "maksud",
+     "arti",
+     "pengertian",
+     "itu apa"
+    ],
+    [
+     "luas permukaan",
+     "permukaan"
+    ]
+   ],
+   "concepts": [
+    "luas-permukaan"
+   ],
+   "answer": "Luas permukaan adalah jumlah luas semua sisi sebuah bangun ruang. Caranya: hitung luas setiap sisi, lalu jumlahkan semuanya.",
+   "simpler": "Kalau kubus dibuka menjadi jaring-jaring dan dibentangkan di atas meja, luas seluruh kertas jaring-jaring itulah luas permukaannya."
+  },
+  {
+   "id": "apa-rusuk",
+   "terms": [
+    [
+     "rusuk"
+    ]
+   ],
+   "concepts": [
+    "unsur-kubus",
+    "unsur-balok"
+   ],
+   "answer": "Rusuk adalah garis tempat dua sisi bertemu. Kubus punya 12 rusuk yang sama panjang, dan panjangnya kita sebut s. Balok juga punya 12 rusuk.",
+   "simpler": "Rusuk itu seperti tepi kotak yang bisa kamu raba dengan jari, tempat dua sisi bertemu."
+  },
+  {
+   "id": "apa-sisi",
+   "terms": [
+    [
+     "apa",
+     "maksud",
+     "arti",
+     "pengertian",
+     "berapa"
+    ],
+    [
+     "sisi"
+    ]
+   ],
+   "concepts": [
+    "unsur-kubus",
+    "unsur-balok"
+   ],
+   "answer": "Sisi adalah bidang datar yang membatasi bangun ruang. Kubus dan balok sama-sama punya 6 sisi. Pada kubus keenam sisinya persegi yang sama besar, pada balok sisinya persegi panjang yang berpasangan.",
+   "simpler": "Sisi itu seperti dinding, lantai, dan atap sebuah kotak. Kotak punya 6: atas, bawah, depan, belakang, kiri, dan kanan."
+  },
+  {
+   "id": "titik-sudut",
+   "terms": [
+    [
+     "titik sudut",
+     "pojok",
+     "sudut"
+    ]
+   ],
+   "concepts": [
+    "unsur-kubus",
+    "unsur-balok"
+   ],
+   "answer": "Titik sudut adalah titik tempat tiga rusuk bertemu. Kubus dan balok masing-masing punya 8 titik sudut.",
+   "simpler": "Titik sudut itu pojok-pojok kotak. Hitung saja: 4 pojok di atas dan 4 pojok di bawah, jadi 8."
+  },
+  {
+   "id": "panjang-lebar-tinggi",
+   "terms": [
+    [
+     "panjang",
+     "lebar",
+     "tinggi"
+    ],
+    [
+     "apa",
+     "mana",
+     "beda",
+     "bedanya",
+     "membedakan",
+     "menentukan",
+     "tahu"
+    ]
+   ],
+   "concepts": [
+    "unsur-balok",
+    "pasangan-sisi"
+   ],
+   "answer": "Panjang (p) biasanya ukuran terpanjang pada alas, lebar (l) ukuran alas yang lebih pendek, dan tinggi (t) ukuran tegak dari alas ke tutup. Yang penting, setiap sisi balok memakai dua dari tiga ukuran itu.",
+   "simpler": "Taruh kotak sepatu di meja. Sisi panjang di meja adalah p, sisi pendek di meja adalah l, dan seberapa tinggi kotak itu dari meja adalah t."
+  },
+  {
+   "id": "pasangan-sisi",
+   "terms": [
+    [
+     "pasangan",
+     "berhadapan",
+     "pasang",
+     "warna"
+    ]
+   ],
+   "concepts": [
+    "pasangan-sisi",
+    "rumus-balok",
+    "unsur-balok"
+   ],
+   "answer": "Balok punya tiga pasang sisi yang sama besar. Alas dan tutup luasnya p × l, depan dan belakang p × t, serta kiri dan kanan l × t. Di gambar, pasangan yang sama diberi warna yang sama.",
+   "simpler": "Pegang kotak. Sisi atas dan bawah kembar, sisi depan dan belakang kembar, sisi kiri dan kanan juga kembar. Jadi ada 3 pasang kembar."
+  },
+  {
+   "id": "tanpa-tutup",
+   "terms": [
+    [
+     "tanpa tutup",
+     "terbuka",
+     "tidak bertutup",
+     "tidak ada tutup",
+     "tanpa tutupnya",
+     "tidak pakai tutup"
+    ]
+   ],
+   "concepts": [
+    "tanpa-tutup",
+    "langkah-soal-cerita"
+   ],
+   "answer": "Kalau tanpa tutup, sisi atas tidak dihitung, jadi hanya 5 sisi. Untuk balok: L = (p × l) + 2 × (p × t) + 2 × (l × t). Untuk kubus: L = 5 × s × s.",
+   "simpler": "Bayangkan akuarium. Tidak ada kaca di bagian atasnya. Jadi kaca yang dibutuhkan hanya untuk alas dan 4 dinding."
+  },
+  {
+   "id": "pembulatan",
+   "terms": [
+    [
+     "kaleng",
+     "dibulatkan",
+     "pembulatan",
+     "bulatkan",
+     "koma",
+     "setengah",
+     "sisa"
+    ]
+   ],
+   "concepts": [
+    "pembulatan",
+    "langkah-soal-cerita"
+   ],
+   "answer": "Barang seperti kaleng cat tidak bisa dibeli sebagian. Kalau hasilnya 4,5 kaleng, membeli 4 kaleng belum cukup. Jadi kita bulatkan ke atas menjadi 5 kaleng.",
+   "simpler": "Kalau kamu butuh 4 setengah botol minum dan toko hanya menjual botol utuh, kamu harus membeli 5 botol supaya cukup."
+  },
+  {
+   "id": "satuan",
+   "terms": [
+    [
+     "satuan",
+     "pangkat",
+     "kuadrat",
+     "cm2",
+     "m2",
+     "persegi nya",
+     "sentimeter persegi"
+    ]
+   ],
+   "concepts": [
+    "luas-persegi",
+    "luas-persegi-panjang",
+    "luas-vs-volume"
+   ],
+   "answer": "Luas memakai satuan berpangkat dua, misalnya cm² atau m², karena kita mengalikan dua panjang: cm × cm = cm². Volume memakai pangkat tiga, misalnya cm³.",
+   "simpler": "Satu cm² itu seperti satu kotak kecil berukuran 1 cm kali 1 cm. Luas berarti ada berapa kotak kecil seperti itu."
+  },
+  {
+   "id": "langkah-soal-cerita",
+   "terms": [
+    [
+     "soal cerita",
+     "cara mengerjakan",
+     "langkah",
+     "mulai dari mana",
+     "harus apa dulu",
+     "cara menjawab"
+    ]
+   ],
+   "concepts": [
+    "langkah-soal-cerita",
+    "tanpa-tutup",
+    "pembulatan"
+   ],
+   "answer": "Ada empat kemampuan. Pahami soal dan tulis yang diketahui serta ditanya. Hitung dengan rumus yang tepat. Tafsirkan hasilnya sesuai situasi. Kalau ada beberapa pilihan, bandingkan dan beri alasan.",
+   "simpler": "Mulai dengan menggarisbawahi angka di soal, lalu lingkari kata yang ditanyakan. Setelah itu baru pilih rumusnya."
+  },
+  {
+   "id": "diketahui-ditanya",
+   "terms": [
+    [
+     "diketahui",
+     "ditanya",
+     "ditanyakan",
+     "informasi"
+    ]
+   ],
+   "concepts": [
+    "langkah-soal-cerita",
+    "contoh-kubus",
+    "contoh-balok"
+   ],
+   "answer": "Diketahui adalah angka dan keterangan yang sudah ada di soal, misalnya ukuran rusuk. Ditanya adalah hal yang harus kamu cari, misalnya luas kertas kado. Menuliskan keduanya membantu memilih rumus yang tepat.",
+   "simpler": "Diketahui itu bahan yang sudah kamu punya. Ditanya itu masakan yang harus kamu buat."
+  },
+  {
+   "id": "rusuk-dari-luas",
+   "terms": [
+    [
+     "cari",
+     "mencari",
+     "menentukan",
+     "berapa"
+    ],
+    [
+     "rusuk",
+     "tinggi",
+     "panjang sisi"
+    ],
+    [
+     "diketahui luas",
+     "dari luas",
+     "luasnya",
+     "luas permukaannya",
+     "kalau luas",
+     "jika luas"
+    ]
+   ],
+   "concepts": [
+    "rumus-kubus",
+    "rumus-balok"
+   ],
+   "answer": "Kita balik langkahnya. Untuk kubus: bagi luas permukaan dengan 6 untuk mendapat luas satu sisi, lalu cari bilangan yang dikali dirinya sendiri sama dengan luas sisi itu. Misalnya 150 : 6 = 25, dan 5 × 5 = 25, jadi rusuknya 5.",
+   "simpler": "Ingat: 6 sisi digabung menjadi luas permukaan. Jadi kalau dipotong lagi menjadi 6 bagian, satu bagian adalah satu sisi. Dari luas satu sisi, tebak rusuknya: angka berapa dikali dirinya sendiri?"
+  },
+  {
+   "id": "rumus-kubus",
+   "terms": [
+    [
+     "rumus",
+     "cara menghitung",
+     "cara hitung",
+     "bagaimana menghitung"
+    ],
+    [
+     "kubus"
+    ]
+   ],
+   "concepts": [
+    "rumus-kubus",
+    "contoh-kubus"
+   ],
+   "answer": "Rumus luas permukaan kubus adalah L = 6 × s × s. Asalnya: kubus punya 6 sisi, dan setiap sisi luasnya s × s.",
+   "simpler": "Hitung dulu luas satu sisi dengan s × s. Setelah dapat, kalikan hasilnya dengan 6."
+  },
+  {
+   "id": "rumus-balok",
+   "terms": [
+    [
+     "rumus",
+     "cara menghitung",
+     "cara hitung",
+     "bagaimana menghitung"
+    ],
+    [
+     "balok"
+    ]
+   ],
+   "concepts": [
+    "rumus-balok",
+    "contoh-balok",
+    "pasangan-sisi"
+   ],
+   "answer": "Rumus luas permukaan balok adalah L = 2 × (p × l + p × t + l × t). Hitung tiga perkaliannya dulu, jumlahkan, lalu kalikan 2.",
+   "simpler": "Ada tiga jenis sisi: p × l, p × t, dan l × t. Hitung ketiganya, jumlahkan, lalu kalikan 2 karena setiap jenis ada dua."
+  },
+  {
+   "id": "luas-persegi-panjang",
+   "terms": [
+    [
+     "luas",
+     "rumus",
+     "menghitung"
+    ],
+    [
+     "persegi panjang"
+    ]
+   ],
+   "concepts": [
+    "luas-persegi-panjang"
+   ],
+   "answer": "Luas persegi panjang adalah panjang dikali lebar, L = p × l. Contoh: 8 cm × 5 cm = 40 cm².",
+   "simpler": "Bayangkan persegi panjang terisi kotak-kotak kecil 1 cm². Ada p kotak ke samping dan l baris ke bawah, jadi jumlah kotaknya p × l."
+  },
+  {
+   "id": "luas-persegi",
+   "terms": [
+    [
+     "luas",
+     "rumus",
+     "menghitung"
+    ],
+    [
+     "persegi"
+    ]
+   ],
+   "concepts": [
+    "luas-persegi"
+   ],
+   "answer": "Luas persegi adalah sisi dikali sisi, L = s × s. Contoh: sisi 6 cm, luasnya 6 × 6 = 36 cm².",
+   "simpler": "Persegi itu kotak yang semua sisinya sama. Jika sisinya 3, ada 3 baris yang masing-masing berisi 3 kotak kecil, jadi 3 × 3 = 9."
+  },
+  {
+   "id": "keliling",
+   "terms": [
+    [
+     "keliling"
+    ]
+   ],
+   "concepts": [
+    "luas-persegi",
+    "luas-persegi-panjang"
+   ],
+   "answer": "Keliling adalah panjang garis tepi sebuah bangun datar, dihitung dengan menjumlahkan semua sisinya. Luas adalah besar daerah di dalamnya. Luas permukaan kubus dan balok memakai luas, bukan keliling.",
+   "simpler": "Keliling itu panjang pagar di sekeliling kebun. Luas itu banyak rumput di dalam kebun."
+  },
+  {
+   "id": "jaring-jaring",
+   "terms": [
+    [
+     "jaring",
+     "dibuka",
+     "dibentangkan"
+    ]
+   ],
+   "concepts": [
+    "luas-permukaan",
+    "pasangan-sisi"
+   ],
+   "answer": "Jaring-jaring adalah bentuk bangun ruang yang dibuka dan dibentangkan menjadi bangun datar. Dari jaring-jaring kita bisa melihat semua sisinya sekaligus, sehingga mudah menghitung luas permukaannya. Coba juga menu Visualisasi untuk melihat animasinya.",
+   "simpler": "Ambil kotak kardus bekas, gunting di beberapa rusuknya, lalu bentangkan di lantai. Bentuk kardus yang terbentang itu adalah jaring-jaring."
+  },
+  {
+   "id": "bernalar-memilih",
+   "terms": [
+    [
+     "pilih",
+     "memilih",
+     "bandingkan",
+     "membandingkan",
+     "mana yang",
+     "lebih hemat",
+     "paling sedikit",
+     "paling hemat"
+    ],
+    [
+     "kotak",
+     "karton",
+     "bahan",
+     "pilihan"
+    ]
+   ],
+   "concepts": [
+    "bernalar"
+   ],
+   "answer": "Untuk memilih kotak yang paling hemat bahan, hitung luas permukaan setiap kotak, lalu bandingkan. Pilih yang luas permukaannya paling kecil, dan sebutkan alasannya dengan angka.",
+   "simpler": "Bayangkan setiap kotak dibuka menjadi jaring-jaring. Jaring-jaring yang paling kecil memakai karton paling sedikit."
+  },
+  {
+   "id": "memeriksa-pekerjaan",
+   "terms": [
+    [
+     "periksa",
+     "memeriksa",
+     "cek",
+     "mengecek",
+     "salah",
+     "keliru",
+     "benar tidak",
+     "betul"
+    ],
+    [
+     "pekerjaan",
+     "jawaban",
+     "hitungan",
+     "hasil",
+     "teman"
+    ]
+   ],
+   "concepts": [
+    "memeriksa"
+   ],
+   "answer": "Periksa tiga hal. Apakah semua sisi sudah dihitung, tiga pasang untuk balok atau enam untuk kubus. Apakah perkaliannya benar. Dan apakah satuannya persegi, misalnya cm².",
+   "simpler": "Hitung ulang luas setiap pasang sisi satu per satu, lalu bandingkan dengan hasil yang diperiksa."
+  },
+  {
+   "id": "terima-kasih",
+   "terms": [
+    [
+     "terima kasih",
+     "makasih",
+     "trims",
+     "thanks"
+    ]
+   ],
+   "concepts": [],
+   "answer": "Sama-sama! Senang bisa membantu. Bertanya itu tanda kamu sedang belajar dengan sungguh-sungguh.",
+   "simpler": "Sama-sama!"
+  },
+  {
+   "id": "sapaan",
+   "terms": [
+    [
+     "halo",
+     "hai",
+     "hallo",
+     "selamat pagi",
+     "selamat siang",
+     "selamat sore",
+     "assalamualaikum"
+    ]
+   ],
+   "concepts": [],
+   "answer": "Halo juga! Saya Bu Sari, guru virtual. Silakan tanyakan apa saja tentang kubus dan balok.",
+   "simpler": "Halo! Ada yang ingin kamu tanyakan tentang kubus dan balok?"
+  }
+ ],
+ "special": {
+  "repeat": [
+   [
+    "ulangi",
+    "ulang",
+    "sekali lagi",
+    "jelaskan lagi",
+    "kurang jelas",
+    "tidak dengar",
+    "nggak dengar",
+    "lebih pelan"
+   ]
+  ],
+  "example": [
+   [
+    "contoh",
+    "misalnya",
+    "contohnya"
+   ]
+  ],
+  "confused": [
+   [
+    "bingung",
+    "tidak paham",
+    "nggak paham",
+    "gak paham",
+    "belum paham",
+    "tidak mengerti",
+    "nggak ngerti",
+    "gak ngerti",
+    "susah",
+    "sulit"
+   ]
   ]
+ },
+ "math_words": [
+  "luas",
+  "volume",
+  "rumus",
+  "sisi",
+  "rusuk",
+  "kubus",
+  "balok",
+  "persegi",
+  "keliling",
+  "hitung",
+  "berapa",
+  "kali",
+  "bagi",
+  "tambah",
+  "kurang",
+  "cm",
+  "meter",
+  "jaring",
+  "panjang",
+  "lebar",
+  "tinggi",
+  "sudut"
+ ]
 }

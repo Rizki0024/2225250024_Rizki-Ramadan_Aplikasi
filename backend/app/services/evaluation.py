@@ -1,6 +1,7 @@
 """Logika evaluasi: membuat sesi acak, menilai, dan menyusun pembahasan."""
 from __future__ import annotations
 
+import json
 import random
 import threading
 from datetime import datetime, timedelta, timezone
@@ -9,7 +10,7 @@ from fastapi import HTTPException
 
 from app.core.config import Settings
 
-from . import grading
+from . import grading, staged
 from .repository import Repository
 
 
@@ -51,6 +52,11 @@ def _questions_by_id(repo: Repository) -> dict[str, dict]:
     return {q["id"]: q for q in repo.list_evaluation_questions()}
 
 
+def _all_questions_by_id(repo: Repository) -> dict[str, dict]:
+    """Termasuk soal nonaktif agar riwayat evaluasi lama tetap dapat dibuka."""
+    return {q["id"]: q for q in repo.list_all_questions()}
+
+
 def public_questions(attempt: dict, repo: Repository) -> list[dict]:
     qmap = _questions_by_id(repo)
     out = []
@@ -58,10 +64,13 @@ def public_questions(attempt: dict, repo: Repository) -> list[dict]:
         q = qmap.get(item["id"])
         if not q:
             continue
-        out.append({
+        item_out = {
             "id": q["id"], "position": pos, "type": q["type"], "process": q["process"],
             "prompt": q["prompt"], "options": _ordered_options(q, item["options"]), "unit": q.get("unit"),
-        })
+        }
+        if q["type"] == "staged":
+            item_out.update(title=q.get("title"), max_points=q.get("max_points"), stages=staged.public_stages(q))
+        out.append(item_out)
     return out
 
 
@@ -106,6 +115,15 @@ def _start(repo: Repository, settings: Settings, student_id: str) -> dict:
 
 
 def _review_item(pos: int, q: dict, option_ids: list[str], answer: str | None, correct: bool) -> dict:
+    if q["type"] == "staged":
+        result = staged.grade(q, answer)
+        return {
+            "position": pos, "question_id": q["id"], "prompt": q["prompt"], "type": "staged", "process": q["process"],
+            "title": q.get("title"), "student_answer": answer, "correct_answer": None, "correct_label": None,
+            "is_correct": result["points"] == result["max_points"], "points": result["points"],
+            "max_points": result["max_points"], "stages": staged.review_stages(q, answer, result),
+            "explanation": q.get("explanation"),
+        }
     return {
         "position": pos, "question_id": q["id"], "prompt": q["prompt"], "type": q["type"],
         "process": q["process"], "options": _ordered_options(q, option_ids), "unit": q.get("unit"),
@@ -137,19 +155,30 @@ def submit(repo: Repository, settings: Settings, student_id: str, attempt_id: st
     duration = int(max(0, (min(now, expires) - started).total_seconds()))
 
     review, rows, correct_count = [], [], 0
+    points, max_points = 0.0, 0.0
     for pos, item in enumerate(order, start=1):
         q = qmap.get(item["id"])
         if not q:
             continue
         ans = given.get(q["id"])
-        ok = grading.is_correct(q, ans)
+        if q["type"] == "staged":
+            ans = json.dumps(staged.parse_parts(ans), ensure_ascii=False) if ans else None
+            result = staged.grade(q, ans)
+            ok = result["points"] == result["max_points"]
+            points += result["points"]
+            max_points += result["max_points"]
+        else:
+            ok = grading.is_correct(q, ans)
+            points += ok
+            max_points += 1
         correct_count += ok
         review.append(_review_item(pos, q, item["options"], ans, ok))
         rows.append({"attempt_id": attempt_id, "question_id": q["id"], "position": pos,
                      "answer_text": ans, "is_correct": ok})
 
     total = len(review)
-    score = grading.score_of(correct_count, total)
+    # Nilai = skor tahap yang diperoleh / skor maksimum × 100 (kisi-kisi: maksimum 24 untuk 4 soal).
+    score = round(points / max_points * 100, 2) if max_points else 0.0
     updated = repo.update_attempt(attempt_id, {
         "status": "submitted", "submitted_at": now.isoformat(), "duration_seconds": duration,
         "correct_count": correct_count, "wrong_count": total - correct_count, "score": score,
@@ -162,6 +191,7 @@ def submit(repo: Repository, settings: Settings, student_id: str, attempt_id: st
     return {
         "attempt_id": attempt_id, "score": score, "correct_count": correct_count,
         "wrong_count": total - correct_count, "total_questions": total,
+        "points_earned": points, "points_max": max_points,
         "duration_seconds": duration, "timed_out": timed_out, "review": review,
     }
 
@@ -178,7 +208,7 @@ def attempt_review(repo: Repository, attempt: dict) -> list[dict]:
                 "correct_label": snap.get("correct_answer"), "is_correct": a["is_correct"],
             })
         return out
-    qmap = _questions_by_id(repo)
+    qmap = _all_questions_by_id(repo)
     option_order = {item["id"]: item["options"] for item in attempt.get("question_order") or []}
     out = []
     for a in answers:

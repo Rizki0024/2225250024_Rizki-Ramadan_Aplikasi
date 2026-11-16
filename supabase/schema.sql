@@ -42,16 +42,20 @@ create table if not exists public.questions (
   id          uuid primary key default gen_random_uuid(),
   code        text not null unique,                  -- mis. EV-01
   usage       text not null default 'evaluasi' check (usage in ('evaluasi')),
-  process     text not null check (process in ('formulate','employ','interpret')),
+  process     text not null check (process in ('reasoning','formulate','employ','interpret')),
   shape       text not null check (shape in ('kubus','balok','campuran')),
   difficulty  smallint not null check (difficulty between 1 and 3),
-  type        text not null check (type in ('mc','numeric')),
+  type        text not null check (type in ('mc','numeric','staged')),
   prompt      text not null,
   options     jsonb,                                 -- [{id,label}] untuk 'mc'
   answer_key  text not null,                         -- id opsi atau angka
   unit        text,
   tolerance   numeric not null default 0,
   explanation jsonb not null,                        -- langkah pembahasan
+  title       text,                                  -- judul soal bertahap
+  indicator   text,                                  -- indikator Mathematical Literacy
+  stages      jsonb,                                 -- tahap + kunci + pembahasan (soal 'staged')
+  max_points  numeric,                               -- skor maksimum soal bertahap
   is_active   boolean not null default true,
   created_at  timestamptz not null default now(),
   constraint mc_has_options check (type <> 'mc' or jsonb_array_length(options) >= 2)

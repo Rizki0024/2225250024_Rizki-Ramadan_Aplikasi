@@ -1,12 +1,15 @@
 // Pembangkit soal latihan dengan angka acak (lihat docs/question-blueprint.md §2).
 // Setiap soal: { id, type: 'mc'|'numeric', process, prompt, unit, answer, options?, mistakes?, solution, correctLabel }
 import { formatNumber } from '../../utils/number.js';
+import { BANK } from './bank.js';
 
 export const LEVELS = [
   { id: 'prasyarat', title: 'Pemanasan', subtitle: 'Luas persegi & persegi panjang' },
   { id: 'kubus', title: 'Kubus', subtitle: 'Luas permukaan kubus' },
   { id: 'balok', title: 'Balok', subtitle: 'Luas permukaan balok' },
   { id: 'soal-cerita', title: 'Soal Cerita', subtitle: 'Masalah sehari-hari' },
+  { id: 'literasi', title: 'Literasi', subtitle: 'Formulate, Employ, Interpret, Reasoning' },
+  { id: 'bank', title: 'Bank Soal', subtitle: 'Soal pilihan dari evaluasi versi lama' },
 ];
 
 export const QUESTIONS_PER_LEVEL = 5;
@@ -385,7 +388,7 @@ function storyCompare(rng) {
   const winner = box < cube ? 'balok' : 'kubus';
   const loser = winner === 'balok' ? 'kubus' : 'balok';
   return mc({
-    prefix: 'cmp', process: 'interpret',
+    prefix: 'cmp', process: 'reasoning',
     prompt: `Ada dua pilihan kotak tertutup: kubus dengan rusuk ${s} cm atau balok berukuran ${p} cm × ${l} cm × ${t} cm. Kotak mana yang membutuhkan karton lebih sedikit, dan berapa selisihnya?`,
     ...textMC(rng, [
       { label: `Kotak ${winner}, lebih hemat ${n(diff)} cm²` },
@@ -404,12 +407,107 @@ function storyCompare(rng) {
   });
 }
 
+
+// ---------- Level 5: literasi (4 indikator kisi-kisi; ukuran ≤ 12 agar berbeda dari soal evaluasi) ----------
+const lpBox = ({ p, l, t }) => 2 * (p * l + p * t + l * t);
+
+function formulateModel(rng) {
+  const cases = [
+    { story: 'Kotak kue tertutup berbentuk balok akan dilapisi kertas di seluruh permukaannya.', model: 'L = 2 × (p × l + p × t + l × t)' },
+    { story: 'Bak mandi tanpa tutup berbentuk balok akan dilapisi keramik di bagian dalamnya.', model: 'L = (p × l) + 2 × (p × t) + 2 × (l × t)' },
+    { story: 'Keempat dinding sebuah kamar (tanpa lantai dan langit-langit) akan dicat.', model: 'L = 2 × (p × t) + 2 × (l × t)' },
+  ];
+  const c = pick(rng, cases);
+  const others = ['L = 2 × (p × l + p × t + l × t)', 'L = (p × l) + 2 × (p × t) + 2 × (l × t)', 'L = 2 × (p × t) + 2 × (l × t)', 'L = p × l × t']
+    .filter((m) => m !== c.model);
+  return mc({
+    prefix: 'model', process: 'formulate',
+    prompt: `${c.story} Model matematika yang tepat untuk menghitung luas yang dimaksud adalah…`,
+    ...textMC(rng, [{ label: c.model }, ...others.map((m) => ({
+      label: m, message: m === 'L = p × l × t' ? MSG.volume : 'Periksa lagi sisi mana saja yang dihitung pada situasi ini.' }))]),
+    solution: {
+      diketahui: [c.story], ditanyakan: 'Model matematika (rumus) yang sesuai situasi', rumus: c.model,
+      substitusi: 'Tentukan dulu sisi mana saja yang dilapisi atau dicat.', perhitungan: ['Cocokkan sisi yang dihitung dengan rumus.'],
+      jawaban: c.model, interpretasi: 'Model dipilih dari sisi yang benar-benar terlibat dalam situasi.',
+    },
+  });
+}
+
+function interpretCheck(rng) {
+  const d = cuboidDims(rng);
+  const wrong = 2 * (d.p * d.l + d.p * d.t);
+  const right = lpBox(d);
+  const missing = right - wrong;
+  return mc({
+    prefix: 'check', process: 'interpret',
+    prompt: `Sebuah kotak berbentuk balok berukuran ${d.p} cm × ${d.l} cm × ${d.t} cm akan dilapisi kertas seluruhnya. Andi menghitung L = 2 × (${d.p}×${d.l} + ${d.p}×${d.t}) = ${n(wrong)} cm² dan menyimpulkan kertas ${n(wrong)} cm² sudah cukup. Apakah kamu setuju?`,
+    ...textMC(rng, [
+      { label: `Tidak setuju. Pasangan l × t terlupa; kurang ${n(missing)} cm², seharusnya ${n(right)} cm².` },
+      { label: 'Setuju, hitungan Andi sudah benar.', message: 'Periksa lagi: ada berapa pasang sisi pada balok?' },
+      { label: `Tidak setuju, seharusnya ${n(wrong * 2)} cm².`, message: 'Bukan dikali 2 lagi. Yang kurang adalah satu pasang sisi.' },
+      { label: `Tidak setuju, seharusnya ${n(d.p * d.l * d.t)} cm².`, message: MSG.volume },
+    ]),
+    solution: {
+      diketahui: [`p = ${d.p} cm, l = ${d.l} cm, t = ${d.t} cm`, `Hasil Andi: ${n(wrong)} cm²`],
+      ditanyakan: 'Benar atau tidaknya pekerjaan Andi', rumus: 'L = 2 × (p × l + p × t + l × t)',
+      substitusi: `L = 2 × (${d.p}×${d.l} + ${d.p}×${d.t} + ${d.l}×${d.t})`,
+      perhitungan: [`Yang terlupa: 2 × (${d.l} × ${d.t}) = ${n(missing)}`, `L = ${n(right)} cm²`],
+      jawaban: `${n(right)} cm²`, interpretasi: `Hasil Andi kurang ${n(missing)} cm², jadi kesimpulannya tidak tepat.`,
+    },
+  });
+}
+
+function reasoningThree(rng) {
+  let s; let b; let c; let vals;
+  do {
+    s = int(rng, 5, 10);
+    b = cuboidDims(rng);
+    c = cuboidDims(rng);
+    vals = [6 * s * s, lpBox(b), lpBox(c)];
+  } while (new Set(vals).size < 3);
+  const names = ['A', 'B', 'C'];
+  const best = vals.indexOf(Math.min(...vals));
+  const vol = [s ** 3, b.p * b.l * b.t, c.p * c.l * c.t];
+  const smallVol = vol.indexOf(Math.min(...vol));
+  return mc({
+    prefix: 'three', process: 'reasoning',
+    prompt: `Toko punya tiga kotak tertutup yang semuanya muat untuk barangnya: Kotak A kubus dengan rusuk ${s} cm, Kotak B balok ${b.p} cm × ${b.l} cm × ${b.t} cm, dan Kotak C balok ${c.p} cm × ${c.l} cm × ${c.t} cm. Kotak mana yang membutuhkan karton paling sedikit, dan apa alasannya?`,
+    ...textMC(rng, [
+      { label: `Kotak ${names[best]}, karena luas permukaannya paling kecil (${n(vals[best])} cm²).` },
+      ...names.filter((_, i) => i !== best).map((nm, i2) => ({
+        label: i2 === 0 && smallVol !== best ? `Kotak ${names[smallVol]}, karena volumenya paling kecil.` : `Kotak ${nm}, karena ukurannya terlihat paling kecil.`,
+        message: 'Karton menutupi permukaan. Bandingkan luas permukaan ketiga kotak, bukan volume atau kesan ukuran.',
+      })),
+    ]),
+    solution: {
+      diketahui: [`A: kubus s = ${s} cm`, `B: ${b.p} × ${b.l} × ${b.t}`, `C: ${c.p} × ${c.l} × ${c.t}`],
+      ditanyakan: 'Kotak dengan karton paling sedikit dan alasannya', rumus: 'Kubus 6 × s × s; balok 2 × (p×l + p×t + l×t)',
+      substitusi: 'Hitung luas permukaan setiap kotak.',
+      perhitungan: names.map((nm, i) => `${nm}: ${n(vals[i])} cm²`),
+      jawaban: `Kotak ${names[best]}`, interpretasi: `Kotak ${names[best]} dipilih karena luas permukaannya paling kecil, sehingga kartonnya paling sedikit.`,
+    },
+  });
+}
+
+function bankLevel(rng) {
+  return shuffle(rng, BANK).slice(0, QUESTIONS_PER_LEVEL).map((q) => {
+    const prefix = q.code.toLowerCase();
+    if (q.type === 'mc') {
+      const options = q.options.map((o) => ({ ...o, feedback: o.id === q.answer ? null : 'Belum tepat. Lihat pembahasan langkah demi langkah.' }));
+      return mc({ prefix, process: q.process, prompt: q.prompt, options, answer: q.answer, solution: q.solution });
+    }
+    return numeric({ prefix, process: q.process, prompt: q.prompt, unit: q.unit, answer: q.answer, solution: q.solution });
+  });
+}
+
 // ---------- susunan level ----------
 const BUILDERS = {
   prasyarat: (rng) => [squareArea(rng, false), rectArea(rng, false), rectRule(rng), squareArea(rng, true), rectArea(rng, true)],
   kubus: (rng) => [cubeLP(rng, true), cubeRule(rng), cubeLP(rng, false), cubeFaceFromLP(rng), cubeSideFromLP(rng)],
   balok: (rng) => [cuboidPairs(rng), cuboidLP(rng, true), cuboidLP(rng, false), cuboidFromFaces(rng), cuboidHeight(rng)],
   'soal-cerita': (rng) => [storyGift(rng), storyBox(rng), storyAquarium(rng), storyPaint(rng), storyCompare(rng)],
+  literasi: (rng) => [formulateModel(rng), cuboidLP(rng, false), interpretCheck(rng), storyCompare(rng), reasoningThree(rng)],
+  bank: (rng) => bankLevel(rng),
 };
 
 export function generateLevel(levelId, rng = Math.random) {

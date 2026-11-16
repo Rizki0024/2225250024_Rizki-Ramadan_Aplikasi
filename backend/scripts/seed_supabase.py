@@ -2,6 +2,8 @@
 
 Pemakaian (dari folder backend, dengan SUPABASE_URL & SUPABASE_SECRET_KEY di backend/.env):
     python scripts/seed_supabase.py
+
+Soal bertahap (ML-1..ML-4) butuh migrasi supabase/migrations/2026-11-16_soal_bertahap.sql lebih dulu.
 """
 from __future__ import annotations
 
@@ -28,9 +30,10 @@ def main() -> int:
 
     materials = [{k: m[k] for k in ("slug", "title", "shape", "order_no", "summary", "content", "is_published")}
                  for m in load_materials()]
-    questions = [{k: q[k] for k in ("id", "code", "usage", "process", "shape", "difficulty", "type", "prompt",
-                                    "options", "answer_key", "unit", "tolerance", "explanation", "is_active")}
-                 for q in load_questions()]
+    fields = ("id", "code", "usage", "process", "shape", "difficulty", "type", "prompt", "options", "answer_key",
+              "unit", "tolerance", "explanation", "is_active", "title", "indicator", "stages", "max_points")
+    # Semua baris memakai kolom yang sama (syarat insert massal PostgREST); soal lama → null untuk kolom baru.
+    questions = [{k: q.get(k) for k in fields} for q in load_questions()]
 
     with httpx.Client(base_url=f"{s.supabase_url}/rest/v1", headers=headers, timeout=30) as c:
         for table, rows, key in (("materials", materials, "slug"), ("questions", questions, "code")):

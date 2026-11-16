@@ -39,15 +39,13 @@ Aturan konten (diuji di `tests/test_lessons.py`): kalimat pendek, indeks papan v
 
 Kontrol: Mulai · Jeda · Lanjutkan · Ulangi bagian · Bagian sebelumnya/berikutnya · Lompat ke bagian (titik nomor) · Suara on/off · Tanya.
 
-## 4. Kecerdasan pedagogis (Fase F)
-`POST /api/tutor/ask` memilih jawaban dengan urutan:
-1. **Perhitungan terpandu** (kubus dengan 1 angka, balok dengan 3 angka): langkah ditunjukkan, tetapi **langkah terakhir dihitung siswa**. Hasil akhir baru diberikan jika siswa meminta penjelasan lebih sederhana.
-2. **Permintaan khusus** terkait segmen aktif: "ulangi", "contoh", "bingung".
-3. **Bank tanya-jawab** (`data/tutor_kb.json`, 23 intent) dengan bonus konteks segmen. Setiap intent punya jawaban + penjelasan alternatif yang lebih sederhana.
-4. **Claude (opsional)** untuk pertanyaan yang tidak dikenali, dengan *system prompt* berisi aturan pedagogis dan seluruh materi. Jika gagal atau menolak → kembali ke curated.
-5. Jika tidak dikenali: minta siswa menanyakan dengan kata lain; jika di luar topik: ditolak dengan sopan dan diarahkan ke guru kelas.
+## 4. Kecerdasan pedagogis (diperbarui 16 Nov 2026)
+`POST /api/tutor/ask`:
+- **AI aktif** (`ANTHROPIC_API_KEY` diisi di backend): **semua** pertanyaan dijawab Claude agar jawaban alami dan mengikuti percakapan (ingatan 10 giliran terakhir). Hanya perintah "ulangi" yang tetap memutar ulang penjelasan papan. Jika AI gagal/menolak → jawaban siap pakai (curated).
+- **Tanpa AI** (bawaan, gratis): perhitungan terpandu, permintaan khusus segmen, bank tanya-jawab (`tutor_kb.json`, 25 intent termasuk *bernalar-memilih* dan *memeriksa-pekerjaan*). Jawaban yang persis sama dengan jawaban sebelumnya tidak diulang: diganti versi lebih sederhana, lalu ajakan menjelaskan bagian yang belum jelas.
+- Jawaban selalu **dibacakan Bu Sari** (Web Speech API) dengan gerak bibir per kata.
 
-Prinsip yang diterapkan: bahasa ramah, jawaban ≤ 4 kalimat, contoh konkret, membedakan luas & volume, membantu Formulate–Employ–Interpret, tidak mengarang rumus, mengakui pertanyaan di luar cakupan.
+*System prompt* AI (`claude_provider.py → RULES`) mengikuti metode **RMT** (lihat [rmt.md](rmt.md)): intensionalitas & resiprositas, makna, transendensi, fase Input–Elaborasi–Output, alat psikologis (jaring-jaring, tabel pasangan sisi, rumus, bahasa matematika), pertanyaan termediasi dengan petunjuk bertahap (ZPD), validasi & refleksi, serta empat indikator literasi. Aturan keamanan tetap: mengaku program komputer, menolak topik di luar materi, tidak meminta data pribadi, tidak mengarang rumus.
 
 ## 5. Manajemen konteks & kelanjutan
 | Disimpan | Di mana |

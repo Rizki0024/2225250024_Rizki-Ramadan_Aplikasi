@@ -1,49 +1,44 @@
 # Kisi-kisi Soal Mathematical Literacy
 
-Kerangka proses (diadaptasi dari PISA):
+Sumber kisi-kisi: dokumen pengembang **"Kisi-kisi Soal Mathematical Literacy — Luas Permukaan Kubus dan Balok" (Tabel 2)**.
+Kerangka: empat indikator literasi matematika.
 
-| Proses | Yang dilakukan siswa | Indikator pada aplikasi |
-|---|---|---|
-| **Formulate** | Mengidentifikasi informasi & menyusun model matematika dari situasi | Memilih rumus/model yang tepat; menentukan sisi mana yang dihitung (mis. tanpa tutup) |
-| **Employ** | Menerapkan rumus dan prosedur | Menghitung luas permukaan; mencari unsur yang belum diketahui (pembagian) |
-| **Interpret** | Menafsirkan hasil dalam konteks nyata | Membulatkan ke atas jumlah kaleng; membandingkan kebutuhan bahan; menyadari bagian yang tidak dihitung |
-
-## 1. Evaluasi (10 soal, 30 menit)
-
-Sumber data: [`backend/app/data/questions.json`](../backend/app/data/questions.json).
-
-| Kode | Proses | Bangun | Tingkat | Tipe | Indikator | Konteks | Kunci |
-|---|---|---|---|---|---|---|---|
-| EV-01 | Employ | Kubus | 1 | PG | Menghitung LP kubus dari rusuk | — | 216 cm² |
-| EV-02 | Employ | Balok | 1 | Isian | Menghitung LP balok dari p, l, t | — | 158 cm² |
-| EV-03 | Formulate | Balok | 1 | PG | Memilih rumus untuk luas karton kotak | Kotak pensil | 2 × (p×l + p×t + l×t) |
-| EV-04 | Formulate | Kubus | 2 | PG | Menyusun model luas kertas kado | Kado | 6 × 15 × 15 |
-| EV-05 | Employ | Kubus | 2 | Isian | Mencari rusuk dari LP (pembagian) | — | 5 cm |
-| EV-06 | Formulate | Balok | 2 | PG | Menentukan sisi yang dicat (tanpa alas) | Lemari | 5 sisi |
-| EV-07 | Interpret | Balok | 3 | PG | LP tanpa tutup | Akuarium | 9.000 cm² |
-| EV-08 | Interpret | Balok | 3 | Isian | Luas dinding → jumlah kaleng (bulat ke atas) | Cat kamar | 5 kaleng |
-| EV-09 | Employ | Balok | 3 | Isian | Mencari tinggi dari LP | — | 8 cm |
-| EV-10 | Interpret | Campuran | 3 | PG | Membandingkan bahan dua kotak | Karton | Balok, hemat 8 cm² |
-
-Sebaran: **Formulate 3 · Employ 4 · Interpret 3** · Kubus 3 · Balok 6 · Campuran 1 · PG 6 · Isian 4.
-
-Penyajian: soal diurutkan menurut tingkat kesulitan (1 → 3); **di dalam tingkat yang sama urutan diacak**, opsi PG juga diacak. Dengan begitu tiap siswa mendapat urutan berbeda tetapi tetap dari mudah ke sulit (beban kognitif intrinsik bertahap).
-
-Penskoran: tiap soal bernilai sama. `nilai = benar / 10 × 100`. Tidak dijawab = salah.
-
-### Pengecoh (distraktor) dan miskonsepsi yang ditargetkan
-
-| Miskonsepsi | Contoh pengecoh |
+| Indikator | Yang dilakukan siswa |
 |---|---|
-| Hanya menghitung satu sisi | EV-01 opsi 36 cm² |
-| Memakai rumus volume | EV-03 `p × l × t`, EV-07 72.000 cm² |
-| Lupa dikali 2 | EV-03 `p×l + p×t + l×t` |
-| Menghitung 4 sisi saja (sisi tegak) | EV-01 144 cm², EV-04 `4 × 15 × 15` |
-| Tidak mengurangi sisi tanpa tutup | EV-07 10.800 cm² |
-| Tidak membulatkan ke atas | EV-08 (jawaban 4 atau 4,2 dinilai salah) |
-| Selisih salah dihitung | EV-10 "hemat 40 cm²" |
+| **Reasoning** | Mengidentifikasi hubungan matematis, membandingkan alternatif, memberi alasan, dan menentukan keputusan yang dapat dipertanggungjawabkan |
+| **Formulate** | Mengidentifikasi informasi relevan, menentukan besaran, dan menerjemahkan situasi nyata menjadi model matematika |
+| **Employ** | Memilih serta menggunakan konsep, operasi, prosedur, dan strategi matematika untuk memperoleh solusi |
+| **Interpret** | Menafsirkan hasil dalam konteks, menilai kewajaran hasil, dan mengambil keputusan berdasarkan hasil perhitungan |
 
-## 2. Latihan (4 level × 5 soal, angka acak)
+## 1. Evaluasi (4 soal cerita bertahap, 30 menit, skor maksimum 24)
+
+Sumber data: [`backend/app/data/questions.json`](../backend/app/data/questions.json) (kode `ML-1`..`ML-4`, `type: "staged"`).
+Teks soal dan pembagian skor **persis** mengikuti Tabel 2.
+
+| Kode | Indikator | Judul | Tahap & skor | Maks |
+|---|---|---|---|---|
+| ML-1 | Reasoning | Memilih Kotak Pengiriman | 1 + 2 + 1 + 1 + 1 | 6 |
+| ML-2 | Formulate | Membungkus Kotak Hadiah | 1 + 1 + 1 + 1 + 1 + 1 | 6 |
+| ML-3 | Employ | Mengecat Kotak Penyimpanan | 1 + 2 + 2 + 1 | 6 |
+| ML-4 | Interpret | Memeriksa Perhitungan Kertas Pelapis | 1 + 1 + 1 + 1 + 1 + 1 | 6 |
+| | | | **Total** | **24** |
+
+**Bentuk jawaban per tahap.** Setiap tahap kisi-kisi menjadi isian di layar: angka (mis. luas tiap kotak, p×l, hasil akhir) atau pilihan (tujuan, rumus/model, urutan, keputusan, alasan, kesimpulan). Siswa melihat judul tahap dan skornya saat mengerjakan, tetapi **tidak** melihat kunci, aturan *carry-forward*, atau pembahasan sebelum mengumpulkan (diuji di `test_start_hides_answer_keys_and_orders_by_difficulty`).
+
+**Pedoman penskoran (dari kisi-kisi) dan penerapannya** — `backend/app/services/staged.py`:
+1. *Skor penuh bila tahapan benar* → tahap mendapat skornya bila semua isian tahap itu benar.
+2. *Skor parsial tetap diberikan bila tahapan benar tetapi salah hitung pada tahap berikutnya* → **carry-forward**: isian yang bergantung pada hasil sebelumnya dinilai benar bila konsisten dengan angka siswa sendiri. Contoh: ML-2 tahap 6 benar bila sama dengan 2 × (jumlah hasil tahap 5 milik siswa); ML-1 tahap 3–4 benar bila urutan/pilihan cocok dengan luas yang dihitung siswa.
+3. *Penilaian berdasarkan proses tiap tahap* → tahap bernilai 2 memberi skor parsial: ML-1 tahap 2 (3 benar = 2, 1–2 benar = 1), ML-3 tahap 2 (3 benar = 2, 1–2 benar = 1), ML-3 tahap 3 (2 benar = 2, 1 benar = 1).
+4. *Skor maksimal 24, 6 per indikator* → `nilai = skor diperoleh / 24 × 100`. Isian kosong = 0.
+
+Urutan soal: tingkat kesulitan 1 → 3 (ML-2/ML-3 acak, lalu ML-4, lalu ML-1). Soal lama EV-01..EV-10 **dinonaktifkan, tidak dihapus**, agar riwayat nilai lama tetap dapat dibuka; isinya kini menjadi level latihan **Bank Soal**.
+
+Kebocoran dicegah oleh tes: ukuran (p, l, t berurutan) dan jawaban akhir ML-1..ML-4 tidak boleh muncul di naskah kelas, bank tanya-jawab, materi, maupun latihan (`test_content_does_not_leak_staged_evaluation`, `generators.test.js`).
+
+## 2. Latihan (6 level × 5 soal)
+
+Level 1–4 seperti di bawah. **Level 5 Literasi**: model/rumus untuk situasi (Formulate), menghitung luas balok (Employ), memeriksa pekerjaan teman (Interpret), membandingkan dua dan tiga kotak dengan alasan (Reasoning); ukuran ≤ 12 agar berbeda dari soal evaluasi. **Level 6 Bank Soal**: 5 soal acak dari 10 soal evaluasi versi lama.
+
 
 Sumber: [`frontend/src/features/practice/generators.js`](../frontend/src/features/practice/generators.js). Setiap soal dibangkitkan dengan bilangan bulat acak di rentang aman sehingga hasil bagi selalu bulat.
 

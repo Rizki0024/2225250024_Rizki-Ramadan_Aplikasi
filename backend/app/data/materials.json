@@ -1,132 +1,497 @@
 [
-  {
-    "slug": "prasyarat",
-    "title": "Luas Persegi & Persegi Panjang",
-    "shape": "prasyarat",
-    "order_no": 1,
-    "summary": "Ingat lagi dua rumus luas bangun datar sebelum masuk ke kubus dan balok.",
-    "content": [
-      { "type": "text", "text": "Permukaan kubus dan balok tersusun dari persegi dan persegi panjang. Jadi, kita ingat dulu cara menghitung luas keduanya." },
-      { "type": "heading", "text": "Luas persegi" },
-      { "type": "figure", "figure": "square", "dims": { "s": 6 }, "caption": "Persegi dengan sisi s" },
-      { "type": "formula", "label": "Luas persegi", "expr": "L = s × s" },
-      { "type": "example", "title": "Contoh 1", "soal": "Sebuah persegi memiliki panjang sisi 6 cm. Berapa luasnya?",
-        "diketahui": ["s = 6 cm"], "ditanyakan": "Luas persegi (L)", "rumus": "L = s × s",
-        "substitusi": "L = 6 × 6", "perhitungan": ["6 × 6 = 36"], "jawaban": "36 cm²" },
-      { "type": "heading", "text": "Luas persegi panjang" },
-      { "type": "figure", "figure": "rectangle", "dims": { "p": 8, "l": 5 }, "caption": "Persegi panjang dengan panjang p dan lebar l" },
-      { "type": "formula", "label": "Luas persegi panjang", "expr": "L = p × l" },
-      { "type": "example", "title": "Contoh 2", "soal": "Sebuah persegi panjang berukuran panjang 8 cm dan lebar 5 cm. Berapa luasnya?",
-        "diketahui": ["p = 8 cm", "l = 5 cm"], "ditanyakan": "Luas persegi panjang (L)", "rumus": "L = p × l",
-        "substitusi": "L = 8 × 5", "perhitungan": ["8 × 5 = 40"], "jawaban": "40 cm²" },
-      { "type": "tip", "text": "Satuan luas selalu berpangkat dua: cm × cm = cm², m × m = m²." }
+ {
+  "slug": "prasyarat",
+  "title": "Luas Persegi & Persegi Panjang",
+  "shape": "prasyarat",
+  "order_no": 1,
+  "summary": "Ingat lagi dua rumus luas bangun datar sebelum masuk ke kubus dan balok.",
+  "content": [
+   {
+    "type": "tip",
+    "text": "Tujuan: mengingat luas persegi dan persegi panjang. Manfaat: semua sisi kubus dan balok berbentuk persegi atau persegi panjang."
+   },
+   {
+    "type": "text",
+    "text": "Permukaan kubus dan balok tersusun dari persegi dan persegi panjang. Jadi, kita ingat dulu cara menghitung luas keduanya."
+   },
+   {
+    "type": "heading",
+    "text": "Luas persegi"
+   },
+   {
+    "type": "figure",
+    "figure": "square",
+    "dims": {
+     "s": 6
+    },
+    "caption": "Persegi dengan sisi s"
+   },
+   {
+    "type": "formula",
+    "label": "Luas persegi",
+    "expr": "L = s × s"
+   },
+   {
+    "type": "example",
+    "title": "Contoh 1",
+    "soal": "Sebuah persegi memiliki panjang sisi 6 cm. Berapa luasnya?",
+    "diketahui": [
+     "s = 6 cm"
+    ],
+    "ditanyakan": "Luas persegi (L)",
+    "rumus": "L = s × s",
+    "substitusi": "L = 6 × 6",
+    "perhitungan": [
+     "6 × 6 = 36"
+    ],
+    "jawaban": "36 cm²"
+   },
+   {
+    "type": "heading",
+    "text": "Luas persegi panjang"
+   },
+   {
+    "type": "figure",
+    "figure": "rectangle",
+    "dims": {
+     "p": 8,
+     "l": 5
+    },
+    "caption": "Persegi panjang dengan panjang p dan lebar l"
+   },
+   {
+    "type": "formula",
+    "label": "Luas persegi panjang",
+    "expr": "L = p × l"
+   },
+   {
+    "type": "example",
+    "title": "Contoh 2",
+    "soal": "Sebuah persegi panjang berukuran panjang 8 cm dan lebar 5 cm. Berapa luasnya?",
+    "diketahui": [
+     "p = 8 cm",
+     "l = 5 cm"
+    ],
+    "ditanyakan": "Luas persegi panjang (L)",
+    "rumus": "L = p × l",
+    "substitusi": "L = 8 × 5",
+    "perhitungan": [
+     "8 × 5 = 40"
+    ],
+    "jawaban": "40 cm²"
+   },
+   {
+    "type": "tip",
+    "text": "Satuan luas selalu berpangkat dua: cm × cm = cm², m × m = m²."
+   },
+   {
+    "type": "heading",
+    "text": "Periksa dirimu (refleksi)"
+   },
+   {
+    "type": "list",
+    "items": [
+     "Apa beda luas dan keliling?",
+     "Satuan luas apa yang kamu pakai?",
+     "Bisakah kamu menjelaskan rumusnya dengan kata-katamu sendiri?"
     ]
-  },
-  {
-    "slug": "kubus",
-    "title": "Luas Permukaan Kubus",
-    "shape": "kubus",
-    "order_no": 2,
-    "summary": "Kubus punya 6 sisi persegi yang sama besar. Dari situ rumusnya muncul.",
-    "content": [
-      { "type": "heading", "text": "Apa itu kubus?" },
-      { "type": "figure", "figure": "cube", "dims": { "s": 4 }, "caption": "Kubus dengan rusuk s. Putar untuk melihat semua sisi." },
-      { "type": "text", "text": "Kubus adalah bangun ruang yang dibatasi oleh 6 sisi berbentuk persegi yang sama besar." },
-      { "type": "heading", "text": "Unsur-unsur kubus" },
-      { "type": "list", "items": ["6 sisi berbentuk persegi yang sama besar", "12 rusuk yang sama panjang, disebut s", "8 titik sudut"] },
-      { "type": "heading", "text": "Luas permukaan = jumlah luas semua sisi" },
-      { "type": "text", "text": "Bayangkan kubus dibuka menjadi jaring-jaring. Semua sisinya terlihat: ada 6 persegi." },
-      { "type": "figure", "figure": "cube-net", "dims": { "s": 4 }, "caption": "Jaring-jaring kubus: 6 persegi yang sama besar" },
-      { "type": "steps", "title": "Menurunkan rumus", "items": [
-        "Satu sisi kubus berbentuk persegi, luasnya s × s.",
-        "Kubus punya 6 sisi yang sama besar.",
-        "Jadi, luas permukaan = 6 × luas satu sisi = 6 × s × s."
-      ] },
-      { "type": "formula", "label": "Luas permukaan kubus", "expr": "L = 6 × s × s", "note": "s = panjang rusuk" },
-      { "type": "example", "title": "Contoh 1: Kertas kado",
-        "soal": "Sebuah kotak kado berbentuk kubus dengan panjang rusuk 10 cm akan dibungkus seluruhnya dengan kertas kado. Berapa luas kertas kado minimal yang dibutuhkan?",
-        "diketahui": ["Kotak berbentuk kubus", "s = 10 cm"], "ditanyakan": "Luas kertas kado minimal = luas permukaan kubus",
-        "rumus": "L = 6 × s × s", "substitusi": "L = 6 × 10 × 10", "perhitungan": ["10 × 10 = 100", "6 × 100 = 600"],
-        "jawaban": "600 cm²", "interpretasi": "Kertas kado yang dibutuhkan paling sedikit 600 cm² (belum termasuk lipatan)." },
-      { "type": "example", "title": "Contoh 2: Mencari panjang rusuk",
-        "soal": "Luas permukaan sebuah kubus adalah 294 cm². Berapa panjang rusuknya?",
-        "diketahui": ["L = 294 cm²"], "ditanyakan": "Panjang rusuk (s)",
-        "rumus": "L = 6 × s × s", "substitusi": "294 = 6 × s × s",
-        "perhitungan": ["s × s = 294 : 6", "294 : 6 = 49", "s × s = 49, maka s = 7 (karena 7 × 7 = 49)"],
-        "jawaban": "7 cm" },
-      { "type": "tip", "text": "Ingat 6 sisi, bukan 4. Alas dan tutup juga ikut dihitung." }
+   }
+  ]
+ },
+ {
+  "slug": "kubus",
+  "title": "Luas Permukaan Kubus",
+  "shape": "kubus",
+  "order_no": 2,
+  "summary": "Kubus punya 6 sisi persegi yang sama besar. Dari situ rumusnya muncul.",
+  "content": [
+   {
+    "type": "tip",
+    "text": "Tujuan: memahami dan menghitung luas permukaan kubus. Manfaat: menghitung kertas kado, karton, atau cat untuk benda berbentuk kubus."
+   },
+   {
+    "type": "heading",
+    "text": "Apa itu kubus?"
+   },
+   {
+    "type": "figure",
+    "figure": "cube",
+    "dims": {
+     "s": 4
+    },
+    "caption": "Kubus dengan rusuk s. Putar untuk melihat semua sisi."
+   },
+   {
+    "type": "text",
+    "text": "Kubus adalah bangun ruang yang dibatasi oleh 6 sisi berbentuk persegi yang sama besar."
+   },
+   {
+    "type": "heading",
+    "text": "Unsur-unsur kubus"
+   },
+   {
+    "type": "list",
+    "items": [
+     "6 sisi berbentuk persegi yang sama besar",
+     "12 rusuk yang sama panjang, disebut s",
+     "8 titik sudut"
     ]
-  },
-  {
-    "slug": "balok",
-    "title": "Luas Permukaan Balok",
-    "shape": "balok",
-    "order_no": 3,
-    "summary": "Balok punya 3 pasang sisi yang sama besar: alas-tutup, depan-belakang, kiri-kanan.",
-    "content": [
-      { "type": "heading", "text": "Apa itu balok?" },
-      { "type": "figure", "figure": "cuboid", "dims": { "p": 6, "l": 4, "t": 3 }, "caption": "Balok dengan panjang p, lebar l, dan tinggi t" },
-      { "type": "text", "text": "Balok adalah bangun ruang yang dibatasi oleh 6 sisi berbentuk persegi panjang. Sisi yang berhadapan sama besar." },
-      { "type": "heading", "text": "Unsur-unsur balok" },
-      { "type": "list", "items": ["Panjang (p), lebar (l), dan tinggi (t)", "6 sisi berbentuk persegi panjang", "12 rusuk dan 8 titik sudut"] },
-      { "type": "heading", "text": "Tiga pasang sisi yang berhadapan" },
-      { "type": "pairs", "items": [
-        { "color": "a", "name": "Alas & tutup", "expr": "p × l" },
-        { "color": "b", "name": "Depan & belakang", "expr": "p × t" },
-        { "color": "c", "name": "Kiri & kanan", "expr": "l × t" }
-      ] },
-      { "type": "figure", "figure": "cuboid-net", "dims": { "p": 6, "l": 4, "t": 3 }, "caption": "Jaring-jaring balok. Warna sama = luas sama." },
-      { "type": "steps", "title": "Menurunkan rumus", "items": [
-        "Alas dan tutup: 2 × (p × l)",
-        "Depan dan belakang: 2 × (p × t)",
-        "Kiri dan kanan: 2 × (l × t)",
-        "Jumlahkan: L = 2 × (p × l) + 2 × (p × t) + 2 × (l × t)",
-        "Keluarkan angka 2: L = 2 × (p × l + p × t + l × t)"
-      ] },
-      { "type": "formula", "label": "Luas permukaan balok", "expr": "L = 2 × (p × l + p × t + l × t)" },
-      { "type": "example", "title": "Contoh: Kotak sepatu",
-        "soal": "Sebuah kotak sepatu berbentuk balok berukuran panjang 30 cm, lebar 20 cm, dan tinggi 12 cm dibuat dari karton. Berapa luas karton yang dibutuhkan?",
-        "diketahui": ["p = 30 cm", "l = 20 cm", "t = 12 cm"], "ditanyakan": "Luas karton = luas permukaan balok",
-        "rumus": "L = 2 × (p × l + p × t + l × t)", "substitusi": "L = 2 × (30 × 20 + 30 × 12 + 20 × 12)",
-        "perhitungan": ["30 × 20 = 600", "30 × 12 = 360", "20 × 12 = 240", "600 + 360 + 240 = 1.200", "2 × 1.200 = 2.400"],
-        "jawaban": "2.400 cm²", "interpretasi": "Karton yang dibutuhkan paling sedikit 2.400 cm² agar kotak tertutup rapat." },
-      { "type": "tip", "text": "Hitung satu per satu: tiga perkalian, lalu jumlahkan, baru dikali 2." }
+   },
+   {
+    "type": "heading",
+    "text": "Luas permukaan = jumlah luas semua sisi"
+   },
+   {
+    "type": "text",
+    "text": "Bayangkan kubus dibuka menjadi jaring-jaring. Semua sisinya terlihat: ada 6 persegi."
+   },
+   {
+    "type": "figure",
+    "figure": "cube-net",
+    "dims": {
+     "s": 4
+    },
+    "caption": "Jaring-jaring kubus: 6 persegi yang sama besar"
+   },
+   {
+    "type": "steps",
+    "title": "Menurunkan rumus",
+    "items": [
+     "Satu sisi kubus berbentuk persegi, luasnya s × s.",
+     "Kubus punya 6 sisi yang sama besar.",
+     "Jadi, luas permukaan = 6 × luas satu sisi = 6 × s × s."
     ]
-  },
-  {
-    "slug": "soal-cerita",
-    "title": "Kubus vs Balok & Soal Cerita",
-    "shape": "soal-cerita",
-    "order_no": 4,
-    "summary": "Bandingkan kubus dan balok, lalu selesaikan soal cerita dengan 3 langkah.",
-    "content": [
-      { "type": "heading", "text": "Kubus dan balok" },
-      { "type": "compare", "rows": [
-        ["Bentuk sisi", "6 persegi sama besar", "6 persegi panjang, berpasangan"],
-        ["Ukuran", "rusuk s", "p, l, dan t"],
-        ["Rumus luas permukaan", "6 × s × s", "2 × (p×l + p×t + l×t)"]
-      ] },
-      { "type": "tip", "text": "Kubus adalah balok khusus dengan p = l = t. Coba: 2 × (s×s + s×s + s×s) = 6 × s × s." },
-      { "type": "heading", "text": "3 langkah soal cerita" },
-      { "type": "steps", "title": "Formulate – Employ – Interpret", "items": [
-        "Pahami (Formulate): tulis yang diketahui dan ditanyakan. Tentukan sisi mana saja yang dihitung.",
-        "Hitung (Employ): masukkan angka ke rumus, hitung langkah demi langkah.",
-        "Tafsirkan (Interpret): cek satuan dan apakah jawabannya masuk akal untuk situasi itu."
-      ] },
-      { "type": "example", "title": "Contoh: Kolam tanpa tutup",
-        "soal": "Bagian dalam kolam ikan berbentuk balok tanpa tutup akan dipasang keramik. Ukuran kolam: panjang 2 m, lebar 1 m, dan dalam 1 m. Berapa luas bagian yang dipasang keramik?",
-        "diketahui": ["p = 2 m", "l = 1 m", "t = 1 m", "Tanpa tutup → sisi atas tidak dihitung"],
-        "ditanyakan": "Luas alas + 4 sisi tegak",
-        "rumus": "L = (p × l) + 2 × (p × t) + 2 × (l × t)",
-        "substitusi": "L = (2 × 1) + 2 × (2 × 1) + 2 × (1 × 1)",
-        "perhitungan": ["2 × 1 = 2", "2 × (2 × 1) = 4", "2 × (1 × 1) = 2", "2 + 4 + 2 = 8"],
-        "jawaban": "8 m²", "interpretasi": "Keramik yang dipasang seluas 8 m². Sisi atas tidak dihitung karena kolam tidak bertutup." },
-      { "type": "heading", "text": "Hati-hati dengan kata kunci" },
-      { "type": "list", "items": [
-        "\"Tanpa tutup\" → kurangi satu sisi (p × l).",
-        "\"Dinding ruangan\" → hanya 4 sisi tegak, tanpa lantai dan langit-langit.",
-        "Jumlah kaleng atau lembar → bulatkan ke atas. 4,2 kaleng berarti beli 5 kaleng."
-      ] }
+   },
+   {
+    "type": "formula",
+    "label": "Luas permukaan kubus",
+    "expr": "L = 6 × s × s",
+    "note": "s = panjang rusuk"
+   },
+   {
+    "type": "example",
+    "title": "Contoh 1: Kertas kado",
+    "soal": "Sebuah kotak kado berbentuk kubus dengan panjang rusuk 10 cm akan dibungkus seluruhnya dengan kertas kado. Berapa luas kertas kado minimal yang dibutuhkan?",
+    "diketahui": [
+     "Kotak berbentuk kubus",
+     "s = 10 cm"
+    ],
+    "ditanyakan": "Luas kertas kado minimal = luas permukaan kubus",
+    "rumus": "L = 6 × s × s",
+    "substitusi": "L = 6 × 10 × 10",
+    "perhitungan": [
+     "10 × 10 = 100",
+     "6 × 100 = 600"
+    ],
+    "jawaban": "600 cm²",
+    "interpretasi": "Kertas kado yang dibutuhkan paling sedikit 600 cm² (belum termasuk lipatan)."
+   },
+   {
+    "type": "example",
+    "title": "Contoh 2: Mencari panjang rusuk",
+    "soal": "Luas permukaan sebuah kubus adalah 294 cm². Berapa panjang rusuknya?",
+    "diketahui": [
+     "L = 294 cm²"
+    ],
+    "ditanyakan": "Panjang rusuk (s)",
+    "rumus": "L = 6 × s × s",
+    "substitusi": "294 = 6 × s × s",
+    "perhitungan": [
+     "s × s = 294 : 6",
+     "294 : 6 = 49",
+     "s × s = 49, maka s = 7 (karena 7 × 7 = 49)"
+    ],
+    "jawaban": "7 cm"
+   },
+   {
+    "type": "tip",
+    "text": "Ingat 6 sisi, bukan 4. Alas dan tutup juga ikut dihitung."
+   },
+   {
+    "type": "heading",
+    "text": "Periksa dirimu (refleksi)"
+   },
+   {
+    "type": "list",
+    "items": [
+     "Mengapa rumusnya dikali 6?",
+     "Apakah satuan jawabanmu sudah persegi (cm², m²)?",
+     "Di mana lagi kamu menemukan bentuk kubus?"
     ]
-  }
+   }
+  ]
+ },
+ {
+  "slug": "balok",
+  "title": "Luas Permukaan Balok",
+  "shape": "balok",
+  "order_no": 3,
+  "summary": "Balok punya 3 pasang sisi yang sama besar: alas-tutup, depan-belakang, kiri-kanan.",
+  "content": [
+   {
+    "type": "tip",
+    "text": "Tujuan: memahami dan menghitung luas permukaan balok. Manfaat: menghitung bahan kardus, kotak sepatu, atau akuarium."
+   },
+   {
+    "type": "heading",
+    "text": "Apa itu balok?"
+   },
+   {
+    "type": "figure",
+    "figure": "cuboid",
+    "dims": {
+     "p": 6,
+     "l": 4,
+     "t": 3
+    },
+    "caption": "Balok dengan panjang p, lebar l, dan tinggi t"
+   },
+   {
+    "type": "text",
+    "text": "Balok adalah bangun ruang yang dibatasi oleh 6 sisi berbentuk persegi panjang. Sisi yang berhadapan sama besar."
+   },
+   {
+    "type": "heading",
+    "text": "Unsur-unsur balok"
+   },
+   {
+    "type": "list",
+    "items": [
+     "Panjang (p), lebar (l), dan tinggi (t)",
+     "6 sisi berbentuk persegi panjang",
+     "12 rusuk dan 8 titik sudut"
+    ]
+   },
+   {
+    "type": "heading",
+    "text": "Tiga pasang sisi yang berhadapan"
+   },
+   {
+    "type": "pairs",
+    "items": [
+     {
+      "color": "a",
+      "name": "Alas & tutup",
+      "expr": "p × l"
+     },
+     {
+      "color": "b",
+      "name": "Depan & belakang",
+      "expr": "p × t"
+     },
+     {
+      "color": "c",
+      "name": "Kiri & kanan",
+      "expr": "l × t"
+     }
+    ]
+   },
+   {
+    "type": "figure",
+    "figure": "cuboid-net",
+    "dims": {
+     "p": 6,
+     "l": 4,
+     "t": 3
+    },
+    "caption": "Jaring-jaring balok. Warna sama = luas sama."
+   },
+   {
+    "type": "steps",
+    "title": "Menurunkan rumus",
+    "items": [
+     "Alas dan tutup: 2 × (p × l)",
+     "Depan dan belakang: 2 × (p × t)",
+     "Kiri dan kanan: 2 × (l × t)",
+     "Jumlahkan: L = 2 × (p × l) + 2 × (p × t) + 2 × (l × t)",
+     "Keluarkan angka 2: L = 2 × (p × l + p × t + l × t)"
+    ]
+   },
+   {
+    "type": "formula",
+    "label": "Luas permukaan balok",
+    "expr": "L = 2 × (p × l + p × t + l × t)"
+   },
+   {
+    "type": "example",
+    "title": "Contoh: Kotak sepatu",
+    "soal": "Sebuah kotak sepatu berbentuk balok berukuran panjang 30 cm, lebar 20 cm, dan tinggi 12 cm dibuat dari karton. Berapa luas karton yang dibutuhkan?",
+    "diketahui": [
+     "p = 30 cm",
+     "l = 20 cm",
+     "t = 12 cm"
+    ],
+    "ditanyakan": "Luas karton = luas permukaan balok",
+    "rumus": "L = 2 × (p × l + p × t + l × t)",
+    "substitusi": "L = 2 × (30 × 20 + 30 × 12 + 20 × 12)",
+    "perhitungan": [
+     "30 × 20 = 600",
+     "30 × 12 = 360",
+     "20 × 12 = 240",
+     "600 + 360 + 240 = 1.200",
+     "2 × 1.200 = 2.400"
+    ],
+    "jawaban": "2.400 cm²",
+    "interpretasi": "Karton yang dibutuhkan paling sedikit 2.400 cm² agar kotak tertutup rapat."
+   },
+   {
+    "type": "tip",
+    "text": "Hitung satu per satu: tiga perkalian, lalu jumlahkan, baru dikali 2."
+   },
+   {
+    "type": "heading",
+    "text": "Periksa dirimu (refleksi)"
+   },
+   {
+    "type": "list",
+    "items": [
+     "Sisi mana saja yang berpasangan?",
+     "Sudahkah ketiga pasang sisi dihitung?",
+     "Apa yang terjadi pada rumus jika p = l = t?"
+    ]
+   }
+  ]
+ },
+ {
+  "slug": "soal-cerita",
+  "title": "Kubus vs Balok & Soal Cerita",
+  "shape": "soal-cerita",
+  "order_no": 4,
+  "summary": "Bandingkan kubus dan balok, lalu selesaikan soal cerita dengan 4 kemampuan literasi.",
+  "content": [
+   {
+    "type": "tip",
+    "text": "Tujuan: menyelesaikan soal cerita dengan empat kemampuan literasi: Formulate, Employ, Interpret, dan Reasoning."
+   },
+   {
+    "type": "heading",
+    "text": "Kubus dan balok"
+   },
+   {
+    "type": "compare",
+    "rows": [
+     [
+      "Bentuk sisi",
+      "6 persegi sama besar",
+      "6 persegi panjang, berpasangan"
+     ],
+     [
+      "Ukuran",
+      "rusuk s",
+      "p, l, dan t"
+     ],
+     [
+      "Rumus luas permukaan",
+      "6 × s × s",
+      "2 × (p×l + p×t + l×t)"
+     ]
+    ]
+   },
+   {
+    "type": "tip",
+    "text": "Kubus adalah balok khusus dengan p = l = t. Coba: 2 × (s×s + s×s + s×s) = 6 × s × s."
+   },
+   {
+    "type": "heading",
+    "text": "4 kemampuan literasi matematika"
+   },
+   {
+    "type": "steps",
+    "title": "Formulate – Employ – Interpret – Reasoning",
+    "items": [
+     "Pahami (Formulate): tulis yang diketahui dan ditanyakan, lalu susun model matematikanya.",
+     "Hitung (Employ): pilih rumus, masukkan angka, hitung langkah demi langkah.",
+     "Tafsirkan (Interpret): cek satuan, kewajaran hasil, dan periksa kembali pekerjaan.",
+     "Bernalar (Reasoning): bandingkan pilihan, beri alasan matematis, lalu ambil keputusan."
+    ]
+   },
+   {
+    "type": "example",
+    "title": "Contoh: Kolam tanpa tutup",
+    "soal": "Bagian dalam kolam ikan berbentuk balok tanpa tutup akan dipasang keramik. Ukuran kolam: panjang 2 m, lebar 1 m, dan dalam 1 m. Berapa luas bagian yang dipasang keramik?",
+    "diketahui": [
+     "p = 2 m",
+     "l = 1 m",
+     "t = 1 m",
+     "Tanpa tutup → sisi atas tidak dihitung"
+    ],
+    "ditanyakan": "Luas alas + 4 sisi tegak",
+    "rumus": "L = (p × l) + 2 × (p × t) + 2 × (l × t)",
+    "substitusi": "L = (2 × 1) + 2 × (2 × 1) + 2 × (1 × 1)",
+    "perhitungan": [
+     "2 × 1 = 2",
+     "2 × (2 × 1) = 4",
+     "2 × (1 × 1) = 2",
+     "2 + 4 + 2 = 8"
+    ],
+    "jawaban": "8 m²",
+    "interpretasi": "Keramik yang dipasang seluas 8 m². Sisi atas tidak dihitung karena kolam tidak bertutup."
+   },
+   {
+    "type": "heading",
+    "text": "Hati-hati dengan kata kunci"
+   },
+   {
+    "type": "list",
+    "items": [
+     "\"Tanpa tutup\" → kurangi satu sisi (p × l).",
+     "\"Dinding ruangan\" → hanya 4 sisi tegak, tanpa lantai dan langit-langit.",
+     "Jumlah kaleng atau lembar → bulatkan ke atas. 4,2 kaleng berarti beli 5 kaleng."
+    ]
+   },
+   {
+    "type": "heading",
+    "text": "Bernalar dan memeriksa"
+   },
+   {
+    "type": "example",
+    "title": "Contoh: Memilih kotak yang hemat karton (Reasoning)",
+    "soal": "Kotak P berbentuk kubus dengan rusuk 6 cm. Kotak Q berbentuk balok 8 cm × 5 cm × 4 cm. Keduanya muat untuk barang yang akan dikirim. Kotak mana yang membutuhkan karton paling sedikit?",
+    "diketahui": [
+     "Kotak P: kubus, s = 6 cm",
+     "Kotak Q: balok, p = 8 cm, l = 5 cm, t = 4 cm"
+    ],
+    "ditanyakan": "Kotak dengan luas permukaan paling kecil",
+    "rumus": "Kubus: L = 6 × s × s; balok: L = 2 × (p×l + p×t + l×t)",
+    "substitusi": "P: L = 6 × 6 × 6; Q: L = 2 × (8×5 + 8×4 + 5×4)",
+    "perhitungan": [
+     "P: 6 × 36 = 216",
+     "Q: 2 × (40 + 32 + 20) = 2 × 92 = 184",
+     "184 < 216"
+    ],
+    "jawaban": "Kotak Q, luas permukaannya 184 cm²",
+    "interpretasi": "Kotak Q dipilih karena muat dan kartonnya paling sedikit. Keputusan didasarkan pada perbandingan luas permukaan."
+   },
+   {
+    "type": "example",
+    "title": "Contoh: Memeriksa pekerjaan teman (Interpret)",
+    "soal": "Rina menghitung luas permukaan balok 9 cm × 6 cm × 4 cm sebagai L = 2 × (54 + 36) = 180 cm². Apakah benar?",
+    "diketahui": [
+     "p = 9 cm, l = 6 cm, t = 4 cm",
+     "Hasil Rina: 180 cm²"
+    ],
+    "ditanyakan": "Benar atau tidaknya pekerjaan Rina, serta luas yang benar",
+    "rumus": "L = 2 × (p×l + p×t + l×t)",
+    "substitusi": "L = 2 × (9×6 + 9×4 + 6×4)",
+    "perhitungan": [
+     "Rina lupa pasangan l × t = 24",
+     "2 × (54 + 36 + 24) = 2 × 114 = 228"
+    ],
+    "jawaban": "228 cm²",
+    "interpretasi": "Pekerjaan Rina kurang 48 cm² karena satu pasang sisi terlupa. Selalu periksa ketiga pasang sisi."
+   },
+   {
+    "type": "heading",
+    "text": "Periksa dirimu (refleksi)"
+   },
+   {
+    "type": "list",
+    "items": [
+     "Sudahkah kamu menulis yang diketahui dan ditanyakan?",
+     "Apakah jawabanmu masuk akal untuk situasinya?",
+     "Jika ada beberapa pilihan, apa alasan matematismu memilih salah satunya?"
+    ]
+   }
+  ]
+ }
 ]

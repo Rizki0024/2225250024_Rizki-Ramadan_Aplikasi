@@ -13,6 +13,7 @@ import { LEVELS } from '../features/practice/generators.js';
 import { useAuth } from '../hooks/useAuth.jsx';
 import { api } from '../services/api.js';
 import { formatDateTime, formatDuration } from '../utils/number.js';
+import { StagedReview } from '../features/quiz/StagedQuestion.jsx';
 
 const levelTitle = (id) => LEVELS.find((l) => l.id === id)?.title || id;
 const attemptTitle = (a) => (a.mode === 'evaluasi' ? 'Evaluasi' : `Latihan: ${levelTitle(a.level)}`);
@@ -93,7 +94,7 @@ export function ResultList() {
               <span className="grow">
                 <strong>{attemptTitle(a)}</strong>
                 <span>{formatDateTime(a.submitted_at || a.started_at)} · {formatDuration(a.duration_seconds)}</span>
-                <span style={{ display: 'block' }}>Benar {a.correct_count} · Salah {a.wrong_count}{a.mode === 'latihan' ? ' · ' : ''}{a.mode === 'latihan' ? <Stars count={a.stars || 0} /> : null}</span>
+                <span style={{ display: 'block' }}>{isStagedEval(a) ? `Skor ${stagedPoints(a)} dari ${STAGED_MAX}` : <>Benar {a.correct_count} · Salah {a.wrong_count}</>}{a.mode === 'latihan' ? ' · ' : ''}{a.mode === 'latihan' ? <Stars count={a.stars || 0} /> : null}</span>
               </span>
               <strong style={{ fontSize: '1.4rem', color: 'var(--blue-800)' }}>{Math.round(a.score)}</strong>
             </CardLink>
@@ -104,7 +105,20 @@ export function ResultList() {
   );
 }
 
+// Evaluasi kisi-kisi: 4 soal bertahap, skor maksimum 24 (lihat docs/question-blueprint.md).
+const STAGED_MAX = 24;
+const isStagedEval = (a) => a.mode === 'evaluasi' && a.total_questions === 4;
+const stagedPoints = (a) => Math.round((a.score * STAGED_MAX) / 100);
+
 function ReviewItem({ item }) {
+  if (item.type === 'staged') {
+    return (
+      <div className={`card stack review-item ${item.is_correct ? 'ok' : 'bad'}`}>
+        <strong>Soal {item.position}</strong>
+        <StagedReview item={item} />
+      </div>
+    );
+  }
   const studentLabel = item.type === 'mc'
     ? item.options?.find((o) => o.id === item.student_answer)?.label
     : item.student_answer ? `${item.student_answer}${item.unit ? ` ${item.unit}` : ''}` : null;
@@ -157,8 +171,19 @@ export function ResultDetail() {
               <div className="score-big">{Math.round(data.score)}</div>
             </div>
             <div className="result-stats">
-              <div className="row"><span><span className="dot" style={{ background: '#22c55e' }} />Benar</span><strong>{data.correct_count}</strong></div>
-              <div className="row"><span><span className="dot" style={{ background: '#ef4444' }} />Salah</span><strong>{data.wrong_count}</strong></div>
+              {data.review?.some((i) => i.type === 'staged') ? (
+                <>
+                  <div className="row"><span><span className="dot" style={{ background: '#22c55e' }} />Skor tahap</span><strong>{data.review.reduce((n, i) => n + (i.points || 0), 0)} / {data.review.reduce((n, i) => n + (i.max_points || 0), 0)}</strong></div>
+                  {data.review.map((i) => (
+                    <div key={i.position} className="row small"><span><ProcessBadge process={i.process} /></span><strong>{i.points} / {i.max_points}</strong></div>
+                  ))}
+                </>
+              ) : (
+                <>
+                  <div className="row"><span><span className="dot" style={{ background: '#22c55e' }} />Benar</span><strong>{data.correct_count}</strong></div>
+                  <div className="row"><span><span className="dot" style={{ background: '#ef4444' }} />Salah</span><strong>{data.wrong_count}</strong></div>
+                </>
+              )}
               <div className="row"><span><span className="dot" style={{ background: '#3b82f6' }} />Waktu</span><strong>{formatClockSec(data.duration_seconds)}</strong></div>
               {data.timed_out ? <div className="alert warn small">Dikumpulkan setelah batas waktu.</div> : null}
             </div>

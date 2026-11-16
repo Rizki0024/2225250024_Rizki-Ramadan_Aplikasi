@@ -157,7 +157,7 @@ export default function VideoLesson() {
           {lesson.segments.map((sg, i) => (
             <button key={sg.id} type="button" className={i === state.seg ? 'on' : ''} onClick={() => act('GOTO', { seg: i, line: 0 })}>
               <span className="num" style={{ width: 28, height: 28, borderRadius: 9, background: 'var(--pastel-blue)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>{i + 1}</span>
-              <span>{sg.title}<br /><span className="small muted" style={{ fontWeight: 600 }}>{sg.goal}</span></span>
+              <span>{sg.title}<br /><span className="small muted" style={{ fontWeight: 600 }}>{sg.goal}</span>{sg.rmt ? <><br /><span className="rmt-chip">Fase {sg.rmt.phase}</span></> : null}</span>
               <span className="t">{formatTime(timeOf(timeline, i, 0))}</span>
             </button>
           ))}
