@@ -1,5 +1,7 @@
 // Uji E2E fitur v3: halaman awal, laci menu, profil & lencana, pengaturan, slide materi, video pembelajaran, visualisasi.
 import { chromium, devices } from 'playwright';
+// Screenshot hanya dokumentasi: skala CSS (ringan di renderer CPU) dan tidak menggugurkan tes bila lambat.
+const shot = (p, o) => p.screenshot({ scale: 'css', timeout: 20000, ...o }).catch(() => console.log('(screenshot dilewati: ' + o.path + ')'));
 
 const BASE = process.env.BASE || 'http://localhost:5173';
 const OUT = process.argv[2] || '.';
@@ -75,7 +77,7 @@ ok('M4 Tombol bacakan (guru berbicara)', (await page.locator('.slide-stage [data
 await page.getByRole('button', { name: 'Lihat semua' }).click();
 await page.getByText('L = 2 × (p × l + p × t + l × t)').first().waitFor();
 ok('M5 "Lihat semua" menampilkan materi lengkap', true);
-await page.screenshot({ path: `${OUT}/v3-materi.png` });
+await shot(page, { path: `${OUT}/v3-materi.png` });
 
 // --- video pembelajaran
 await page.getByRole('link', { name: 'Tonton video' }).click();
@@ -102,7 +104,7 @@ ok('VD6 Ajukan pertanyaan dari video (gelembung berfoto guru)', await page.locat
 await page.getByRole('button', { name: 'Kembali ke pelajaran' }).click();
 await page.getByRole('button', { name: 'Ajukan Pertanyaan' }).waitFor();
 ok('VD7 Kembali ke video setelah bertanya', true);
-await page.screenshot({ path: `${OUT}/v3-video.png`, fullPage: true });
+await shot(page, { path: `${OUT}/v3-video.png`, fullPage: true });
 
 // --- pengaturan
 // v3.1: aset karakter lama (termasuk pilihan "berkerudung") dihapus; guru & siswa digambar ulang dari nol.
@@ -133,7 +135,7 @@ ok('P2 Profil: 4 lencana', (await page.locator('.badge-item').count()) === 4);
 await page.locator('.badge-item').first().click();
 ok('P3 Ketuk lencana menampilkan syarat', await page.getByRole('status').filter({ hasText: 'Penjelajah Materi' }).isVisible());
 ok('P4 Lencana "Penjelajah Materi" terbuka setelah 4 materi dibuka', (await page.locator('.badge-item').first().getAttribute('class')).indexOf('locked') === -1);
-await page.screenshot({ path: `${OUT}/v3-profil.png` });
+await shot(page, { path: `${OUT}/v3-profil.png` });
 
 // --- keluar dari pengaturan
 await page.locator('nav.tabbar').getByRole('link', { name: 'Pengaturan' }).click();

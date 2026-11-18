@@ -21,7 +21,8 @@ Catatan teknis Vercel (serverless):
 1. **Migrasi database (sekali):** Supabase → SQL Editor → tempel isi `supabase/migrations/2026-11-16_soal_bertahap.sql` → Run. Hanya menambah kolom & melonggarkan batasan; tidak menghapus data.
 2. **Isi soal baru:** dari folder `backend`: `python scripts/seed_supabase.py` (mengisi ML-1..ML-4, menonaktifkan EV-01..EV-10 tanpa menghapus).
 3. **Deploy kode:** push ke `main` → Vercel membangun frontend & backend. (Urutan aman: kode baru tetap jalan dengan soal lama sampai langkah 1–2 selesai.)
-4. **(Opsional, berbayar) AI Bu Sari:** buat kunci di console.anthropic.com (beli kredit), lalu di Vercel proyek **backend** → Settings → Environment Variables: `ANTHROPIC_API_KEY` = kunci, `TUTOR_MODEL` = `claude-haiku-5-5` (murah) atau `claude-opus-5-5` → Redeploy. Cek `GET /api/health` → `"tutor": "claude"`. Kunci **tidak boleh** ditaruh di proyek frontend.
+4. **(Gratis) AI Bu Sari via Groq:** daftar di console.groq.com (tanpa kartu) → API Keys → Create. Di Vercel proyek **backend** → Settings → Environment Variables: `GROQ_API_KEY` = kunci → Redeploy. Cek `GET /api/health` → `"tutor": "groq"`. Kuota gratis (±30 permintaan/menit, ±1.000/hari, ±8.000 token/menit per model) dibagi ke beberapa model; bila habis, Bu Sari memakai jawaban siap pakai.
+5. **(Opsional, berbayar) AI Bu Sari via Claude:** buat kunci di console.anthropic.com (beli kredit), lalu di Vercel proyek **backend** → Settings → Environment Variables: `ANTHROPIC_API_KEY` = kunci, `TUTOR_MODEL` = `claude-haiku-5-5` (murah) atau `claude-opus-5-5` → Redeploy. Cek `GET /api/health` → `"tutor": "claude"`. Kunci **tidak boleh** ditaruh di proyek frontend.
 
 ## 0. Persiapan akun
 1. **GitHub** — https://github.com/signup

@@ -36,14 +36,15 @@ class AskOut(BaseModel):
     answer: str
     follow_up: str | None
     intent: str | None
-    source: Literal["curated", "claude"]
+    source: Literal["curated", "claude", "groq"]
     in_scope: bool
     can_simplify: bool
 
 
 @router.get("/status")
 def status(request: Request, student: dict = Depends(get_current_student)):
-    return {"provider": "claude" if request.app.state.claude_tutor else "curated"}
+    tutors = request.app.state.ai_tutors
+    return {"provider": tutors[0].name if tutors else "curated", "chain": [t.name for t in tutors] + ["curated"]}
 
 
 @router.post("/ask", response_model=AskOut)
@@ -55,6 +56,6 @@ def ask(body: AskIn, request: Request, student: dict = Depends(get_current_stude
         raise HTTPException(404, "Bagian pelajaran tidak ditemukan.")
     _, segment = found
     reply, source = tutor.ask(body.question, segment, [t.model_dump() for t in body.history],
-                              simpler=body.simpler, intent=body.intent, claude=request.app.state.claude_tutor)
+                              simpler=body.simpler, intent=body.intent, providers=request.app.state.ai_tutors)
     return AskOut(answer=reply.answer, follow_up=reply.follow_up, intent=reply.intent, source=source,
                   in_scope=reply.in_scope, can_simplify=reply.can_simplify)

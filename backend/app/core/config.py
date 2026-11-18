@@ -30,6 +30,8 @@ class Settings:
     anthropic_api_key: str = ""
     tutor_model: str = "claude-opus-5-5"
     tutor_max_requests: int = 30
+    groq_api_key: str = ""
+    groq_models: tuple[str, ...] = ()
 
     @property
     def storage_mode(self) -> str:
@@ -57,4 +59,6 @@ def load_settings() -> Settings:
         anthropic_api_key=env.get("ANTHROPIC_API_KEY", "").strip(),
         tutor_model=env.get("TUTOR_MODEL", "claude-opus-5-5").strip() or "claude-opus-5-5",
         tutor_max_requests=int(env.get("TUTOR_MAX_REQUESTS", "30")),
+        groq_api_key=env.get("GROQ_API_KEY", "").strip(),
+        groq_models=tuple(m.strip() for m in env.get("GROQ_MODELS", "").split(",") if m.strip()),
     )

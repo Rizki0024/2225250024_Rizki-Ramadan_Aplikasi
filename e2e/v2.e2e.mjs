@@ -1,5 +1,7 @@
 // Uji E2E fitur v2: kelas guru virtual, suara (mikrofon tiruan), tanya-jawab, interupsi & lanjut, animasi.
 import { chromium, devices } from 'playwright';
+// Screenshot hanya dokumentasi: skala CSS (ringan di renderer CPU) dan tidak menggugurkan tes bila lambat.
+const shot = (p, o) => p.screenshot({ scale: 'css', timeout: 20000, ...o }).catch(() => console.log('(screenshot dilewati: ' + o.path + ')'));
 
 const BASE = process.env.BASE || 'http://localhost:5173';
 const OUT = process.argv[2] || '.';
@@ -31,7 +33,8 @@ const MOCK_STT = () => {
   window.webkitSpeechRecognition = FakeRecognition;
 };
 
-const browser = await chromium.launch({ args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader'] });
+// Tanpa SwiftShader: tes guru virtual tidak memakai 3D, dan rendering CPU membuatnya lambat/flaky.
+const browser = await chromium.launch();
 const ctx = await browser.newContext({ ...devices['Pixel 7'] });
 await ctx.addInitScript(MOCK_STT);
 const page = await ctx.newPage();
@@ -51,7 +54,7 @@ await page.getByRole('link', { name: /Belajar Bersama Guru/ }).first().click();
 await page.getByRole('heading', { name: 'Halo, aku Bu Sari!' }).waitFor();
 await page.locator('.list-link').nth(3).waitFor();
 ok('D1 Daftar 4 pelajaran guru', (await page.locator('.list-link').count()) === 4);
-await page.screenshot({ path: `${OUT}/v2-hp-kelas-daftar.png`, fullPage: true });
+await shot(page, { path: `${OUT}/v2-hp-kelas-daftar.png`, fullPage: true });
 
 // --- kelas kubus
 await page.locator('.list-link', { hasText: 'Luas Permukaan Kubus' }).click();
@@ -71,7 +74,7 @@ await page.getByRole('button', { name: 'Jeda' }).click();
 const pausedSub = await page.locator('.speech-bubble').innerText();
 await page.waitForTimeout(2500);
 ok('D7 Jeda menghentikan penjelasan', (await page.locator('.speech-bubble').innerText()) === pausedSub);
-await page.screenshot({ path: `${OUT}/v2-hp-kelas-papan.png`, fullPage: true });
+await shot(page, { path: `${OUT}/v2-hp-kelas-papan.png`, fullPage: true });
 
 // --- interupsi dengan suara
 await page.getByRole('button', { name: 'Tanya Bu Sari' }).click();
@@ -88,7 +91,7 @@ ok('F2 Guru menanyakan apakah sudah paham', await page.getByText(/sudah lebih je
 await page.getByRole('button', { name: 'Belum paham' }).click();
 await page.locator('.bubble.teacher', { hasText: 'dadu' }).waitFor({ timeout: 15000 });
 ok('F3 Belum paham → penjelasan alternatif yang lebih sederhana', true);
-await page.screenshot({ path: `${OUT}/v2-hp-tanya-jawab.png`, fullPage: true });
+await shot(page, { path: `${OUT}/v2-hp-tanya-jawab.png`, fullPage: true });
 await page.getByRole('button', { name: 'Sudah paham, lanjutkan' }).waitFor({ timeout: 15000 });
 await page.getByRole('button', { name: 'Sudah paham, lanjutkan' }).click();
 await page.getByRole('toolbar', { name: 'Kontrol pelajaran' }).waitFor({ timeout: 15000 });
@@ -197,7 +200,7 @@ await p2.getByRole('button', { name: 'Mulai' }).click();
 await p2.waitForTimeout(2500);
 const cols = await p2.evaluate(() => getComputedStyle(document.querySelector('.classroom')).gridTemplateColumns.split(' ').length);
 ok('M16 Laptop: papan tulis & guru berdampingan', cols === 2);
-await p2.screenshot({ path: `${OUT}/v2-laptop-kelas.png` });
+await shot(p2, { path: `${OUT}/v2-laptop-kelas.png` });
 await ctx2.close();
 
 await browser.close();

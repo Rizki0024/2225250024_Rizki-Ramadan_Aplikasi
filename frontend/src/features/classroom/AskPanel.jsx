@@ -161,6 +161,9 @@ export default function AskPanel({ lessonSlug, segment, muted, startListening, o
               <div className={`bubble ${m.role}`}>
                 {m.text}
                 {m.followUp ? <div className="bubble-follow">{m.followUp}</div> : null}
+                {m.role === 'teacher' && m.source ? (
+                  <div className="bubble-source">{m.source === 'curated' ? 'Jawaban dasar Bu Sari' : 'Dijawab AI · bisa keliru, cek dengan guru'}</div>
+                ) : null}
               </div>
               {m.role === 'student' ? <Face role="student" /> : null}
             </motion.div>

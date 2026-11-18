@@ -243,3 +243,17 @@ Tes anti-kebocoran dibuktikan bisa gagal: menyisipkan "Kotak 50 cm, 30 cm, dan 2
 ### Deploy revisi ke produksi (16 November 2026)
 Pengembang menjalankan migrasi `2026-11-16_soal_bertahap.sql` di Supabase → `seed_supabase.py`: 14 soal (ML-1..ML-4 aktif, EV-01..EV-10 nonaktif, tidak dihapus). Pemeriksaan baca-saja kode baru terhadap Supabase produksi: 4 soal tersusun mudah → sulit, tidak ada kunci/pembahasan di data untuk siswa, kunci setiap soal bernilai 6/6, riwayat lama tetap terbaca. `main` di-push → Vercel; uji asap produksi **12/12** (P9 diperbarui: daftar kelas memang publik, tanpa kunci jawaban); `/api/health` → `tutor: curated` (AI belum aktif). Endpoint evaluasi/riwayat tanpa token → 401.
 Belum diuji di produksi: mengerjakan evaluasi dengan akun siswa sungguhan.
+
+## 13. AI gratis via Groq (18 November 2026)
+Rantai guru virtual: Claude (berbayar, opsional) → **Groq** (gratis, `GROQ_API_KEY`) → curated. Groq memakai *system prompt* ringkas (aturan RMT + pelajaran yang sedang dibuka; < 6.000 karakter), `reasoning_effort: low` & `include_reasoning: false` untuk gpt-oss, dan berpindah model (gpt-oss-120b → llama-3.3-70b → gpt-oss-20b) saat HTTP 429/5xx dengan mengistirahatkan model sesuai `retry-after`. Jawaban dibersihkan dari markdown/LaTeX karena dibacakan. Label jawaban di layar: "Dijawab AI · bisa keliru, cek dengan guru" / "Jawaban dasar Bu Sari".
+
+| Lapisan | Hasil |
+|---|---|
+| pytest | **83/83** (+6 `test_groq.py`, klien HTTP tiruan: prompt ringkas & parameter penalaran, pindah model + istirahat 429, semua gagal → curated, tanda di luar materi, urutan Claude → Groq, aktif dari variabel lingkungan) |
+| Vitest | **66/66** |
+| Build | berhasil |
+| E2E | lihat catatan di bawah |
+
+**Catatan lingkungan uji:** di komputer pengembang, Chromium dengan SwiftShader (rendering CPU) kini sangat lambat (screenshot resolusi HP > 20 dtk, kanvas 3D > 20 dtk), sementara tanpa SwiftShader screenshot ±0,6 dtk dan halaman berjalan ±60 fps. Bukan kerusakan aplikasi. Penyesuaian tes: screenshot memakai `scale: 'css'` dan tidak menggugurkan tes bila lambat (hanya dokumentasi); v2 tidak lagi memakai SwiftShader (tidak menguji 3D); tunggu kanvas 3D di legacy 20 → 60 dtk. Hasil: legacy **38/38** (data bersih, dijalankan sendirian), v2 **33/33** (2× berturut-turut, dijalankan sendirian), v3 **33/33**, rig **10/10**. Saat v2 dijalankan bersamaan dengan v3, D7/F4 sempat gagal karena perebutan CPU; dijalankan sendirian lulus.
+
+**Belum diuji:** panggilan Groq sungguhan (menunggu `GROQ_API_KEY` dari pengembang).

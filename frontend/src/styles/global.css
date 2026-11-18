@@ -537,3 +537,5 @@ details > summary { cursor: pointer; font-weight: 900; color: var(--blue-700); m
 
 /* Fase berpikir RMT (Input – Elaborasi – Output – Refleksi) */
 .rmt-chip { display: inline-block; margin: 0; padding: 3px 10px; border-radius: 999px; background: #fef3c7; color: #92400e; font-size: .8rem; font-weight: 600; }
+
+.bubble-source { margin-top: 6px; font-size: .72rem; font-weight: 600; opacity: .7; }

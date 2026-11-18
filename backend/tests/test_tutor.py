@@ -89,7 +89,7 @@ def test_tutor_ask_endpoint(client, auth):
     assert r.status_code == 200
     data = r.json()
     assert data["source"] == "curated" and data["intent"] == "kenapa-kali-6" and data["follow_up"]
-    assert client.get("/api/tutor/status", headers=auth).json() == {"provider": "curated"}
+    assert client.get("/api/tutor/status", headers=auth).json() == {"provider": "curated", "chain": ["curated"]}
 
 
 def test_tutor_validation(client, auth):

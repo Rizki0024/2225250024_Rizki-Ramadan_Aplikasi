@@ -12,22 +12,26 @@ log = logging.getLogger("kubus-balok.tutor")
 
 
 def ask(question: str, segment: dict | None, history: list[dict], *, simpler: bool = False,
-        intent: str | None = None, claude=None) -> tuple[TutorReply, str]:
-    """Mengembalikan (balasan, sumber) dengan sumber 'curated' atau 'claude'.
+        intent: str | None = None, claude=None, providers: list | None = None) -> tuple[TutorReply, str]:
+    """Mengembalikan (balasan, sumber) dengan sumber 'curated', 'claude', atau 'groq'.
 
-    Bila AI aktif, semua pertanyaan dijawab AI agar alami dan mengikuti percakapan; jawaban siap pakai (curated)
-    hanya cadangan saat AI gagal. Perintah "ulangi" tetap memutar ulang penjelasan papan tulis.
+    Bila ada AI aktif, semua pertanyaan dijawab AI agar alami dan mengikuti percakapan. Penyedia dicoba berurutan
+    (Claude → Groq); jawaban siap pakai (curated) hanya cadangan saat semua AI gagal atau kuota habis.
+    Perintah "ulangi" tetap memutar ulang penjelasan papan tulis.
     """
+    chain = [p for p in ([claude] if claude is not None else []) + list(providers or []) if p is not None]
     reply = curated.answer(question, segment, simpler=simpler, intent=intent)
-    if claude is not None and reply.intent != "repeat":
-        try:
-            result = claude.answer(question, segment, history, simpler)
-        except Exception as exc:  # layanan AI gagal → tetap menjawab dengan curated
-            log.warning("Tutor Claude gagal, memakai curated: %s", exc)
-            result = None
-        if result:
-            text, in_scope = result
-            return TutorReply(text, "ai", in_scope, in_scope, FOLLOW_UP if in_scope else None), "claude"
+    if reply.intent != "repeat":
+        for provider in chain:
+            name = getattr(provider, "name", "claude")
+            try:
+                result = provider.answer(question, segment, history, simpler)
+            except Exception as exc:  # layanan AI gagal / kuota habis → coba penyedia berikutnya
+                log.warning("Tutor %s gagal: %s", name, exc)
+                continue
+            if result:
+                text, in_scope = result
+                return TutorReply(text, "ai", in_scope, in_scope, FOLLOW_UP if in_scope else None), name
     return _avoid_repeat(reply, question, segment, history), "curated"
 
 

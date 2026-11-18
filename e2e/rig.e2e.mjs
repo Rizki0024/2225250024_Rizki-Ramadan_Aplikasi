@@ -1,6 +1,8 @@
 // Uji mesin rig karakter raster dengan gambar uji buatan kanvas (disajikan lewat intersepsi jaringan,
 // tidak ada file uji yang masuk ke proyek). Memastikan: cadangan SVG, kedip, sinkron bibir, pose, mask area.
 import { chromium } from 'playwright';
+// Screenshot hanya dokumentasi: skala CSS (ringan di renderer CPU) dan tidak menggugurkan tes bila lambat.
+const shot = (p, o) => p.screenshot({ scale: 'css', timeout: 20000, ...o }).catch(() => console.log('(screenshot dilewati: ' + o.path + ')'));
 
 const BASE = process.env.BASE || 'http://localhost:5173';
 const OUT = process.argv[2] || '.';
@@ -111,7 +113,7 @@ ok('R6 Sinyal kata dari speech.js menggerakkan mulut', sawSpeechEvent === 'open'
 await p2.goto(`${BASE}/karakter/rig`);
 await p2.getByText('Semua gambar ditemukan.').waitFor();
 ok('R7 Penyetel Rig memuat manifest & semua gambar', true);
-await p2.screenshot({ path: `${OUT}/rig-tuner.png` });
+await shot(p2, { path: `${OUT}/rig-tuner.png` });
 
 // 7) Manifest rusak → cadangan SVG
 const p3ctx = await browser.newContext();

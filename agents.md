@@ -39,7 +39,7 @@ npm run build
 
 ## Tambahan v2 (guru virtual)
 9. Naskah kelas (`backend/app/data/lessons.json`), bank tanya-jawab (`tutor_kb.json`), materi, dan latihan tidak boleh memuat ukuran/jawaban soal evaluasi (diuji `test_lessons_do_not_leak_evaluation_items`, `test_content_does_not_leak_staged_evaluation`, `generators.test.js`).
-10. `ANTHROPIC_API_KEY` hanya di backend. Mode bawaan tanpa kunci (curated) harus selalu berfungsi; kegagalan AI harus kembali ke curated.
+10. `ANTHROPIC_API_KEY` dan `GROQ_API_KEY` hanya di backend. Rantai AI: Claude → Groq → curated (`services/tutor/`), bahan prompt bersama di `prompting.py`. Mode bawaan tanpa kunci (curated) harus selalu berfungsi; kegagalan AI harus kembali ke curated.
 11. Guru virtual wajib memberi tahu bahwa ia program komputer, menolak topik di luar materi, dan tidak menyimpan audio.
 12. Animasi hanya `transform`/`opacity` dan harus menghormati `prefers-reduced-motion`.
 13. Logika pemutar ada di `features/classroom/player.js` (fungsi murni). Ubah beserta `player.test.js`.

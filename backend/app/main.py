@@ -43,11 +43,17 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     app.state.repo = build_repository(settings)
     app.state.login_limiter = LoginLimiter(settings.login_max_failures, settings.login_lock_seconds)
     app.state.tutor_limiter = TutorLimiter(settings.tutor_max_requests, 600)
-    app.state.claude_tutor = None
+    # Rantai guru virtual AI: Claude (berbayar, opsional) → Groq (gratis, opsional) → curated (selalu ada).
+    app.state.ai_tutors = []
     if settings.anthropic_api_key:
         from app.services.tutor.claude_provider import ClaudeTutor
 
-        app.state.claude_tutor = ClaudeTutor(settings.anthropic_api_key, settings.tutor_model)
+        app.state.ai_tutors.append(ClaudeTutor(settings.anthropic_api_key, settings.tutor_model))
+    if settings.groq_api_key:
+        from app.services.tutor.groq_provider import DEFAULT_MODELS, GroqTutor
+
+        app.state.ai_tutors.append(GroqTutor(settings.groq_api_key, settings.groq_models or DEFAULT_MODELS))
+    app.state.claude_tutor = next((t for t in app.state.ai_tutors if t.name == "claude"), None)
 
     app.add_middleware(
         CORSMiddleware,
@@ -76,7 +82,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     @app.get("/api/health", tags=["health"])
     def health():
         return {"status": "ok", "storage": settings.storage_mode,
-                "tutor": "claude" if app.state.claude_tutor else "curated",
+                "tutor": app.state.ai_tutors[0].name if app.state.ai_tutors else "curated",
                 "time": datetime.now(timezone.utc).isoformat()}
 
     @app.get("/", include_in_schema=False)

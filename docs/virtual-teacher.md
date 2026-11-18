@@ -41,7 +41,8 @@ Kontrol: Mulai · Jeda · Lanjutkan · Ulangi bagian · Bagian sebelumnya/beriku
 
 ## 4. Kecerdasan pedagogis (diperbarui 16 Nov 2026)
 `POST /api/tutor/ask`:
-- **AI aktif** (`ANTHROPIC_API_KEY` diisi di backend): **semua** pertanyaan dijawab Claude agar jawaban alami dan mengikuti percakapan (ingatan 10 giliran terakhir). Hanya perintah "ulangi" yang tetap memutar ulang penjelasan papan. Jika AI gagal/menolak → jawaban siap pakai (curated).
+- **Rantai AI**: Claude (`ANTHROPIC_API_KEY`, berbayar) → **Groq** (`GROQ_API_KEY`, gratis; model gpt-oss-120b → llama-3.3-70b → gpt-oss-20b, pindah model saat kena batas 429 dan mengistirahatkannya sesuai `retry-after`; *system prompt* ringkas berisi aturan RMT + pelajaran yang sedang dibuka saja) → curated. Setiap jawaban di layar diberi label "Dijawab AI · bisa keliru, cek dengan guru" atau "Jawaban dasar Bu Sari".
+- **AI aktif**: **semua** pertanyaan dijawab AI agar jawaban alami dan mengikuti percakapan (ingatan 10 giliran terakhir). Hanya perintah "ulangi" yang tetap memutar ulang penjelasan papan. Jika AI gagal/menolak → jawaban siap pakai (curated).
 - **Tanpa AI** (bawaan, gratis): perhitungan terpandu, permintaan khusus segmen, bank tanya-jawab (`tutor_kb.json`, 25 intent termasuk *bernalar-memilih* dan *memeriksa-pekerjaan*). Jawaban yang persis sama dengan jawaban sebelumnya tidak diulang: diganti versi lebih sederhana, lalu ajakan menjelaskan bagian yang belum jelas.
 - Jawaban selalu **dibacakan Bu Sari** (Web Speech API) dengan gerak bibir per kata.
 
