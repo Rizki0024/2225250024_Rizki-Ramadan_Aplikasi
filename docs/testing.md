@@ -257,3 +257,16 @@ Rantai guru virtual: Claude (berbayar, opsional) → **Groq** (gratis, `GROQ_API
 **Catatan lingkungan uji:** di komputer pengembang, Chromium dengan SwiftShader (rendering CPU) kini sangat lambat (screenshot resolusi HP > 20 dtk, kanvas 3D > 20 dtk), sementara tanpa SwiftShader screenshot ±0,6 dtk dan halaman berjalan ±60 fps. Bukan kerusakan aplikasi. Penyesuaian tes: screenshot memakai `scale: 'css'` dan tidak menggugurkan tes bila lambat (hanya dokumentasi); v2 tidak lagi memakai SwiftShader (tidak menguji 3D); tunggu kanvas 3D di legacy 20 → 60 dtk. Hasil: legacy **38/38** (data bersih, dijalankan sendirian), v2 **33/33** (2× berturut-turut, dijalankan sendirian), v3 **33/33**, rig **10/10**. Saat v2 dijalankan bersamaan dengan v3, D7/F4 sempat gagal karena perebutan CPU; dijalankan sendirian lulus.
 
 **Belum diuji:** panggilan Groq sungguhan (menunggu `GROQ_API_KEY` dari pengembang).
+
+## 14. Uji Groq sungguhan di produksi (19 November 2026)
+`GROQ_API_KEY` diisi pengembang di Vercel. `/api/health` → `"tutor":"groq"`; `/api/tutor/status` → `chain: ["groq","curated"]`. Diuji dengan akun demo KB-001:
+
+| Pertanyaan | Sumber | Waktu | Hasil |
+|---|---|---|---|
+| kenapa luas permukaan kubus dikali 6? | groq | 1,4 dtk | ✅ penjelasan 6 sisi persegi sama besar + pertanyaan pemandu |
+| kalau rusuknya 5 cm berapa luasnya? | groq | 1,8 dtk | ✅ membimbing sampai 6 × 25 cm², langkah akhir diserahkan ke siswa |
+| apa bedanya luas permukaan sama volume? | groq | 1,5 dtk | ✅ cm² vs cm³, "kulit" vs "isi" |
+| siapa presiden pertama indonesia? | groq | 1,0 dtk | ✅ ditolak (di luar materi), diajak kembali |
+| kamu manusia atau robot? | groq | 1,3 dtk | ✅ mengaku program komputer, ⚠️ sempat ditandai di luar materi |
+
+Perbaikan: aturan 10 memperjelas bahwa pertanyaan tentang Bu Sari bukan di luar materi; `clean_answer` menormalkan tanda hubung/spasi khusus (U+2011, U+00A0) agar dibacakan wajar. pytest **85/85** (+2 tes).

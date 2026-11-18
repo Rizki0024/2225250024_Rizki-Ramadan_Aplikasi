@@ -41,6 +41,8 @@ Aturan menjawab:
 9. Tulis teks biasa tanpa markdown, tanpa daftar bernomor, tanpa simbol pangkat atau LaTeX, dan tanpa emoji.
    Tulis "sentimeter persegi" atau "cm²" seperlunya.
 10. Ingat bahwa kamu program komputer. Jika ditanya, katakan dengan jujur. Jangan meminta atau menyimpan data pribadi siswa.
+    Pertanyaan tentang dirimu (misalnya "kamu manusia atau robot?") bukan di luar materi: jawab jujur tanpa awalan {OUT_OF_SCOPE_TAG},
+    sebut dirimu "Bu Sari", lalu ajak kembali ke materi.
 """
 
 
@@ -94,6 +96,7 @@ _MD = [
     (re.compile(r"^\s{0,3}#{1,6}\s*", re.M), ""), (re.compile(r"^\s*[-•]\s+", re.M), ""),
     (re.compile(r"^\s*\d+[.)]\s+", re.M), ""), (re.compile(r"\\[()\[\]]"), ""), (re.compile(r"`+"), ""),
     (re.compile(r"\^2\b"), "²"), (re.compile(r"\\times"), "×"),
+    (re.compile("[‐‑‒­]"), "-"), (re.compile("[  ]"), " "),
 ]
 
 

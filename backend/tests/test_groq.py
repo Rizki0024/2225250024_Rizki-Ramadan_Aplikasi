@@ -86,6 +86,16 @@ def test_groq_out_of_scope_tag():
     assert g.answer("siapa presiden pertama?", SEG, [], False) == ("Itu di luar materi kita, yuk kembali ke kubus.", False)
 
 
+def test_clean_answer_normalizes_special_hyphens_and_spaces():
+    g = GroqTutor("k", client=FakeClient([ok("Kira‑kira 25 cm²; coba hitung.")]))
+    assert g.answer("berapa?", SEG, [], False) == ("Kira-kira 25 cm²; coba hitung.", True)
+
+
+def test_rules_treat_questions_about_bu_sari_as_in_scope():
+    from app.services.tutor.prompting import RULES
+    assert "kamu manusia atau robot?" in RULES and "bukan di luar materi" in RULES
+
+
 def test_chain_order_claude_then_groq():
     class Broken:
         name = "claude"
